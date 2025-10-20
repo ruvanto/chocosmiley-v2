@@ -1,5 +1,3 @@
-
-
 // @/components/views/MobileProductDetailView.tsx
 'use client';
 
@@ -28,7 +26,7 @@ interface MobileProductDetailViewProps {
   onFeaturedProductAddToCart: (product: SanityProduct) => void;
   onImageExpand: (index: number) => void;
   likedProducts: WishlistItem[];
-  onProductClick: (product: SanityProduct) => void;
+  onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
 }
 
 export function MobileProductDetailView({ 

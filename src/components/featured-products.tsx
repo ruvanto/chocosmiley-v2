@@ -9,44 +9,30 @@ import { ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
-import Link from 'next/link';
 
 interface FeaturedProductsProps {
   products: SanityProduct[];
+  onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   cart: Record<string, { name: string; quantity: number; flavours?: string[] }>;
   isMobile?: boolean;
-  onProductClick: (product: SanityProduct) => void;
 }
 
 export function FeaturedProducts({
   products,
+  onProductClick,
   onAddToCart,
   onRemoveFromCart,
   cart,
   isMobile = false,
-  onProductClick,
 }: FeaturedProductsProps) {
   const router = useRouter();
-  const { setIsGlobalLoading } = useAppContext();
+  const { likedProducts } = useAppContext();
 
-  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
-    // Only trigger client-side navigation for left clicks without modifier keys
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        e.preventDefault();
-        setIsGlobalLoading(true);
-        onProductClick(product);
-    }
+  const handleViewMore = () => {
+    router.push('/search?q=');
   };
-
-  const handleViewMoreClick = (e: React.MouseEvent) => {
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-      e.preventDefault();
-      setIsGlobalLoading(true);
-      router.push('/search?q=');
-    }
-  }
 
   return (
     <div className={cn(
@@ -66,7 +52,7 @@ export function FeaturedProducts({
               <div className="aspect-[3/4] h-full w-full">
                 <FeaturedProductCard
                   product={product}
-                  onProductClick={(e) => handleProductClick(e, product)}
+                  onProductClick={onProductClick}
                   onAddToCart={onAddToCart}
                   onRemoveFromCart={onRemoveFromCart}
                   quantity={cart[product.name]?.quantity || 0}
@@ -75,20 +61,18 @@ export function FeaturedProducts({
             </div>
           ))}
           <div className="w-40 flex-shrink-0">
-             <Link href="/search?q=" onClick={handleViewMoreClick} className="flex aspect-[3/4] h-full w-full">
-                <Button
-                  variant="outline"
-                  className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
-                  asChild
-                >
-                  <div>
-                    <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                        <ChevronRight className="h-8 w-8" />
-                    </div>
-                    <span className="font-semibold text-base">View More</span>
-                  </div>
-                </Button>
-              </Link>
+            <div className="flex aspect-[3/4] h-full w-full">
+              <Button
+                variant="outline"
+                onClick={handleViewMore}
+                className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
+              >
+                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                    <ChevronRight className="h-8 w-8" />
+                </div>
+                <span className="font-semibold text-base">View More</span>
+              </Button>
+            </div>
           </div>
         </div>
       ) : (
@@ -98,7 +82,7 @@ export function FeaturedProducts({
                <div className="aspect-[3/4] h-full w-full">
                 <FeaturedProductCard
                   product={product}
-                  onProductClick={(e) => handleProductClick(e, product)}
+                  onProductClick={onProductClick}
                   onAddToCart={onAddToCart}
                   onRemoveFromCart={onRemoveFromCart}
                   quantity={cart[product.name]?.quantity || 0}
@@ -107,20 +91,18 @@ export function FeaturedProducts({
             </div>
           ))}
           <div className="w-56 flex-shrink-0">
-            <Link href="/search?q=" onClick={handleViewMoreClick} className="flex aspect-[3/4] h-full w-full">
+            <div className="flex aspect-[3/4] h-full w-full">
              <Button
               variant="outline"
+              onClick={handleViewMore}
               className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
-              asChild
             >
-              <div>
-                <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
-                    <ChevronRight className="h-10 w-10" />
-                </div>
-                <span className="font-semibold text-lg">View More</span>
+              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
+                  <ChevronRight className="h-10 w-10" />
               </div>
+              <span className="font-semibold text-lg">View More</span>
             </Button>
-            </Link>
+            </div>
           </div>
         </div>
       )}
