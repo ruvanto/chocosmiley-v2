@@ -1,4 +1,3 @@
-
 // @/components/views/ProductDetailClientPage.tsx
 'use client';
 
@@ -405,7 +404,6 @@ export default function ProductDetailClientPage({ product, featuredProducts }: P
             <div className="md:mx-16 lg:mx-24 py-8 mb-8">
               <FeaturedProducts 
                   products={featuredProducts}
-                  onProductClick={handleProductClick}
                   onAddToCart={onFeaturedProductAddToCart}
                   onRemoveFromCart={handleRemoveFromCart}
                   cart={cart}

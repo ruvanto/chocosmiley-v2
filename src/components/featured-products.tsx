@@ -1,4 +1,3 @@
-
 // @/components/featured-products.tsx
 'use client';
 
@@ -10,10 +9,10 @@ import { ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
+import Link from 'next/link';
 
 interface FeaturedProductsProps {
   products: SanityProduct[];
-  onProductClick: (product: SanityProduct) => void;
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   cart: Record<string, { name: string; quantity: number; flavours?: string[] }>;
@@ -22,18 +21,30 @@ interface FeaturedProductsProps {
 
 export function FeaturedProducts({
   products,
-  onProductClick,
   onAddToCart,
   onRemoveFromCart,
   cart,
   isMobile = false,
 }: FeaturedProductsProps) {
   const router = useRouter();
-  useAppContext();
+  const { setIsGlobalLoading } = useAppContext();
 
-  const handleViewMore = () => {
-    router.push('/search?q=');
+  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
+    // Only trigger client-side navigation for left clicks without modifier keys
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        setIsGlobalLoading(true);
+        router.push(`/product/${product.slug.current}`);
+    }
   };
+
+  const handleViewMoreClick = (e: React.MouseEvent) => {
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+      e.preventDefault();
+      setIsGlobalLoading(true);
+      router.push('/search?q=');
+    }
+  }
 
   return (
     <div className={cn(
@@ -49,11 +60,11 @@ export function FeaturedProducts({
       {isMobile ? (
         <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
           {products.map(product => (
-            <div key={product._id} className="w-40 flex-shrink-0" onClick={() => onProductClick(product)}>
+            <div key={product._id} className="w-40 flex-shrink-0">
               <div className="aspect-[3/4] h-full w-full">
                 <FeaturedProductCard
                   product={product}
-                  onProductClick={onProductClick}
+                  onProductClick={(e) => handleProductClick(e, product)}
                   onAddToCart={onAddToCart}
                   onRemoveFromCart={onRemoveFromCart}
                   quantity={cart[product.name]?.quantity || 0}
@@ -62,18 +73,20 @@ export function FeaturedProducts({
             </div>
           ))}
           <div className="w-40 flex-shrink-0">
-            <div className="flex aspect-[3/4] h-full w-full">
-              <Button
-                variant="outline"
-                onClick={handleViewMore}
-                className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
-              >
-                <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                    <ChevronRight className="h-8 w-8" />
-                </div>
-                <span className="font-semibold text-base">View More</span>
-              </Button>
-            </div>
+             <Link href="/search?q=" onClick={handleViewMoreClick} className="flex aspect-[3/4] h-full w-full">
+                <Button
+                  variant="outline"
+                  className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
+                  asChild
+                >
+                  <div>
+                    <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                        <ChevronRight className="h-8 w-8" />
+                    </div>
+                    <span className="font-semibold text-base">View More</span>
+                  </div>
+                </Button>
+              </Link>
           </div>
         </div>
       ) : (
@@ -83,7 +96,7 @@ export function FeaturedProducts({
                <div className="aspect-[3/4] h-full w-full">
                 <FeaturedProductCard
                   product={product}
-                  onProductClick={onProductClick}
+                  onProductClick={(e) => handleProductClick(e, product)}
                   onAddToCart={onAddToCart}
                   onRemoveFromCart={onRemoveFromCart}
                   quantity={cart[product.name]?.quantity || 0}
@@ -92,18 +105,20 @@ export function FeaturedProducts({
             </div>
           ))}
           <div className="w-56 flex-shrink-0">
-            <div className="flex aspect-[3/4] h-full w-full">
+            <Link href="/search?q=" onClick={handleViewMoreClick} className="flex aspect-[3/4] h-full w-full">
              <Button
               variant="outline"
-              onClick={handleViewMore}
               className="w-full h-full bg-white/20 border-2 border-dashed border-white/50 text-white hover:bg-white/30 hover:text-white flex flex-col items-center justify-center gap-2 rounded-2xl"
+              asChild
             >
-              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
-                  <ChevronRight className="h-10 w-10" />
+              <div>
+                <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center">
+                    <ChevronRight className="h-10 w-10" />
+                </div>
+                <span className="font-semibold text-lg">View More</span>
               </div>
-              <span className="font-semibold text-lg">View More</span>
             </Button>
-            </div>
+            </Link>
           </div>
         </div>
       )}

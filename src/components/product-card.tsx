@@ -1,4 +1,3 @@
-
 // @/components/product-card.tsx
 'use client';
 
@@ -9,13 +8,13 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import type { SanityProduct } from '@/types';
 import { useAppContext } from '@/context/app-context';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: SanityProduct;
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   quantity: number;
-  onProductClick: (product: SanityProduct) => void;
 }
 
 export function ProductCard({
@@ -23,7 +22,6 @@ export function ProductCard({
   onAddToCart,
   onRemoveFromCart,
   quantity,
-  onProductClick,
 }: ProductCardProps) {
   const [isAnimatingLike, setIsAnimatingLike] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -69,8 +67,8 @@ export function ProductCard({
   const subtitle = [product.weight, product.composition, product.packageType].filter(Boolean).join(' | ');
 
   return (
-    <div 
-      onClick={() => onProductClick(product)}
+    <Link 
+      href={`/product/${product.slug.current}`}
       className="relative w-full h-full bg-white/90 active:bg-custom-gold md:hover:bg-custom-gold rounded-2xl overflow-hidden cursor-pointer group border border-custom-gold md:border-white md:hover:border-custom-gold transition-colors duration-300 flex flex-col shadow-lg"
     >
       {/* Image Section */}
@@ -223,6 +221,6 @@ export function ProductCard({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

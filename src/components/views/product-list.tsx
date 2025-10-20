@@ -1,4 +1,3 @@
-
 // @/components/views/product-list.tsx
 'use client';
 
@@ -203,9 +202,13 @@ export function ProductList({
     }
   };
 
-  const handleProductClick = (product: SanityProduct) => {
-    setIsGlobalLoading(true);
-    router.push(`/product/${product.slug.current}`);
+  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
+    // Only trigger client-side navigation for left clicks without modifier keys
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        setIsGlobalLoading(true);
+        router.push(`/product/${product.slug.current}`);
+    }
   };
   
   const handleContinueShopping = () => {
@@ -277,15 +280,13 @@ export function ProductList({
       ) : products.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
           {products.map((product) => (
-            <div key={product._id} onClick={() => handleProductClick(product)}>
-              <ProductCard
-                product={product}
-                onAddToCart={() => onProductCardAddToCart(product)}
-                onRemoveFromCart={() => onProductCardRemoveFromCart(product)}
-                quantity={cart[product.name]?.quantity || 0}
-                onProductClick={handleProductClick}
-              />
-            </div>
+            <ProductCard
+              key={product._id}
+              product={product}
+              onAddToCart={() => onProductCardAddToCart(product)}
+              onRemoveFromCart={() => onProductCardRemoveFromCart(product)}
+              quantity={cart[product.name]?.quantity || 0}
+            />
           ))}
           {hasMore && renderSkeletons()}
         </div>
