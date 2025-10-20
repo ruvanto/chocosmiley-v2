@@ -1,5 +1,50 @@
-import { redirect } from 'next/navigation';
 
-export default function Home() {
-  redirect('/dashboard');
+// @/app/page.tsx
+import { client } from '@/lib/sanity';
+import type { SanityProduct } from '@/types';
+import { Suspense } from 'react';
+import HomeClient from './home-client';
+import { HomeSkeleton } from '@/components/skeletons/home-skeleton';
+import { getTrendingSuggestions } from './actions';
+
+export const revalidate = 300; // Revalidate this page at most every 300 seconds
+
+interface HomepageContent {
+  exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string }[];
+  exploreFlavours: { _key: string; name: string; subtitle: string; imageUrl: string }[];
+}
+
+async function getHomepageContent(): Promise<HomepageContent> {
+    const query = `*[_type == "homepage"][0]{
+        exploreCategories[]{
+            _key,
+            name,
+            subtitle,
+            "imageUrl": image.asset->url
+        },
+        exploreFlavours[]{
+            _key,
+            name,
+            subtitle,
+            "imageUrl": image.asset->url
+        }
+    }`;
+    const content = await client.fetch(query);
+    return content || { exploreCategories: [], exploreFlavours: [] };
+}
+
+export default async function Home() {
+    const homepageContent = await getHomepageContent();
+    const trendingSuggestions = await getTrendingSuggestions();
+
+    return (
+        <Suspense fallback={<HomeSkeleton />}>
+            <HomeClient
+                allProducts={[]}
+                exploreCategories={homepageContent.exploreCategories}
+                exploreFlavours={homepageContent.exploreFlavours}
+                trendingSuggestions={trendingSuggestions}
+            />
+        </Suspense>
+    );
 }

@@ -1,0 +1,23 @@
+{
+  "name": "Choco Smiley",
+  "short_name": "ChocoSmiley",
+  "description": "Handcrafted chocolates for every occasion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5D2B79",
+  "theme_color": "#5D2B79",
+  "icons": [
+    {
+      "src": "/mobile-app-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/splash-screen-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

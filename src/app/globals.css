@@ -2,79 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  html {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  html{
+    /* Chrome, Edge, Safari */
+    input[type="search"]::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      appearance: none;
+      display: none;
+    }
+
+    /* Firefox */
+    input[type="search"]::-moz-search-clear {
+      display: none;
+    }
+
+    /* Internet Explorer */
+    input[type="search"]::-ms-clear {
+      display: none;
+    }
+  }
   :root {
-    --background: 207 90% 94%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 207 90% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 207 90% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 207 88% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 207 90% 88%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 207 90% 88%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 124 44% 64%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 275 53% 33%; /* #5d2b79 */
+    --foreground: 0 0% 100%;    /* white */
+    --card: 275 53% 28%;
+    --card-foreground: 0 0% 100%;
+    --popover: 275 53% 23%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 49 100% 61%; /* #ffd139 */
+    --primary-foreground: 275 53% 15%;
+    --secondary: 275 40% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 275 40% 45%;
+    --muted-foreground: 0 0% 75%;
+    --accent: 275 40% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 207 90% 84%;
-    --input: 207 90% 84%;
-    --ring: 207 88% 60%;
-    --chart-1: 207 88% 60%;
-    --chart-2: 124 44% 64%;
-    --chart-3: 27 87% 67%;
-    --chart-4: 197 37% 24%;
-    --chart-5: 43 74% 66%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 275 40% 50%;
+    --input: 275 40% 50%;
+    --ring: 49 100% 61%; /* #ffd139 */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 207 90% 98%;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-primary: 207 88% 60%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 207 90% 92%;
-    --sidebar-accent-foreground: 222.2 84% 4.9%;
-    --sidebar-border: 207 90% 88%;
-    --sidebar-ring: 207 88% 60%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sparkle: 0 0% 100%;
   }
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 207 88% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 124 44% 34%;
-    --accent-foreground: 210 40% 98%;
+    --background: 275 53% 33%; /* #5d2b79 */
+    --foreground: 0 0% 100%;    /* white */
+    --card: 275 53% 28%;
+    --card-foreground: 0 0% 100%;
+    --popover: 275 53% 23%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 49 100% 61%; /* #ffd139 */
+    --primary-foreground: 275 53% 15%;
+    --secondary: 275 40% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 275 40% 45%;
+    --muted-foreground: 0 0% 75%;
+    --accent: 275 40% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 207 88% 60%;
-    --chart-1: 207 88% 60%;
-    --chart-2: 124 44% 44%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 275 40% 50%;
+    --input: 275 40% 50%;
+    --ring: 49 100% 61%; /* #ffd139 */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 222.2 84% 4.9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 207 88% 60%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 207 88% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sparkle: 0 0% 100%;
   }
 }
 
@@ -85,4 +111,78 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px; /* Added for horizontal scrollbar consistency */
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #aaaaaa;
+  }
+  /* Explicitly hide horizontal scrollbar for mobile suggestions */
+  .custom-scrollbar::-webkit-scrollbar:horizontal {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .always-visible-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .always-visible-scrollbar::-webkit-scrollbar-track {
+    background: #E5E7EB1a; /* A light grey from Tailwind's palette */
+  }
+  .always-visible-scrollbar::-webkit-scrollbar-thumb {
+    background: #FFD139;
+    border-radius: 10px;
+  }
+  .always-visible-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #FFD139;
+    opacity: 0.8;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes tick {
+  0%, 15%, 100% {
+    stroke-dashoffset: 24;
+  }
+  30%, 85% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-tick {
+  animation: tick 3s ease-in-out infinite;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 0;
 }
