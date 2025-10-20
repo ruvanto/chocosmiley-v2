@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { SanityFlavour } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useState } from 'react';
 
 interface FlavourCardProps {
   flavour: SanityFlavour;
@@ -16,6 +17,8 @@ interface FlavourCardProps {
 
 export function FlavourCard({ flavour, onToggle, isSelected }: FlavourCardProps) {
   const isMobile = useIsMobile();
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -29,12 +32,18 @@ export function FlavourCard({ flavour, onToggle, isSelected }: FlavourCardProps)
       )}
     >
       <div className="relative w-full aspect-square">
+         {isImageLoading && <div className="absolute inset-0 bg-black/10 animate-pulse rounded-full" />}
         <Image
           src={flavour.imageUrl}
           alt={flavour.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="rounded-full object-cover"
+          className={cn(
+            "rounded-full object-cover transition-opacity duration-300",
+            isImageLoading ? 'opacity-0' : 'opacity-100'
+          )}
+          onLoad={() => setIsImageLoading(false)}
+          onError={() => setIsImageLoading(false)}
           data-ai-hint={flavour.name}
           onDragStart={(e) => e.preventDefault()}
         />
