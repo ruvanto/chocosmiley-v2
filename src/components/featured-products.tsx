@@ -29,7 +29,7 @@ export function FeaturedProducts({
   isMobile = false,
 }: FeaturedProductsProps) {
   const router = useRouter();
-  const { likedProducts } = useAppContext();
+  useAppContext();
 
   const handleViewMore = () => {
     router.push('/search?q=');

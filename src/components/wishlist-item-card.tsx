@@ -1,5 +1,3 @@
-
-
 // @/components/wishlist-item-card.tsx
 'use client';
 
@@ -36,6 +34,7 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
   };
 
   const subtitle = product.subtitle;
+  const isOutOfStock = product.isOutOfStock;
 
   if (isMobile) {
     return (
@@ -73,21 +72,30 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
             
             <div className="flex justify-between items-end gap-2">
                 {product.discountedPrice && <p className="font-bold text-base text-custom-purple-dark mt-1 truncate">₹{product.discountedPrice}</p>}
-                <Button
-                  size="sm"
-                  onClick={handleAddToCartClick}
-                  className={cn(
-                    "rounded-full uppercase border-2 border-b-[3px] h-8 px-5 text-xs transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
-                    isInCart
-                      ? 'bg-custom-purple-dark text-white'
-                      : 'bg-transparent text-custom-purple-dark',
-                    isMobile
-                      ? (isInCart ? 'hover:bg-custom-purple-dark hover:text-white' : 'hover:bg-transparent hover:text-custom-purple-dark')
-                      : (isInCart ? 'hover:bg-custom-purple-dark/90' : 'hover:bg-custom-purple-dark hover:text-white')
-                  )}
-                >
-                  {isInCart ? 'ADDED' : 'ADD'}
-                </Button>
+                
+                {isOutOfStock ? (
+                  <Button
+                    size="sm"
+                    disabled
+                    className="h-8 px-4 rounded-full bg-gray-400 text-white cursor-not-allowed text-xs"
+                  >
+                    OUT OF STOCK
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    onClick={handleAddToCartClick}
+                    className={cn(
+                      "rounded-full uppercase border-2 border-b-[3px] h-8 px-5 text-xs transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
+                      isInCart
+                        ? 'bg-custom-purple-dark text-white'
+                        : 'bg-transparent text-custom-purple-dark',
+                      isInCart ? 'hover:bg-custom-purple-dark hover:text-white' : 'hover:bg-transparent hover:text-custom-purple-dark'
+                    )}
+                  >
+                    {isInCart ? 'ADDED' : 'ADD'}
+                  </Button>
+                )}
             </div>
           </div>
         </div>
@@ -128,18 +136,29 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
           </div>
           <div className="flex justify-between items-end gap-2">
             {product.discountedPrice && <p className="font-bold text-xl text-custom-purple-dark truncate">₹{product.discountedPrice}</p>}
-            <Button
-              size="sm"
-              onClick={handleAddToCartClick}
-              className={cn(
-                "rounded-full uppercase border-2 border-b-[3px] h-9 px-6 text-sm transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
-                isInCart
-                  ? 'bg-custom-purple-dark text-white hover:bg-custom-purple-dark/90'
-                  : 'bg-transparent text-custom-purple-dark hover:bg-custom-purple-dark hover:text-white'
-              )}
-            >
-              {isInCart ? 'ADDED' : 'ADD'}
-            </Button>
+
+            {isOutOfStock ? (
+              <Button
+                size="sm"
+                disabled
+                className="h-9 px-4 rounded-full bg-gray-400 text-white cursor-not-allowed text-sm"
+              >
+                OUT OF STOCK
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                onClick={handleAddToCartClick}
+                className={cn(
+                  "rounded-full uppercase border-2 border-b-[3px] h-9 px-6 text-sm transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
+                  isInCart
+                    ? 'bg-custom-purple-dark text-white hover:bg-custom-purple-dark/90'
+                    : 'bg-transparent text-custom-purple-dark hover:bg-custom-purple-dark hover:text-white'
+                )}
+              >
+                {isInCart ? 'ADDED' : 'ADD'}
+              </Button>
+            )}
           </div>
         </div>
       </div>

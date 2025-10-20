@@ -44,6 +44,7 @@ export function MobileProductDetailView({
   onFeaturedProductAddToCart,
   onImageExpand,
   likedProducts,
+  onProductClick,
 }: MobileProductDetailViewProps) {
   const productQuantity = cart[product.name]?.quantity || 0;
   
@@ -65,6 +66,7 @@ export function MobileProductDetailView({
           onRemoveFromCart={onRemoveFromCart}
           cart={cart}
           isMobile={true}
+          onProductClick={onProductClick}
         />
       </div>
     </div>

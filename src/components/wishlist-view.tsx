@@ -1,4 +1,3 @@
-
 // @/components/wishlist-view.tsx
 'use client';
 
@@ -54,16 +53,17 @@ export function WishlistView({
             setAreProductsLoaded(true);
             return;
         }
-        const productNames = likedProducts.map(p => p.name);
-        const query = `*[_type == "product" && name in $productNames]{
+        const productIds = likedProducts.map(p => p._id);
+        const query = `*[_type == "product" && _id in $productIds]{
             ...,
+            isOutOfStock,
             "images": images[].asset->url,
             availableFlavours[]->{_id, name, "imageUrl": image.asset->url, "price": coalesce(price, 0)},
         }`;
         try {
-            const products: SanityProduct[] = await client.fetch(query, { productNames });
+            const products: SanityProduct[] = await client.fetch(query, { productIds });
             const productsMap = products.reduce((acc, product) => {
-                acc[product.name] = product;
+                acc[product._id] = product;
                 return acc;
             }, {} as Record<string, SanityProduct>);
             setAllProducts(productsMap);
@@ -81,12 +81,12 @@ export function WishlistView({
 
   
   const handleUnlike = (product: WishlistItem) => {
-    const fullProduct = allProducts[product.name];
+    const fullProduct = allProducts[product._id];
     toggleLike(fullProduct || null, product._id);
   };
   
   const onAddToCart = (product: WishlistItem) => {
-    const fullProduct = allProducts[product.name];
+    const fullProduct = allProducts[product._id];
     const isInCart = !!cart[product.name];
 
     if (isInCart) {
@@ -111,20 +111,25 @@ export function WishlistView({
     );
   }
 
+  const enhancedLikedProducts = likedProducts.map(p => ({
+    ...p,
+    isOutOfStock: allProducts[p._id]?.isOutOfStock ?? false,
+  }));
+
   if (isMobile) {
     return (
        <div className="flex flex-col min-h-0 px-4 pt-4">
-        {likedProducts.length > 0 ? (
+        {enhancedLikedProducts.length > 0 ? (
           <div className="bg-white/80 rounded-2xl flex flex-col h-full mb-20">
             <div className="flex justify-between items-center p-4 border-b border-black/10 flex-shrink-0">
-              <p className="text-base font-bold text-black">Total Products: {likedProducts.length}</p>
+              <p className="text-base font-bold text-black">Total Products: {enhancedLikedProducts.length}</p>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
                     variant="destructive"
                     size="sm"
                     className="bg-red-500 text-white rounded-full hover:bg-red-600/90 text-xs h-8 px-3 disabled:opacity-50"
-                    disabled={likedProducts.length === 0}
+                    disabled={enhancedLikedProducts.length === 0}
                   >
                     Clear All
                   </Button>
@@ -144,7 +149,7 @@ export function WishlistView({
               </AlertDialog>
             </div>
             <div className="overflow-y-auto no-scrollbar">
-              {likedProducts.map((product, index) => (
+              {enhancedLikedProducts.map((product, index) => (
                 <WishlistItemCard 
                   key={product._id}
                   product={product}
@@ -153,7 +158,7 @@ export function WishlistView({
                   isInCart={!!cart[product.name]}
                   isUnliking={unlikingItems.includes(product._id)}
                   onAnimationEnd={() => {}}
-                  isLastItem={index === likedProducts.length - 1}
+                  isLastItem={index === enhancedLikedProducts.length - 1}
                   isMobile={true}
                 />
               ))}
@@ -179,10 +184,10 @@ export function WishlistView({
     <div className="p-8 pb-0 text-white h-full flex flex-col relative">
       <h2 className="text-3xl font-normal font-poppins self-start mb-6">My Wishlist</h2>
       
-      {likedProducts.length > 0 ? (
+      {enhancedLikedProducts.length > 0 ? (
         <>
           <div className="flex-grow overflow-y-auto pr-4 pb-8 space-y-2 no-scrollbar">
-            {likedProducts.map(product => (
+            {enhancedLikedProducts.map(product => (
               <WishlistItemCard 
                 key={product._id}
                 product={product}
@@ -202,7 +207,7 @@ export function WishlistView({
                   variant="destructive"
                   size="icon"
                   className="bg-red-600 hover:bg-red-700 shadow-lg h-14 w-14 rounded-full"
-                  disabled={likedProducts.length === 0}
+                  disabled={enhancedLikedProducts.length === 0}
                 >
                   <FaTrash className="h-6 w-6" />
                 </Button>

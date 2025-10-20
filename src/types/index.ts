@@ -1,5 +1,3 @@
-
-
 // src/types/index.ts
 import type { PortableTextBlock } from '@portabletext/react';
 
@@ -62,6 +60,7 @@ export interface WishlistItem {
   coverImage?: string;
   subtitle: string;
   discountedPrice?: number;
+  isOutOfStock?: boolean;
 }
 
 export interface Order {
@@ -95,7 +94,3 @@ export type ActiveView =
   | 'product-detail' 
   | 'admin'
   | 'admin-analytics';
-
-
-
-
