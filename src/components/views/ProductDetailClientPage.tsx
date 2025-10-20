@@ -1,3 +1,4 @@
+
 // @/components/views/ProductDetailClientPage.tsx
 'use client';
 
@@ -230,12 +231,9 @@ export default function ProductDetailClientPage({ product, featuredProducts }: P
     else router.push('/');
   };
 
-  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        e.preventDefault();
-        setIsGlobalLoading(true);
-        router.push(`/product/${product.slug.current}`);
-    }
+  const handleProductClick = (product: SanityProduct) => {
+    setIsGlobalLoading(true);
+    router.push(`/product/${product.slug.current}`);
   };
   
   const handleImageExpand = (index: number) => {
@@ -285,7 +283,7 @@ export default function ProductDetailClientPage({ product, featuredProducts }: P
               onBuyNow={handleBuyNow}
               isLiked={isCurrentProductLiked}
               onLikeToggle={() => toggleLike(product, product._id)}
-              onProductClick={(e, p) => handleProductClick(e, p)}
+              onProductClick={handleProductClick}
               onRemoveFromCart={handleRemoveFromCart}
               onFeaturedProductAddToCart={onFeaturedProductAddToCart}
               onImageExpand={handleImageExpand}
