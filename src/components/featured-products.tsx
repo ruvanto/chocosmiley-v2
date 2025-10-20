@@ -1,3 +1,4 @@
+
 // @/components/featured-products.tsx
 'use client';
 
@@ -12,7 +13,7 @@ import { useAppContext } from '@/context/app-context';
 
 interface FeaturedProductsProps {
   products: SanityProduct[];
-  onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
+  onProductClick: (product: SanityProduct) => void;
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   cart: Record<string, { name: string; quantity: number; flavours?: string[] }>;
@@ -48,7 +49,7 @@ export function FeaturedProducts({
       {isMobile ? (
         <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
           {products.map(product => (
-            <div key={product._id} className="w-40 flex-shrink-0">
+            <div key={product._id} className="w-40 flex-shrink-0" onClick={() => onProductClick(product)}>
               <div className="aspect-[3/4] h-full w-full">
                 <FeaturedProductCard
                   product={product}

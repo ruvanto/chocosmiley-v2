@@ -1,3 +1,4 @@
+
 // @/components/featured-product-card.tsx
 'use client';
 
@@ -8,14 +9,13 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import type { SanityProduct } from '@/types';
 import { useAppContext } from '@/context/app-context';
-import Link from 'next/link';
 
 interface FeaturedProductCardProps {
   product: SanityProduct;
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   quantity: number;
-  onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
+  onProductClick: (product: SanityProduct) => void;
 }
 
 export function FeaturedProductCard({
@@ -35,25 +35,21 @@ export function FeaturedProductCard({
   }, []);
 
   const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
   };
 
   const handleIncrement = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
   };
 
   const handleDecrement = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     onRemoveFromCart(product);
   };
   
   const handleLikeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     toggleLike(product, product._id);
   }
@@ -65,9 +61,8 @@ export function FeaturedProductCard({
   const subtitle = [product.weight, product.composition, product.packageType].filter(Boolean).join(' | ');
 
   return (
-    <Link
-      href={`/product/${product.slug.current}`}
-      onClick={(e) => onProductClick(e, product)}
+    <div
+      onClick={() => onProductClick(product)}
       className="relative w-full h-full bg-black/20 rounded-2xl overflow-hidden cursor-pointer group border border-white/20 hover:border-custom-gold/50 transition-colors duration-300"
     >
       <div className="absolute inset-0">
@@ -158,6 +153,6 @@ export function FeaturedProductCard({
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
