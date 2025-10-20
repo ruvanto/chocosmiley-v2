@@ -15,6 +15,7 @@ interface ProductCardProps {
   onAddToCart: (product: SanityProduct) => void;
   onRemoveFromCart: (product: SanityProduct) => void;
   quantity: number;
+  onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
 }
 
 export function ProductCard({
@@ -22,6 +23,7 @@ export function ProductCard({
   onAddToCart,
   onRemoveFromCart,
   quantity,
+  onProductClick,
 }: ProductCardProps) {
   const [isAnimatingLike, setIsAnimatingLike] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -69,6 +71,7 @@ export function ProductCard({
   return (
     <Link 
       href={`/product/${product.slug.current}`}
+      onClick={(e) => onProductClick(e, product)}
       className="relative w-full h-full bg-white/90 active:bg-custom-gold md:hover:bg-custom-gold rounded-2xl overflow-hidden cursor-pointer group border border-custom-gold md:border-white md:hover:border-custom-gold transition-colors duration-300 flex flex-col shadow-lg"
     >
       {/* Image Section */}

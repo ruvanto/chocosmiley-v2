@@ -219,6 +219,15 @@ export function ProductList({
     return Array.from({ length: skeletonCount }).map((_, i) => <ProductCardSkeleton key={`skeleton-${i}`} />);
   };
   
+  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
+    // Only trigger client-side navigation for left clicks without modifier keys
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        setIsGlobalLoading(true);
+        router.push(`/product/${product.slug.current}`);
+    }
+  };
+
   const headerContent = (
     <>
       <div className="flex justify-between items-center text-white">
@@ -277,6 +286,7 @@ export function ProductList({
               onAddToCart={() => onProductCardAddToCart(product)}
               onRemoveFromCart={() => onProductCardRemoveFromCart(product)}
               quantity={cart[product.name]?.quantity || 0}
+              onProductClick={(e, p) => handleProductClick(e, p)}
             />
           ))}
           {hasMore && renderSkeletons()}
