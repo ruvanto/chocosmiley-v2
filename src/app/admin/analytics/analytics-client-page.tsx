@@ -10,13 +10,10 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
-import type { SanityProduct } from '@/types';
 import { EmptyState } from '@/components/empty-state';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Image from 'next/image';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
-import { client } from '@/lib/sanity';
 import { Loader } from '@/components/loader';
 
 const MetricCard = ({ title, value, icon, description }: { title: string, value: string | number, icon: React.ReactNode, description?: string }) => (
@@ -42,7 +39,7 @@ export default function AnalyticsClientPage() {
     
     useEffect(() => {
         setIsGlobalLoading(false);
-    }, []);
+    }, [setIsGlobalLoading]);
 
     const handleHeaderNavigate = (view: 'about' | 'faq' | 'admin' | 'admin-analytics') => {
         const newPath = `/${view}`;
@@ -75,7 +72,6 @@ export default function AnalyticsClientPage() {
             .map(([name, quantity]) => ({
                 name,
                 quantity,
-                image: '/placeholder.png' // Using a placeholder as we are no longer fetching all products
             }));
 
         return { totalRevenue, totalOrders, avgOrderValue, totalProductsSold, topProducts };

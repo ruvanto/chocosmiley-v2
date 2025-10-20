@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from "next/image";
@@ -88,9 +87,6 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
             initial="initial"
-            // --- THE FIX IS HERE ---
-            // On mobile, animate directly to the 'hover' state without interaction.
-            // On desktop, the state is 'initial' and changes on hover.
             animate={isMobile ? "hover" : "initial"}
             whileHover={isMobile ? undefined : "hover"}
         >

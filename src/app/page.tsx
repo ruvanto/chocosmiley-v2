@@ -1,7 +1,6 @@
 
 // @/app/page.tsx
 import { client } from '@/lib/sanity';
-import type { SanityProduct } from '@/types';
 import { Suspense } from 'react';
 import HomeClient from './home-client';
 import { HomeSkeleton } from '@/components/skeletons/home-skeleton';
@@ -40,7 +39,6 @@ export default async function Home() {
     return (
         <Suspense fallback={<HomeSkeleton />}>
             <HomeClient
-                
                 exploreCategories={homepageContent.exploreCategories}
                 exploreFlavours={homepageContent.exploreFlavours}
                 trendingSuggestions={trendingSuggestions}

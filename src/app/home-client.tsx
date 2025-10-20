@@ -39,8 +39,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const { cart, updateCart, flavourSelection, setFlavourSelection, setIsGlobalLoading } = useAppContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEnquireOpen, setIsEnquireOpen] = useState(false);
-  const isMobileHook = useIsMobile();
-  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+  const isMobile = useIsMobile();
   const router = useRouter();
   const pathname = usePathname();
   const [searchInput, setSearchInput] = useState("");
@@ -55,18 +54,14 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const [isContentScrolled, setIsContentScrolled] = useState(false);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartMessage, setCartMessage] = useState('');
-  const [isCartButtonExpanded, setIsCartButtonExpanded] = useState(false);
+  const [cartMessage] = useState('');
+  const [isCartButtonExpanded] = useState(false);
   const handleToggleCartPopup = () => setIsCartOpen(p => !p);
-
-  useEffect(() => {
-    setIsMobile(isMobileHook);
-  }, [isMobileHook]);
 
   useEffect(() => {
     setIsClient(true);
     setIsGlobalLoading(false);
-  }, []);
+  }, [setIsGlobalLoading]);
 
   useEffect(() => {
     if (isProfileOpen) {
@@ -179,7 +174,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
       <>
         <Header 
           onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={isMobile ? true : isContentScrolled}
+          isContentScrolled={!!isMobile}
           onReset={handleResetToHome}
           onNavigate={handleHeaderNavigate}
           activeView={'home'}
@@ -207,7 +202,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
       )}>
         <Header 
           onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={isMobile ? true : isContentScrolled}
+          isContentScrolled={!!isMobile}
           onReset={handleResetToHome}
           onNavigate={handleHeaderNavigate}
           activeView={'home'}

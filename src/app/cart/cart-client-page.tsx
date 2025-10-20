@@ -54,8 +54,7 @@ export default function CartClientPage() {
   const router = useRouter();
   const pathname = usePathname();
   const { cart, updateCart, clearCart, addOrder, isAuthenticated, setAuthPopup, isCartLoaded, setIsGlobalLoading, setIsProcessingOrder, profileInfo } = useAppContext();
-  const isMobileHook = useIsMobile();
-  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+  const isMobile = useIsMobile();
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
@@ -69,15 +68,11 @@ export default function CartClientPage() {
   const cartItems = Object.values(cart);
   const productNamesInCart = cartItems.map(item => item.name);
 
-  useEffect(() => {
-    setIsMobile(isMobileHook);
-  }, [isMobileHook]);
-
 
   useEffect(() => {
     setIsClient(true);
     setIsGlobalLoading(false);
-  }, []);
+  }, [setIsGlobalLoading]);
   
   useEffect(() => {
     let isMounted = true;
@@ -109,7 +104,7 @@ export default function CartClientPage() {
     return () => {
         isMounted = false;
     };
-  }, [cart, isCartLoaded]);
+  }, [cart, isCartLoaded, productNamesInCart]);
 
   useEffect(() => {
     if (!isClient || !isMobile) return;

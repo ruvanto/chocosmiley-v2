@@ -168,7 +168,7 @@ export function ProductList({
 
   useEffect(() => {
     fetchProducts(0, true);
-  }, [searchParams, sortOption]);
+  }, [searchParams, sortOption, fetchProducts]);
 
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const target = entries[0];

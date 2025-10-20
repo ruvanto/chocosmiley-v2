@@ -27,8 +27,6 @@ export function AnimatedSearchBar({
   isExpanded,
   onExpandedChange,
   className,
-  isSearchingOnAbout,
-  activeView,
   searchInput,
   onSearchInputChange,
   onFocus,
