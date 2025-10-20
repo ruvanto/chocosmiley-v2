@@ -40,7 +40,7 @@ export default async function Home() {
     return (
         <Suspense fallback={<HomeSkeleton />}>
             <HomeClient
-                allProducts={[]}
+                
                 exploreCategories={homepageContent.exploreCategories}
                 exploreFlavours={homepageContent.exploreFlavours}
                 trendingSuggestions={trendingSuggestions}

@@ -30,12 +30,12 @@ interface HomepageContent {
 }
 
 interface HomeClientProps extends HomepageContent {
-  allProducts: SanityProduct[];
+ 
   trendingSuggestions: TrendingSuggestion[];
 }
 
 
-export default function HomeClient({ allProducts, exploreCategories, exploreFlavours, trendingSuggestions }: HomeClientProps) {
+export default function HomeClient({ exploreCategories, exploreFlavours, trendingSuggestions }: HomeClientProps) {
   const { cart, updateCart, flavourSelection, setFlavourSelection, setIsGlobalLoading } = useAppContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEnquireOpen, setIsEnquireOpen] = useState(false);

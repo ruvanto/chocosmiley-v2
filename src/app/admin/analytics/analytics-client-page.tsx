@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
 import { client } from '@/lib/sanity';
+import { Loader } from '@/components/loader';
 
 const MetricCard = ({ title, value, icon, description }: { title: string, value: string | number, icon: React.ReactNode, description?: string }) => (
     <Card className="bg-white/10 text-white border-white/20">
@@ -31,12 +32,6 @@ const MetricCard = ({ title, value, icon, description }: { title: string, value:
     </Card>
 )
 
-async function getAllProducts(): Promise<SanityProduct[]> {
-    const query = `*[_type == "product"]{ ..., isOutOfStock, "images": images[].asset->url, "availableFlavours": availableFlavours[]-> | order(orderRank) { _id, name, "imageUrl": image.asset->url, "price": coalesce(price, 0) }, numberOfChocolates, bestFor }`;
-    const products = await client.fetch(query);
-    return products;
-}
-
 export default function AnalyticsClientPage() {
     const router = useRouter();
     const pathname = usePathname();
@@ -44,18 +39,9 @@ export default function AnalyticsClientPage() {
     const { allOrders, isAllOrdersLoaded, isAdmin, setIsGlobalLoading } = useAppContext();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isEnquireOpen, setIsEnquireOpen] = useState(false);
-    const [allProducts, setAllProducts] = useState<SanityProduct[]>([]);
-    const [areProductsLoaded, setAreProductsLoaded] = useState(false);
-
-
+    
     useEffect(() => {
         setIsGlobalLoading(false);
-        const fetchProducts = async () => {
-            const products = await getAllProducts();
-            setAllProducts(products);
-            setAreProductsLoaded(true);
-        };
-        fetchProducts();
     }, []);
 
     const handleHeaderNavigate = (view: 'about' | 'faq' | 'admin' | 'admin-analytics') => {
@@ -66,7 +52,7 @@ export default function AnalyticsClientPage() {
     }
 
     const analyticsData = useMemo(() => {
-        if (!isAllOrdersLoaded || allOrders.length === 0 || !areProductsLoaded) {
+        if (!isAllOrdersLoaded || allOrders.length === 0) {
             return { totalRevenue: 0, totalOrders: 0, avgOrderValue: 0, totalProductsSold: 0, topProducts: [] };
         }
         const completedOrders = allOrders.filter(order => order.status === 'Order Delivered');
@@ -89,15 +75,19 @@ export default function AnalyticsClientPage() {
             .map(([name, quantity]) => ({
                 name,
                 quantity,
-                image: allProducts.find(p => p.name === name)?.images?.[0] || '/placeholder.png'
+                image: '/placeholder.png' // Using a placeholder as we are no longer fetching all products
             }));
 
         return { totalRevenue, totalOrders, avgOrderValue, totalProductsSold, topProducts };
-    }, [allOrders, isAllOrdersLoaded, allProducts, areProductsLoaded]);
+    }, [allOrders, isAllOrdersLoaded]);
 
 
-    if (!isAllOrdersLoaded || !areProductsLoaded) {
-        return null;
+    if (!isAllOrdersLoaded) {
+        return (
+            <div className="flex h-screen w-full items-center justify-center bg-background">
+                <Loader />
+            </div>
+        );
     }
 
     if (!isAdmin) {
@@ -140,7 +130,6 @@ export default function AnalyticsClientPage() {
                                         {analyticsData.topProducts.map((product, index) => (
                                             <div key={product.name} className="flex items-center gap-4">
                                                 <span className="font-bold text-lg w-6">#{index + 1}</span>
-                                                <Image src={product.image} alt={product.name} width={40} height={40} className="rounded-md" />
                                                 <p className="flex-grow font-medium">{product.name}</p>
                                                 <p className="font-semibold">{product.quantity} sold</p>
                                             </div>
