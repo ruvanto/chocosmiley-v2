@@ -1,10 +1,9 @@
 import { PageHeader } from "@/components/page-header"
-import { DollarSign, Wallet, TrendingUp, TrendingDown, Lightbulb } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { DollarSign, Wallet, TrendingUp, TrendingDown } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getExpenses, getRevenue } from "@/app/lib/data"
 import { Suspense } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
-import { AISuggestions } from "./ai-suggestions"
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat("en-US", {
@@ -83,32 +82,6 @@ function CardSkeleton() {
     )
 }
 
-function AISuggestionsSkeleton() {
-    return (
-        <Card className="col-span-1 lg:col-span-3">
-             <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="text-primary" />
-                    <span>AI-Powered Suggestions</span>
-                </CardTitle>
-                <CardDescription>
-                    Here are some suggestions to better visualize your business data.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                {[...Array(3)].map((_, i) => (
-                    <li key={i} className="p-4 bg-secondary/50 rounded-lg border list-none">
-                        <Skeleton className="h-6 w-1/3 mb-2" />
-                        <Skeleton className="h-4 w-1/2 mb-2" />
-                        <Skeleton className="h-4 w-full" />
-                     </li>
-                ))}
-            </CardContent>
-        </Card>
-    )
-}
-
-
 export default function DashboardPage() {
   return (
     <>
@@ -125,9 +98,6 @@ export default function DashboardPage() {
         </Suspense>
         <Suspense fallback={<CardSkeleton />}>
             <ProfitCard />
-        </Suspense>
-        <Suspense fallback={<AISuggestionsSkeleton />}>
-            <AISuggestions />
         </Suspense>
       </div>
     </>
