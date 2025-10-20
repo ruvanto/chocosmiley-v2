@@ -13,7 +13,7 @@ import {
 import { Button } from "./ui/button";
 import { X, CheckCircle2 } from "lucide-react";
 import type { SanityFlavour } from "@/types";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
@@ -29,6 +29,8 @@ interface FlavourCardProps {
 }
 
 const FlavourCard = ({ flavour, isSelected, isDisabled, onSelect, pieces }: FlavourCardProps) => {
+    const [isImageLoading, setIsImageLoading] = useState(true);
+    
     return (
         <div
             onClick={() => !isDisabled && onSelect()}
@@ -38,12 +40,18 @@ const FlavourCard = ({ flavour, isSelected, isDisabled, onSelect, pieces }: Flav
                 isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
             )}
         >
+            {isImageLoading && <div className="absolute inset-0 bg-black/30 animate-pulse rounded-xl" />}
             <Image
                 src={flavour.imageUrl}
                 alt={flavour.name}
                 fill
                 sizes="150px"
-                className="object-cover rounded-xl z-0"
+                className={cn(
+                    "object-cover rounded-xl z-0 transition-opacity duration-300",
+                    isImageLoading ? 'opacity-0' : 'opacity-100'
+                )}
+                onLoad={() => setIsImageLoading(false)}
+                onError={() => setIsImageLoading(false)}
                 onDragStart={(e) => e.preventDefault()}
             />
             <div className="absolute top-1.5 left-1.5 z-10 bg-black/50 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
