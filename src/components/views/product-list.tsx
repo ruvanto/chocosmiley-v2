@@ -201,15 +201,6 @@ export function ProductList({
       updateCart(product.name, prevQuantity - 1);
     }
   };
-
-  const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
-    // Only trigger client-side navigation for left clicks without modifier keys
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        e.preventDefault();
-        setIsGlobalLoading(true);
-        router.push(`/product/${product.slug.current}`);
-    }
-  };
   
   const handleContinueShopping = () => {
     setIsGlobalLoading(true);

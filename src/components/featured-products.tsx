@@ -17,6 +17,7 @@ interface FeaturedProductsProps {
   onRemoveFromCart: (product: SanityProduct) => void;
   cart: Record<string, { name: string; quantity: number; flavours?: string[] }>;
   isMobile?: boolean;
+  onProductClick: (product: SanityProduct) => void;
 }
 
 export function FeaturedProducts({
@@ -25,6 +26,7 @@ export function FeaturedProducts({
   onRemoveFromCart,
   cart,
   isMobile = false,
+  onProductClick,
 }: FeaturedProductsProps) {
   const router = useRouter();
   const { setIsGlobalLoading } = useAppContext();
@@ -34,7 +36,7 @@ export function FeaturedProducts({
     if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
         e.preventDefault();
         setIsGlobalLoading(true);
-        router.push(`/product/${product.slug.current}`);
+        onProductClick(product);
     }
   };
 
