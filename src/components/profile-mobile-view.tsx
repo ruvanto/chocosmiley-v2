@@ -4,7 +4,6 @@
 
 import { useState } from 'react';
 import type { ProfileInfo } from '@/context/app-context';
-import type { SanityProduct, WishlistItem } from '@/types';
 import { cn } from '@/lib/utils';
 import { MyProfileTab } from '@/components/my-profile-tab';
 import { WishlistView } from '@/components/wishlist-view';

@@ -43,6 +43,7 @@ export default function ProfileClientPage() {
     setIsGlobalLoading,
   } = useAppContext();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isEnquireOpen, setIsEnquireOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('My Profile');
   const [isClient, setIsClient] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -124,7 +125,7 @@ export default function ProfileClientPage() {
   return (
     <>
       {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
-      <div className={cn("flex flex-col min-h-screen", (isProfileOpen || !!authPopup || flavourSelection.isOpen) && 'opacity-50')}>
+      <div className={cn("flex flex-col min-h-screen", (isProfileOpen || !!authPopup || flavourSelection.isOpen || isEnquireOpen) && 'opacity-50')}>
         
         <Header
           onProfileOpenChange={handleDesktopProfileClick}
@@ -136,6 +137,8 @@ export default function ProfileClientPage() {
           }}
           onNavigate={handleHeaderNavigate}
           activeView={'profile'}
+          isEnquireOpen={isEnquireOpen}
+          onEnquireOpenChange={setIsEnquireOpen}
         />
         <ProfileCompletionBanner isMobile={isMobile} />
         <main className={cn(
@@ -228,6 +231,7 @@ export default function ProfileClientPage() {
        <PopupsManager
           isProfileOpen={isProfileOpen}
           setIsProfileOpen={setIsProfileOpen}
+          isEnquireOpen={isEnquireOpen}
       />
       <FlavourSelectionPopup
         open={flavourSelection.isOpen}

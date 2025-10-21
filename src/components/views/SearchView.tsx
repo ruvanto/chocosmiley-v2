@@ -4,7 +4,7 @@
 
 import { FilterContainer } from '@/components/filter-container';
 import { cn } from '@/lib/utils';
-import type { SanityProduct, StructuredFilter } from '@/types';
+import type { StructuredFilter } from '@/types';
 import { ProductList } from './product-list';
 
 interface SearchViewProps {
