@@ -63,7 +63,7 @@ export default function CartClientPage() {
   const [isClient, setIsClient] = useState(false);
   const [productsInCart, setProductsInCart] = useState<SanityProduct[]>([]);
   const [isProductLoading, setIsProductLoading] = useState(true);
-
+  const [isCartUpdating, setIsCartUpdating] = useState(false);
 
   const cartItems = Object.values(cart);
   const productNamesInCart = cartItems.map(item => item.name);
@@ -79,7 +79,11 @@ export default function CartClientPage() {
     const fetchProductDetails = async () => {
       // Don't show a full loader on quantity updates, only on initial load.
       if (isCartLoaded) {
-        setIsProductLoading(true);
+        if (productsInCart.length > 0) {
+            setIsCartUpdating(true);
+        } else {
+            setIsProductLoading(true);
+        }
       }
       
       if (productNamesInCart.length > 0) {
@@ -94,6 +98,7 @@ export default function CartClientPage() {
       }
       if (isMounted) {
         setIsProductLoading(false);
+        setIsCartUpdating(false);
       }
     };
 
@@ -214,8 +219,6 @@ export default function CartClientPage() {
     return acc;
   }, {} as Record<string, SanityProduct>);
   
-  // This is the unified loading condition for the initial skeleton.
-  // It shows the skeleton only on the first load when there are no products yet.
   const isPageLoading = !isClient || !isCartLoaded || (isProductLoading && productsInCart.length === 0);
 
   if (isPageLoading) {
@@ -298,7 +301,6 @@ export default function CartClientPage() {
                       <div className="overflow-y-auto no-scrollbar">
                         {cartItems.map((item, index) => {
                           const product = productsByName[item.name];
-                          // Do not render if product details are missing, skeleton handled it
                           if (!product) return null; 
                           return (
                            <MobileCartItemCard
@@ -315,7 +317,7 @@ export default function CartClientPage() {
                       </div>
                     </div>
                     {cartItems.length > 0 && productsInCart.length > 0 && (
-                      <MobileCartSummary ref={summaryRef} cart={cart} allProducts={productsInCart} onCheckout={handleCheckout} isLoading={isProcessingOrder} />
+                      <MobileCartSummary ref={summaryRef} cart={cart} allProducts={productsInCart} onCheckout={handleCheckout} isLoading={isProcessingOrder || isCartUpdating} />
                     )}
                   </div>
                   <div className="h-16" />
@@ -345,7 +347,7 @@ export default function CartClientPage() {
           allProducts={productsInCart}
           onCheckout={handleCheckout}
           isVisible={!isSummaryVisible}
-          isLoading={isProcessingOrder}
+          isLoading={isProcessingOrder || isCartUpdating}
         />
       )}
     </>
