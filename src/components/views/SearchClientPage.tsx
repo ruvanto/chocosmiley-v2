@@ -86,8 +86,11 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
 
 
   useEffect(() => {
-    setIsClient(true);
+    // This is a reload or direct visit, not a client-side navigation.
+    // We keep isGlobalLoading false to prevent the progress bar.
+    // The LoadingFallback will be shown because isClient is false initially.
     setIsGlobalLoading(false);
+    setIsClient(true);
   }, [setIsGlobalLoading]);
   
   useEffect(() => {
