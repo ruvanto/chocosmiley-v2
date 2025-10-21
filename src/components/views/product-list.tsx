@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import { MobileSearchControls } from '../mobile-search-controls';
 import { FilterContainer } from '../filter-container';
 import { Button } from '../ui/button';
+import { ScrollArea } from '../ui/scroll-area';
 
 const PRODUCTS_PER_PAGE = 8;
 
@@ -372,9 +373,11 @@ export function ProductList({
         <div className="flex-shrink-0 px-8 pt-6 pb-4">
           {headerContent}
         </div>
-        <div className="flex-grow overflow-y-auto custom-scrollbar pt-4 pb-8 min-h-0 px-8">
-            {mainContent}
-        </div>
+        <ScrollArea className="flex-grow min-h-0">
+            <div className="pt-4 pb-8 px-8">
+              {mainContent}
+            </div>
+        </ScrollArea>
     </div>
   );
 }

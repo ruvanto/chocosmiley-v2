@@ -161,7 +161,7 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
         <div className="flex h-full gap-4 flex-grow min-h-0 px-6 pb-4">
           {/* Left Section (Items) */}
           <div className="w-[60%] flex flex-col">
-            <ScrollArea className="flex-grow pr-4 -mr-4 min-h-0 custom-scrollbar">
+            <ScrollArea className="flex-grow pr-4 min-h-0 custom-scrollbar">
               <div className="space-y-4 pb-4">
                 {cartItems.map((item) => {
                   const product = productsByName[item.name];
