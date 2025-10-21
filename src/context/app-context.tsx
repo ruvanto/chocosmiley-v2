@@ -229,7 +229,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setIsWishlistLoaded(false);
         setIsFirestoreCartLoaded(false);
         setUser(newUser);
-        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',');
+        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(email => email.trim());
         const newIsAdmin = !!newUser?.email && adminEmails.includes(newUser.email);
         setIsAuthenticated(!!newUser);
         setIsAdmin(newIsAdmin);
