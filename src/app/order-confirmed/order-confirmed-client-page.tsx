@@ -223,7 +223,7 @@ function OrderConfirmedPageComponent() {
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
         />
-        <main className="flex-grow flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-8">
+        <main className="flex-grow flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-32">
           <motion.div 
             className="w-full max-w-2xl mx-auto flex flex-col items-center gap-4 md:gap-6 text-center"
             initial="hidden"
@@ -271,7 +271,7 @@ function OrderConfirmedPageComponent() {
 
             <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="mt-4 md:mt-6 bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 w-full max-w-lg">
               <p className="font-semibold text-sm md:text-base max-w-md mx-auto text-white/90">
-                To finalize your order and process the 50% advance payment, please connect with us.
+              You’re one step away from chocolate happiness! Just contact us to confirm the final details.
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 w-full justify-center">
                 <Button asChild variant="outline" className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base text-white border-white/50 bg-transparent hover:bg-white/10 hover:text-white rounded-full font-plex-sans shadow-lg">
@@ -325,6 +325,7 @@ function OrderConfirmedPageComponent() {
         open={isBackDialogOpen}
         onClose={() => setIsBackDialogOpen(false)}
         onConfirm={handleConfirmNavigation}
+        order={confirmedOrder}
       />
     </>
   );

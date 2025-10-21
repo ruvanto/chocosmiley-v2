@@ -29,8 +29,8 @@ export function Footer() {
     };
     
     return (
-        <footer className="bg-footer-gray text-white font-poppins py-6 md:py-8 px-8 md:rounded-t-[20px] lg:rounded-t-[40px] mx-0 lg:mx-12 md:mb-0 border-t border-white/20 md:border-t-0">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8">
+        <footer className="bg-footer-gray text-white font-poppins py-4 px-8 md:rounded-t-[20px] lg:rounded-t-[40px] mx-0 lg:mx-12 md:pt-8 border-t border-white/20 md:border-t-0">
+            <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 pb-4">
                 {/* Logo */}
                 <div className="flex items-start">
                     <Image
@@ -85,7 +85,7 @@ export function Footer() {
                 </FooterSection>
             </div>
 
-            <Separator className="my-4 md:my-8 bg-white/50" />
+            <Separator className="my-4 bg-white/50" />
 
             <div className="text-center text-white/80 text-xs md:text-sm">
                 <p>© 2025 Choco Smiley. All rights reserved.</p>
