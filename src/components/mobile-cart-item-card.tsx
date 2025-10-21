@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
+import { FaTrash } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Minus, Plus, ChevronDown } from 'lucide-react';
@@ -172,7 +172,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                         <div className="flex justify-between items-start gap-2">
                             <h3 className="font-bold text-base leading-tight flex-1 truncate">{item.name}</h3>
                             <button onClick={handleRemove} className="text-black/80 hover:text-red-500 transition-colors flex-shrink-0">
-                                <Trash2 size={18} />
+                                <FaTrash size={18} />
                             </button>
                         </div>
                         <p className="text-xs text-black/80 truncate mt-0">{subtitle}</p>
