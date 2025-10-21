@@ -53,7 +53,7 @@ export default function CartClientPage() {
   const [isEnquireOpen, setIsEnquireOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { cart, updateCart, clearCart, addOrder, isAuthenticated, setAuthPopup, isCartLoaded, setIsGlobalLoading, setIsProcessingOrder, profileInfo } = useAppContext();
+  const { cart, updateCart, clearCart, addOrder, isAuthenticated, setAuthPopup, isCartLoaded, setIsGlobalLoading, isProcessingOrder, setIsProcessingOrder, profileInfo } = useAppContext();
   const isMobile = useIsMobile();
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -104,7 +104,7 @@ export default function CartClientPage() {
     return () => {
         isMounted = false;
     };
-  }, [cart, isCartLoaded, productNamesInCart]);
+  }, [cart, isCartLoaded]);
 
   useEffect(() => {
     if (!isClient || !isMobile) return;
@@ -315,7 +315,7 @@ export default function CartClientPage() {
                       </div>
                     </div>
                     {cartItems.length > 0 && productsInCart.length > 0 && (
-                      <MobileCartSummary ref={summaryRef} cart={cart} allProducts={productsInCart} onCheckout={handleCheckout} isLoading={isProductLoading} />
+                      <MobileCartSummary ref={summaryRef} cart={cart} allProducts={productsInCart} onCheckout={handleCheckout} isLoading={isProcessingOrder} />
                     )}
                   </div>
                   <div className="h-16" />
@@ -345,7 +345,7 @@ export default function CartClientPage() {
           allProducts={productsInCart}
           onCheckout={handleCheckout}
           isVisible={!isSummaryVisible}
-          isLoading={isProductLoading}
+          isLoading={isProcessingOrder}
         />
       )}
     </>
