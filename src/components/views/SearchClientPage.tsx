@@ -11,7 +11,7 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { BottomNavbar } from '@/components/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { SearchView } from '@/components/views/SearchView';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-is-mobile';
 import type { SanityProduct, StructuredFilter } from '@/types';
 import { FloatingCartButton } from '@/components/floating-cart-button';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
@@ -23,6 +23,7 @@ import { ProfileCompletionBanner } from '../profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../search-suggestions';
 import { MobileSearchHeader } from '../header/mobile-search-header';
+import { SearchBar } from '../header/search-bar';
 
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];

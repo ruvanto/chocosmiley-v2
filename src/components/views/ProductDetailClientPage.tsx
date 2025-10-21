@@ -11,7 +11,7 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { BottomNavbar } from '@/components/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { FloatingCartButton } from '@/components/floating-cart-button';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-is-mobile';
 import { MobileSearchHeader } from '@/components/header/mobile-search-header';
 import { MobileProductDetailView } from '@/components/views/MobileProductDetailView';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
@@ -30,6 +30,7 @@ import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion 
 import { SearchSuggestions } from '../search-suggestions';
 import { MobileProductStickyBar } from '../mobile-product-sticky-bar';
 import { MobileExpandedImageView } from '../mobile-image-gallery';
+import { SearchBar } from '../header/search-bar';
 
 interface ProductDetailClientPageProps {
   product: SanityProduct;

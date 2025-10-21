@@ -157,6 +157,7 @@ export function UserActions({
                             <IoLogoFacebook className="h-7 w-7 lg:h-8 lg:w-8 transition-colors hover:text-custom-gold" />
                         </a>
                     </div>
+                    <Separator orientation="vertical" className="h-6 bg-foreground/50 mx-1 lg:mx-2" />
                     <Popover open={isCompletionDropdownOpen} onOpenChange={handleDropdownOpenChange}>
                         <PopoverTrigger asChild>
                             <button onClick={handleProfileClick} aria-label="Profile" className="ml-1 lg:ml-2">

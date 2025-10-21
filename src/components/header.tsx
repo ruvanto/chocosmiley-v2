@@ -9,10 +9,13 @@ import { Logo } from "./header/logo";
 import { Navigation } from "./header/navigation";
 import { UserActions } from "./header/user-actions";
 import type { ActiveView } from "@/types";
-import { AnimatedSearchBar } from "./animated-search-bar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { MobileHeader } from "./header/mobile-header";
+import { SearchBar } from "./header/search-bar";
+import { SearchSuggestions } from "./search-suggestions";
+import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from "@/app/actions";
+import type { SanityProduct } from "@/types";
 
 interface HeaderProps {
   onProfileOpenChange: (isOpen: boolean) => void;
@@ -78,28 +81,25 @@ export function Header({
       "fixed top-0 z-50 w-full pt-4 md:pt-6 pb-4 md:pb-4 transition-all duration-100", 
       isContentScrolled ? 'bg-background border-b border-white/20' : 'bg-transparent',
     )}>
-      <div className="container relative flex h-12 md:h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
+      <div className="relative flex h-12 md:h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
         
-        <div className="flex justify-start">
+        <div className="flex-1 flex justify-start">
           <Logo onLogoClick={handleLogoClick} isEnquireOpen={isEnquireOpen} />
         </div>
         
-        <div ref={searchContainerRef} className="hidden md:flex flex-1 justify-center px-4 relative">
+        <div ref={searchContainerRef} className="flex-1 flex justify-center px-4 relative">
            {(activeView === 'search' || activeView === 'product-detail') ? (
               <div 
                 className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
                 onClick={onSearchIconClick}
               >
-                <AnimatedSearchBar 
-                    onSearchSubmit={onSearchSubmit}
-                    isExpanded={true}
-                    onExpandedChange={() => {}}
-                    isSearchingOnAbout={false}
-                    activeView={activeView}
-                    searchInput={searchInput}
-                    onSearchInputChange={onSearchInputChange}
-                    onFocus={onSearchFocus}
-                    isClickOnly={isMobile}
+                <SearchBar
+                  activeView={activeView}
+                  isEnquireOpen={isEnquireOpen}
+                  onSubmit={(e, query) => onSearchSubmit(query)}
+                  searchInput={searchInput}
+                  onSearchInputChange={onSearchInputChange}
+                  onFocus={onSearchFocus}
                 />
                  {children}
               </div>
@@ -112,7 +112,7 @@ export function Header({
           )}
         </div>
         
-        <div className="flex justify-end">
+        <div className="flex-1 flex justify-end">
           {isClient && (
             <UserActions 
               isEnquireOpen={isEnquireOpen}
