@@ -27,7 +27,7 @@ interface MobileCartItemCardProps {
     onQuantityChange: (productName: string, newQuantity: number) => void;
     onRemove: (productName: string) => void;
     isLastItem: boolean;
-    onProductClick: (product: SanityProduct) => void;
+    onProductClick: () => void;
 }
 
 export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, isLastItem, onProductClick }: MobileCartItemCardProps) {
@@ -57,7 +57,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
         if (!isFlavourSheetOpen) {
             if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
                 e.preventDefault();
-                onProductClick(product);
+                onProductClick();
             }
         }
     }

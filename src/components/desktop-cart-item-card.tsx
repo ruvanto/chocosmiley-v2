@@ -24,11 +24,13 @@ interface CartItemCardProps {
 
 export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove, isRemoving, onAnimationEnd, onProductClick }: CartItemCardProps) {
     const handleIncrement = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         onQuantityChange(item.name, item.quantity + 1, item.flavours);
     };
 
     const handleDecrement = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         onQuantityChange(item.name, item.quantity - 1, item.flavours);
     };

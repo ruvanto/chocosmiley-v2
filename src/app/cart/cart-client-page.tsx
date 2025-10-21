@@ -310,7 +310,7 @@ export default function CartClientPage() {
                               onQuantityChange={handleQuantityChange}
                               onRemove={handleRemove}
                               isLastItem={index === cartItems.length - 1}
-                              onProductClick={handleProductClick}
+                              onProductClick={() => handleProductClick(product)}
                             />
                           )
                         })}

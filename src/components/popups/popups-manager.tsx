@@ -44,6 +44,7 @@ export function PopupsManager({
     setIsProcessingOrder, 
     logout,
     clearCart,
+    setIsGlobalLoading,
   } = useAppContext();
   
 
@@ -92,6 +93,7 @@ export function PopupsManager({
 
   const handleProductClick = (product: SanityProduct) => {
     onToggleCartPopup();
+    setIsGlobalLoading(true);
     router.push(`/product/${product.slug.current}`);
   }
 
