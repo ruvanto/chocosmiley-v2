@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
 import { LoginPopup } from '../login-popup';
 import { SignUpPopup } from '../signup-popup';
-import { CompleteDetailsPopup } from '../complete-details-popup';
+import { CompleteDetailsPopup } from '../provide-details-popup';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { ForgotPasswordPopup } from '../forgot-password-popup';

@@ -33,19 +33,14 @@ interface MobileProductDetailViewProps {
 export function MobileProductDetailView({ 
   product, 
   featuredProducts,
-  onClose, 
   cart, 
-  onAddToCart, 
-  onBuyNow, 
   isLiked,
   onLikeToggle,
   onRemoveFromCart,
   onFeaturedProductAddToCart,
   onImageExpand,
-  likedProducts,
   onProductClick,
 }: MobileProductDetailViewProps) {
-  const productQuantity = cart[product.name]?.quantity || 0;
   
   return (
     <div className={cn("flex flex-col")}>

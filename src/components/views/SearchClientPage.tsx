@@ -65,7 +65,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
   const [isSearchViewOpen, setIsSearchViewOpen] = useState(false);
   
   const [searchInput, setSearchInput] = useState(query);
-  const [isContentScrolled, setIsContentScrolled] = useState(false);
+  const [isContentScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   const [productSuggestions, setProductSuggestions] = useState<SanityProduct[]>([]);

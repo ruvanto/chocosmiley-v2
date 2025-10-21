@@ -54,14 +54,13 @@ export function UserActions({
     isEnquireOpen, 
     onEnquireOpenChange, 
     onProfileOpenChange, 
-    onNavigate, 
     activeView,
 }: UserActionsProps) {
     const isMobile = useIsMobile();
     const [isEnquireSheetOpen, setIsEnquireSheetOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
-    const { logout, isAuthenticated, isAdmin, setAuthPopup, setIsGlobalLoading, profileInfo, isProfileLoaded } = useAppContext();
+    const { logout, isAuthenticated, isAdmin, setIsGlobalLoading, profileInfo, isProfileLoaded } = useAppContext();
     
     const [isCompletionDropdownOpen, setIsCompletionDropdownOpen] = useState(false);
     const [wasDropdownDismissed, setWasDropdownDismissed] = useState(false);
@@ -170,7 +169,7 @@ export function UserActions({
                                 align="end"
                                 sideOffset={10}
                                 className="w-auto p-0 border-none bg-transparent rounded-xl shadow-lg"
-                                onInteractOutside={(e) => {
+                                onInteractOutside={() => {
                                     handleDropdownOpenChange(false);
                                 }}
                             >
