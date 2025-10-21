@@ -1,7 +1,8 @@
 {
   "projects": {
     "staging": "chocosmiley",
-    "default": "choco-smiley"
+    "default": "choco-smiley",
+    "chcoc-smiley": "choco-smiley"
   },
   "targets": {},
   "etags": {}

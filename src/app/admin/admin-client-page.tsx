@@ -198,11 +198,11 @@ export default function AdminClientPage() {
                     placeholder="Search by Product or Customer..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-12 h-12 rounded-full bg-white/10 border-white/20 placeholder:text-gray-400"
+                    className="w-full pl-10 pr-10 h-12 rounded-full bg-white/10 border-white/20 placeholder:text-gray-400"
                   />
                     <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
                       <SheetTrigger asChild>
-                          <Button variant="ghost" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 text-white hover:bg-white/20 hover:text-white rounded-full">
+                          <Button variant="ghost" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-12 w-12 text-white hover:bg-white/20 hover:text-white rounded-full">
                             <Filter className="h-5 w-5" />
                           </Button>
                       </SheetTrigger>
