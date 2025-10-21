@@ -179,7 +179,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     {(exploreFlavours || []).map((flavour, index) => (
                     <motion.div 
                         key={flavour._key} 
-                        className="w-24 md:flex-1 md:w-full max-w-xs md:max-w-48 flex-shrink-0 md:flex-shrink aspect-square md:aspect-[5/6] relative group cursor-pointer" 
+                        className="w-24 md:flex-1 md:max-w-xs flex-shrink-0 aspect-square md:aspect-[5/6] relative group cursor-pointer" 
                         variants={itemVariants}
                         whileHover={isMobile ? {} : { scale: 1.02 }}
                         onClick={() => handleFlavourClick(flavour.name)}
