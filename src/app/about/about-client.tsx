@@ -161,7 +161,7 @@ export default function AboutPageClient() {
                             </div>
                         </div>
                         <motion.div 
-                            className="bg-transparent mb-8 mx-4 md:mx-16 lg:mx-32 animate-fade-in"
+                            className="bg-transparent mb-8 mx-4 md:mx-16 xl:mx-32 animate-fade-in"
                             variants={itemVariants} 
                             initial="hidden" 
                             animate="visible"

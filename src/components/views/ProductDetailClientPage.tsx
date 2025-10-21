@@ -1,4 +1,3 @@
-
 // @/components/views/ProductDetailClientPage.tsx
 'use client';
 
@@ -11,7 +10,7 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { BottomNavbar } from '@/components/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { FloatingCartButton } from '@/components/floating-cart-button';
-import { useIsMobile } from '@/hooks/use-is-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileSearchHeader } from '@/components/header/mobile-search-header';
 import { MobileProductDetailView } from '@/components/views/MobileProductDetailView';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
