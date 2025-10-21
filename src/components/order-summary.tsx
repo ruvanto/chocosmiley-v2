@@ -103,7 +103,6 @@ export function OrderSummary({ cart, allProducts, onFinalizeOrder, isLoading }: 
                         <OrderSummaryItem
                             product={product}
                             quantity={item!.quantity}
-                            onClick={() => router.push(`/product/${product.slug.current}`)}
                         />
                         {index < itemsWithPrices.length - 1 && <Separator className="bg-black/10 my-1" />}
                     </React.Fragment>
