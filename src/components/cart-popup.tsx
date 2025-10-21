@@ -25,6 +25,7 @@ import { EmptyState } from './empty-state';
 import { useAppContext } from '@/context/app-context';
 import { client } from '@/lib/sanity';
 import { Loader } from './loader';
+import { ScrollArea } from './ui/scroll-area';
 
 interface CartPopupProps {
   onClose: () => void;
@@ -160,9 +161,7 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
         <div className="flex h-full gap-4 flex-grow min-h-0 px-6 pb-4">
           {/* Left Section (Items) */}
           <div className="w-[60%] flex flex-col">
-            <div 
-              className="flex-grow overflow-y-auto pr-4 min-h-0 custom-scrollbar"
-            >
+            <ScrollArea className="flex-grow pr-4 -mr-4 min-h-0 custom-scrollbar">
               <div className="space-y-4 pb-4">
                 {cartItems.map((item) => {
                   const product = productsByName[item.name];
@@ -181,7 +180,7 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
                   )
                 })}
               </div>
-            </div>
+            </ScrollArea>
           </div>
 
           {/* Right Section (Summary & Footer) */}

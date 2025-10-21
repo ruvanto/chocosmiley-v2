@@ -229,7 +229,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         setIsWishlistLoaded(false);
         setIsFirestoreCartLoaded(false);
         setUser(newUser);
-        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').split(',').map(email => email.trim());
+        const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '').toLowerCase().split(',').map(email => email.trim());
         const newIsAdmin = !!newUser?.email && adminEmails.includes(newUser.email.toLowerCase());
         setIsAuthenticated(!!newUser);
         setIsAdmin(newIsAdmin);
@@ -461,7 +461,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
                 coverImage: product.images?.[0] || '/placeholder.png',
                 numberOfChocolates: product.numberOfChocolates,
             };
-        }).filter((item): item is OrderItem => item !== null);
+        });
 
         const subtotal = totalProductPrice + totalFlavoursCost;
         const totalDiscount = totalMrp - totalProductPrice;
