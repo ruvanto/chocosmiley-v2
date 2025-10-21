@@ -83,10 +83,12 @@ export function Header({
     )}>
       <div className="flex h-12 md:h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
         
-        <div className="flex justify-start items-center">
+        {/* Left Column */}
+        <div className="flex items-center justify-start">
           <Logo onLogoClick={handleLogoClick} isEnquireOpen={isEnquireOpen} />
         </div>
         
+        {/* Center Column */}
         <div className="flex-1 flex justify-center items-center px-4 relative">
           <div ref={searchContainerRef} className="w-full h-full flex justify-center items-center">
              {(activeView === 'search' || activeView === 'product-detail') ? (
@@ -114,7 +116,8 @@ export function Header({
           </div>
         </div>
         
-        <div className="flex justify-end items-center">
+        {/* Right Column */}
+        <div className="flex items-center justify-end">
           {isClient && (
             <UserActions 
               isEnquireOpen={isEnquireOpen}
