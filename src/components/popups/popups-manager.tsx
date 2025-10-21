@@ -4,7 +4,7 @@
 
 import { CartPopup } from '@/components/cart-popup';
 import { ProfilePopup } from '@/components/profile-popup';
-import type { SanityProduct, WishlistItem } from '@/types';
+import type { SanityProduct } from '@/types';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';

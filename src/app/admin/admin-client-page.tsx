@@ -158,7 +158,7 @@ export default function AdminClientPage() {
     return (
        <div className="flex h-screen w-full items-center justify-center bg-background">
          <EmptyState
-            imageUrl="/icons/profile_drpdwn_btn.png"
+            imageUrl="/icons/profile_icon.png"
             title="Access Denied"
             description="You do not have permission to view this page."
             buttonText="Go to Homepage"

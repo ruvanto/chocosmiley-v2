@@ -91,10 +91,6 @@ export default function ProfileClientPage() {
     updateProfileInfo(updatedProfile);
   };
   
-  const handleProductClick = (product: SanityProduct) => {
-    setIsGlobalLoading(true);
-    router.push(`/product/${product.slug.current}`);
-  };
   
   const handleLoginClick = () => {
     setAuthPopup('login');
@@ -184,7 +180,7 @@ export default function ProfileClientPage() {
                     ) : (
                       <div className="flex-grow flex flex-col items-center justify-center h-full px-4 pt-24">
                       <EmptyState 
-                          imageUrl='/icons/profile_drpdwn_btn.png'
+                          imageUrl='/icons/profile_icon.png'
                           title="You're Not Logged In"
                           description="Log in or create an account to view your profile, orders, and wishlist."
                           buttonText="Log In / Sign Up"
@@ -216,7 +212,7 @@ export default function ProfileClientPage() {
           ) : (
             <div className="flex-grow flex flex-col items-center justify-center h-full px-4 pb-24">
               <EmptyState 
-                imageUrl='/icons/profile_drpdwn_btn.png'
+                imageUrl='/icons/profile_icon.png'
                 title="You're Not Logged In"
                 description="Log in or create an account to view your profile, orders, and wishlist."
                 buttonText="Log In / Sign Up"

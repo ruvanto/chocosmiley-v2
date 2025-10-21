@@ -111,7 +111,7 @@ export function ProfilePopup({
                         ) : (
                           <div className="h-full flex flex-col items-center justify-center">
                             <EmptyState
-                              imageUrl="/icons/profile_drpdwn_btn.png"
+                              imageUrl="/icons/profile_icon.png"
                               title="You're Not Logged In"
                               description="Log in or create an account to view your profile."
                               buttonText="Log In / Sign Up"

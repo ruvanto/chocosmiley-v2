@@ -24,7 +24,7 @@ interface ProfileSidebarProps {
 }
 
 const mainSidebarItems = [
-  { id: 'My Profile', label: 'My Profile', icon: <Image src="/icons/profile_drpdwn_btn.png" alt="Profile" width={24} height={24} onDragStart={(e) => e.preventDefault()} /> },
+  { id: 'My Profile', label: 'My Profile', icon: <Image src="/icons/profile_icon.png" alt="Profile" width={24} height={24} onDragStart={(e) => e.preventDefault()} /> },
   { id: 'My Wishlist', label: 'My Wishlist', icon: <Heart /> },
   { id: 'My Orders', label: 'My Orders', icon: <ListOrdered /> },
 ];
