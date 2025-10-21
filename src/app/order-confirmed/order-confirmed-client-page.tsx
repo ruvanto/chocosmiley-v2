@@ -2,7 +2,7 @@
 // @/app/order-confirmed/order-confirmed-client-page.tsx
 'use client';
 
-import { Suspense, useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Lottie from 'lottie-react';
 import { motion } from 'framer-motion';
