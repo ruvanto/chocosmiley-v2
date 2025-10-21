@@ -87,29 +87,31 @@ export function Header({
           <Logo onLogoClick={handleLogoClick} isEnquireOpen={isEnquireOpen} />
         </div>
         
-        <div ref={searchContainerRef} className="flex-1 flex justify-center items-center px-4 relative">
-           {(activeView === 'search' || activeView === 'product-detail') ? (
-              <div 
-                className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
-                onClick={onSearchIconClick}
-              >
-                <SearchBar
-                  activeView={activeView}
-                  isEnquireOpen={isEnquireOpen}
-                  onSubmit={(e, query) => onSearchSubmit(query)}
-                  searchInput={searchInput}
-                  onSearchInputChange={onSearchInputChange}
-                  onFocus={onSearchFocus}
-                />
-                 {children}
-              </div>
-          ) : (
-            isClient &&
-            <Navigation 
-              onNavigate={onNavigate}
-              activeView={activeView}
-            />
-          )}
+        <div className="flex-1 flex justify-center items-center px-4 relative">
+          <div ref={searchContainerRef} className="w-full h-full flex justify-center items-center">
+             {(activeView === 'search' || activeView === 'product-detail') ? (
+                <div 
+                  className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
+                  onClick={onSearchIconClick}
+                >
+                  <SearchBar
+                    activeView={activeView}
+                    isEnquireOpen={isEnquireOpen}
+                    onSubmit={(e, query) => onSearchSubmit(query)}
+                    searchInput={searchInput}
+                    onSearchInputChange={onSearchInputChange}
+                    onFocus={onSearchFocus}
+                  />
+                   {children}
+                </div>
+            ) : (
+              isClient &&
+              <Navigation 
+                onNavigate={onNavigate}
+                activeView={activeView}
+              />
+            )}
+          </div>
         </div>
         
         <div className="flex justify-end items-center">
