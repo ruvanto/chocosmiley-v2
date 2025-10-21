@@ -362,23 +362,15 @@ export const onAllOrdersSnapshot = (
   const db = getClientFirestore();
   if (!db) return () => {};
 
-  // --- Start of Fix ---
-
-  // 1. Start with an empty list of constraints.
   const queryConstraints: QueryConstraint[] = [];
 
-  // 2. Add the FILTER first (if it exists).
   if (filter !== 'All') {
     queryConstraints.push(where('status', '==', filter));
   }
 
-  // 3. Add the SORTING second.
   queryConstraints.push(orderBy('date', 'desc'));
 
-  // 4. Add the LIMIT last (changed back to 5 for consistency).
   queryConstraints.push(limit(5));
-
-  // --- End of Fix ---
 
   const q = query(collectionGroup(db, 'orders'), ...queryConstraints);
 
@@ -552,3 +544,6 @@ export const deleteUserAccount = async (password?: string): Promise<void> => {
 
     await deleteUser(user);
 };
+
+
+    
