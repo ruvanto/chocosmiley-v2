@@ -157,7 +157,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     Explore Categories
                 </SectionTitle>
                 <motion.div 
-                    className="grid grid-cols-2 md:flex md:flex-row flex-1 justify-around items-center gap-4 md:gap-6 pt-1 pb-6 md:pb-12 px-2"
+                    className="grid grid-cols-2 md:flex md:flex-row flex-grow justify-around items-center gap-4 md:gap-8 pt-1 pb-6 md:pb-12 px-2 md:px-4"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -171,7 +171,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     Explore Flavours
                 </SectionTitle>
                 <motion.div 
-                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-1 md:justify-around items-center gap-4 md:gap-8 px-2 md:px-0 pb-6 md:pb-10 pt-1"
+                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-grow md:justify-around items-center gap-4 md:gap-8 px-2 md:px-0 pb-6 md:pb-10 pt-1"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -179,7 +179,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     {(exploreFlavours || []).map((flavour, index) => (
                     <motion.div 
                         key={flavour._key} 
-                        className="w-24 md:flex-1 md:max-w-xs flex-shrink-0 aspect-square md:aspect-[5/6] relative group cursor-pointer" 
+                        className="w-24 md:flex-1 md:max-w-[15rem] flex-shrink-0 aspect-square md:aspect-[5/6] relative group cursor-pointer" 
                         variants={itemVariants}
                         whileHover={isMobile ? {} : { scale: 1.02 }}
                         onClick={() => handleFlavourClick(flavour.name)}
