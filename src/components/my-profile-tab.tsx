@@ -254,7 +254,7 @@ const fullAddressFromState = useMemo(() => {
                     <AvatarFallback>{profile.name?.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0">
-                        <h2 className="text-lg font-bold text-white truncate">{name || "New User"}</h2>
+                        <h2 className="text-lg font-bold text-white truncate">{name || "Guest User"}</h2>
                         <p className="text-sm text-white/70 truncate">{profile.email}</p>
                         {isGoogleSignIn && (
                             <div className="flex items-center gap-1.5 bg-black/20 text-white text-xs px-2 py-0.5 rounded-full mt-1 w-fit">
