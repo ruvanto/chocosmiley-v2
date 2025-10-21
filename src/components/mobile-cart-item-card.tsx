@@ -19,6 +19,7 @@ import type { SanityProduct, SanityFlavour } from '@/types';
 import { useState, useMemo } from 'react';
 import { Separator } from './ui/separator';
 import { AnimatedNumber } from './ui/animated-number';
+import Link from 'next/link';
 
 interface MobileCartItemCardProps {
     item: CartItem;
@@ -33,25 +34,31 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
     const [isFlavourSheetOpen, setIsFlavourSheetOpen] = useState(false);
     
     const handleRemove = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         onRemove(item.name);
     }
     
     const handleIncrement = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         onQuantityChange(item.name, item.quantity + 1);
     };
 
     const handleDecrement = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         if (item.quantity > 1) {
             onQuantityChange(item.name, item.quantity - 1);
         }
     };
 
-    const handleImageClick = () => {
+    const handleImageClick = (e: React.MouseEvent) => {
         if (!isFlavourSheetOpen) {
-            onProductClick(product);
+            if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                e.preventDefault();
+                onProductClick(product);
+            }
         }
     }
     
@@ -122,16 +129,18 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
     : null;
 
     return (
-        <div 
+        <Link
+            href={`/product/${product.slug.current}`}
+            onClick={handleImageClick}
             className={cn(
-                "w-full bg-transparent p-3 text-black relative transition-all duration-300 overflow-hidden",
+                "w-full bg-transparent p-3 text-black relative transition-all duration-300 overflow-hidden block",
                 !isLastItem && "border-b border-black/10"
             )}
         >
             <div className="flex gap-3">
                 {/* Left Column: Image and Quantity Stepper */}
                 <div className="w-1/4 flex-shrink-0 flex flex-col items-center gap-2">
-                    <div className="cursor-pointer w-full" onClick={handleImageClick}>
+                    <div className="cursor-pointer w-full">
                       <Image
                           src={product.images?.[0] || "/placeholder.png"}
                           alt={item.name}
@@ -182,7 +191,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                     {sortedFlavoursForDisplay.length > 0 ? (
                         <Sheet open={isFlavourSheetOpen} onOpenChange={setIsFlavourSheetOpen}>
                             <SheetTrigger asChild>
-                            <Button variant="ghost" className="h-auto p-2 mt-1 text-custom-purple-dark text-xs rounded-lg hover:text-custom-purple-dark hover:bg-black/5 self-start" onClick={(e) => e.stopPropagation()}>
+                            <Button variant="ghost" className="h-auto p-2 mt-1 text-custom-purple-dark text-xs rounded-lg hover:text-custom-purple-dark hover:bg-black/5 self-start" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsFlavourSheetOpen(true); }}>
                                 <span>Selected Flavours</span>
                                 <ChevronDown className="h-4 w-4 text-custom-purple-dark" />
                                 </Button>
@@ -237,6 +246,6 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

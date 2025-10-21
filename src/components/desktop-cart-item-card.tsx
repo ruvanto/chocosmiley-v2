@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import type { SanityProduct, SanityFlavour } from '@/types';
 import { useMemo } from 'react';
 import { AnimatedNumber } from './ui/animated-number';
+import Link from 'next/link';
 
 interface CartItemCardProps {
     item: { name: string; quantity: number; flavours?: string[] };
@@ -33,12 +34,16 @@ export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove,
     };
     
     const handleRemove = (e: React.MouseEvent) => {
+        e.preventDefault();
         e.stopPropagation();
         onRemove(item.name);
     }
     
-    const handleClick = () => {
-        onProductClick(product);
+    const handleClick = (e: React.MouseEvent) => {
+        if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+            e.preventDefault();
+            onProductClick(product);
+        }
     }
 
     const subtitle = [product.weight, product.composition, product.packageType].filter(Boolean).join(' | ');
@@ -104,11 +109,12 @@ export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove,
 
 
     return (
-        <div 
-            onAnimationEnd={onAnimationEnd}
+        <Link 
+            href={`/product/${product.slug.current}`}
             onClick={handleClick}
+            onAnimationEnd={onAnimationEnd}
             className={cn(
-                "w-full bg-white/80 rounded-2xl p-3 text-black relative transition-all duration-300 overflow-hidden cursor-pointer",
+                "w-full bg-white/80 rounded-2xl p-3 text-black relative transition-all duration-300 overflow-hidden block",
                 "hover:bg-gray-50",
                 isRemoving && 'animate-fade-out-slide-up'
             )}
@@ -116,7 +122,7 @@ export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove,
             <div className="flex gap-4">
                 {/* Left Column: Image and Quantity Stepper */}
                 <div className="w-1/4 flex-shrink-0 flex flex-col items-center gap-2">
-                    <div className="cursor-pointer w-full" onClick={handleClick}>
+                    <div className="cursor-pointer w-full">
                       <Image
                           src={product.images?.[0] || "/placeholder.png"}
                           alt={item.name}
@@ -205,6 +211,6 @@ export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove,
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
