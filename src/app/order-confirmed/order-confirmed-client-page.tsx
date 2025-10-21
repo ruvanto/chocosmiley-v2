@@ -76,6 +76,7 @@ function OrderConfirmedPageComponent() {
   const [orderedProducts, setOrderedProducts] = useState<SanityProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isEnquireOpen, setIsEnquireOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [isBackDialogOpen, setIsBackDialogOpen] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState<(() => void) | null>(null);
@@ -219,6 +220,8 @@ function OrderConfirmedPageComponent() {
           onSearchSubmit={handleSearchSubmit}
           searchInput={searchInput}
           onSearchInputChange={setSearchInput}
+          isEnquireOpen={isEnquireOpen}
+          onEnquireOpenChange={setIsEnquireOpen}
         />
         <main className="flex-grow flex flex-col items-center justify-center px-4 pt-24 pb-16 md:pt-32 md:pb-8">
           <motion.div 
@@ -316,6 +319,7 @@ function OrderConfirmedPageComponent() {
       <PopupsManager 
         isProfileOpen={isProfileOpen}
         setIsProfileOpen={setIsProfileOpen}
+        isEnquireOpen={isEnquireOpen}
       />
       <OrderBackDialog
         open={isBackDialogOpen}

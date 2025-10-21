@@ -10,7 +10,7 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
-import type { Order, SanityProduct } from '@/types';
+import type { Order } from '@/types';
 import { EmptyState } from '@/components/empty-state';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
