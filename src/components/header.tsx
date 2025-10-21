@@ -83,7 +83,7 @@ export function Header({
     )}>
       <div className="relative flex h-12 md:h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
         
-        <div className="flex-1 flex justify-start">
+        <div className="flex justify-start items-center">
           <Logo onLogoClick={handleLogoClick} isEnquireOpen={isEnquireOpen} />
         </div>
         
@@ -112,7 +112,7 @@ export function Header({
           )}
         </div>
         
-        <div className="flex-1 flex justify-end">
+        <div className="flex justify-end items-center">
           {isClient && (
             <UserActions 
               isEnquireOpen={isEnquireOpen}
