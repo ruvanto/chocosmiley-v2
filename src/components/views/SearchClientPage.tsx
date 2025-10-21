@@ -40,13 +40,6 @@ function formatCategoryTitleToKey(title: string) {
     return title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
 }
 
-const sortOptions = [
-    { value: "featured", label: "Featured" },
-    { value: "price-low-to-high", label: "Price: Low to High" },
-    { value: "price-high-to-low", label: "Price: High to Low" },
-    { value: "new-arrivals", label: "New Arrivals" },
-];
-
 
 export default function SearchClientPage({ initialFilters, trendingSuggestions }: SearchClientPageProps) {
   const router = useRouter();
@@ -86,11 +79,8 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
 
 
   useEffect(() => {
-    // This is a reload or direct visit, not a client-side navigation.
-    // We keep isGlobalLoading false to prevent the progress bar.
-    // The LoadingFallback will be shown because isClient is false initially.
-    setIsGlobalLoading(false);
     setIsClient(true);
+    setIsGlobalLoading(false);
   }, [setIsGlobalLoading]);
   
   useEffect(() => {

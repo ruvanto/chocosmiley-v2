@@ -44,7 +44,7 @@ import {
     deleteDoc
 } from 'firebase/firestore';
 import type { ProfileInfo, Cart } from '@/context/app-context';
-import type { Order, WishlistItem, SanityProduct } from '@/types';
+import type { Order, WishlistItem } from '@/types';
 
 
 // Initialize Firebase on the client side

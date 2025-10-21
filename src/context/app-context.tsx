@@ -21,7 +21,6 @@ import {
   rateOrder as rateOrderInDb,
   addCancellationReason,
   getMoreOrders,
-  deleteUserAccount,
   onWishlistSnapshot,
   addToWishlist,
   removeFromWishlist,

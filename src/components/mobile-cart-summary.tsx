@@ -17,11 +17,11 @@ interface MobileCartSummaryProps {
   isLoading: boolean;
 }
 
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean }) => (
+const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string }) => (
     <div className={cn("flex justify-between items-center text-sm", isBold ? "font-bold text-base text-black" : "text-black/80")}>
         <span>{label}</span>
         {isAnimated ? (
-          <AnimatedNumber value={value} prefix={value < 0 ? "-₹" : "₹"} className={valueClassName} />
+          <AnimatedNumber value={value} prefix={prefix} className={valueClassName} />
         ) : (
           <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `₹${value.toFixed(2)}`}</span>
         )}

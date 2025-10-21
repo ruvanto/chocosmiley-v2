@@ -4,7 +4,7 @@
 
 import { useState, type UIEvent, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import type { SanityProduct, ActiveView, WishlistItem } from '@/types';
+import type { SanityProduct, ActiveView } from '@/types';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/header';
 import { SparkleBackground } from '@/components/sparkle-background';
