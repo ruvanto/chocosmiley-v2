@@ -16,6 +16,7 @@ import { SearchBar } from "./header/search-bar";
 import { SearchSuggestions } from "./search-suggestions";
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from "@/app/actions";
 import type { SanityProduct } from "@/types";
+import { AnimatedSearchBar } from "./animated-search-bar";
 
 interface HeaderProps {
   onProfileOpenChange: (isOpen: boolean) => void;
@@ -89,21 +90,25 @@ export function Header({
         </div>
         
         {/* Center Column */}
-        <div className="flex-1 flex justify-center items-center px-4 relative">
+        <div className="hidden md:flex flex-1 justify-center px-6 relative">
           <div ref={searchContainerRef} className="w-full h-full flex justify-center items-center">
              {(activeView === 'search' || activeView === 'product-detail') ? (
                 <div 
                   className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
                   onClick={onSearchIconClick}
                 >
-                  <SearchBar
+                  <AnimatedSearchBar 
+                    onSearchSubmit={onSearchSubmit}
+                    isExpanded={true}
+                    onExpandedChange={() => {}}
+                    isSearchingOnAbout={false}
                     activeView={activeView}
-                    isEnquireOpen={isEnquireOpen}
-                    onSubmit={(e, query) => onSearchSubmit(query)}
                     searchInput={searchInput}
                     onSearchInputChange={onSearchInputChange}
                     onFocus={onSearchFocus}
-                  />
+                    isClickOnly={isMobile}
+                />
+
                    {children}
                 </div>
             ) : (

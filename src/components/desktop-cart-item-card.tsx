@@ -21,7 +21,7 @@ interface CartItemCardProps {
     onProductClick: (product: SanityProduct) => void;
 }
 
-export function CartItemCard({ item, product, onQuantityChange, onRemove, isRemoving, onAnimationEnd, onProductClick }: CartItemCardProps) {
+export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove, isRemoving, onAnimationEnd, onProductClick }: CartItemCardProps) {
     const handleIncrement = (e: React.MouseEvent) => {
         e.stopPropagation();
         onQuantityChange(item.name, item.quantity + 1, item.flavours);
