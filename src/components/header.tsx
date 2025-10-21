@@ -81,13 +81,13 @@ export function Header({
       "fixed top-0 z-50 w-full pt-4 md:pt-6 pb-4 md:pb-4 transition-all duration-100", 
       isContentScrolled ? 'bg-background border-b border-white/20' : 'bg-transparent',
     )}>
-      <div className="relative flex h-12 md:h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
+      <div className="flex h-12 md:h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-24">
         
         <div className="flex justify-start items-center">
           <Logo onLogoClick={handleLogoClick} isEnquireOpen={isEnquireOpen} />
         </div>
         
-        <div ref={searchContainerRef} className="flex-1 flex justify-center px-4 relative">
+        <div ref={searchContainerRef} className="flex-1 flex justify-center items-center px-4 relative">
            {(activeView === 'search' || activeView === 'product-detail') ? (
               <div 
                 className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
