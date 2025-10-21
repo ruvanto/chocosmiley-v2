@@ -2,7 +2,7 @@
 // @/app/order-confirmed/order-confirmed-client-page.tsx
 'use client';
 
-import { Suspense, useState, useEffect, useCallback, useRef } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Lottie from 'lottie-react';
 import { motion } from 'framer-motion';
@@ -64,28 +64,6 @@ const TimelineConnector = ({ isCompleted }: { isCompleted: boolean }) => (
   <div className="flex-1 h-0.5 transition-all duration-500" style={{ background: isCompleted ? 'hsl(var(--primary))' : 'hsla(0, 0%, 100%, 0.3)' }} />
 );
 
-const lottieContainerVariants = {
-  initial: { y: 0 },
-  animate: { 
-    y: '-110%',
-    transition: { type: 'spring', stiffness: 100, damping: 20, delay: 1.2 }
-  },
-};
-
-const contentVariants = {
-  initial: { opacity: 0, y: 30 },
-  animate: { 
-    opacity: 1, 
-    y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 20, delay: 1.5, staggerChildren: 0.1 }
-  },
-};
-
-const contentItemVariants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-};
-
 function OrderConfirmedPageComponent() {
   const router = useRouter();
   const pathname = usePathname();
@@ -102,26 +80,6 @@ function OrderConfirmedPageComponent() {
   const [searchInput, setSearchInput] = useState('');
   const [isBackDialogOpen, setIsBackDialogOpen] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState<(() => void) | null>(null);
-  const [showMainContent, setShowMainContent] = useState(false);
-  const hasNavigatedAway = useRef(false);
-
-  useEffect(() => {
-    // This effect runs when the component mounts. We listen for popstate events.
-    const handlePopState = (event: PopStateEvent) => {
-        // If we have navigated away and the user tries to go back,
-        // we redirect them to the home page instead of this one.
-        if (hasNavigatedAway.current) {
-            event.preventDefault();
-            router.replace('/');
-        }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-        window.removeEventListener('popstate', handlePopState);
-    };
-  }, [router]);
 
 
   useEffect(() => {
@@ -159,7 +117,6 @@ function OrderConfirmedPageComponent() {
   }, [searchParams, orders, router, setIsGlobalLoading, setIsProcessingOrder]);
   
   const attemptNavigation = (navAction: () => void) => {
-    hasNavigatedAway.current = true;
     setPendingNavigation(() => navAction);
     setIsBackDialogOpen(true);
   };
@@ -181,7 +138,8 @@ function OrderConfirmedPageComponent() {
   
   const handleLogoClick = () => {
     if (pathname === '/') return;
-    attemptNavigation(() => router.replace('/'));
+    setIsGlobalLoading(true);
+    router.replace('/');
   };
 
   const handleContinueShopping = () => {
@@ -251,7 +209,7 @@ function OrderConfirmedPageComponent() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-background text-white overflow-hidden">
+      <div className="flex flex-col min-h-screen bg-background text-white">
         {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
         <Header 
           onProfileOpenChange={setIsProfileOpen}
@@ -265,100 +223,94 @@ function OrderConfirmedPageComponent() {
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
         />
-        <main className="flex-grow flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-32 relative">
-          <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
-            
-            <motion.div
-                className="w-32 h-32 md:w-40 md:h-40 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                variants={lottieContainerVariants}
-                initial="initial"
-                animate="animate"
-                onAnimationComplete={() => setShowMainContent(true)}
-            >
+        <main className="flex-grow flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-32">
+          <motion.div 
+            className="w-full max-w-2xl mx-auto flex flex-col items-center gap-4 md:gap-6 text-center"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.2, delayChildren: 0.1 }
+              }
+            }}
+          >
+            <motion.div variants={{ hidden: { scale: 0.5, opacity: 0 }, visible: { scale: 1, opacity: 1 } }} className="w-32 h-32 md:w-40 md:h-40">
               <Lottie animationData={CheckmarkAnimation} loop={false} />
             </motion.div>
 
-            {showMainContent && (
-                <motion.div 
-                    className="flex flex-col items-center gap-4 md:gap-6 w-full"
-                    variants={contentVariants}
-                    initial="initial"
-                    animate="animate"
-                >
-                    <motion.div variants={contentItemVariants} className="w-32 h-32 md:w-40 md:h-40" />
+            <motion.h1 variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="text-4xl md:text-5xl font-bold text-custom-gold font-plex-sans">Thank You!</motion.h1>
+            
+            <motion.p variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="text-base md:text-lg text-white/80">Your order request has been received.</motion.p>
+            
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="bg-white/10 rounded-full px-4 py-1.5 text-sm flex items-center gap-2">
+              <span>Order ID: <span className="font-bold">{confirmedOrder.customOrderId}</span></span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-white/70 hover:text-white hover:bg-white/20"
+                onClick={() => handleCopyToClipboard(confirmedOrder.customOrderId)}
+              >
+                <Copy className="h-3 w-3" />
+              </Button>
+            </motion.div>
 
-                    <motion.h1 variants={contentItemVariants} className="text-4xl md:text-5xl font-bold text-custom-gold font-plex-sans">Thank You!</motion.h1>
-                    
-                    <motion.p variants={contentItemVariants} className="text-base md:text-lg text-white/80">Your order request has been received.</motion.p>
-                    
-                    <motion.div variants={contentItemVariants} className="bg-white/10 rounded-full px-4 py-1.5 text-sm flex items-center gap-2">
-                      <span>Order ID: <span className="font-bold">{confirmedOrder.customOrderId}</span></span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 text-white/70 hover:text-white hover:bg-white/20"
-                        onClick={() => handleCopyToClipboard(confirmedOrder.customOrderId)}
-                      >
-                        <Copy className="h-3 w-3" />
-                      </Button>
-                    </motion.div>
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="w-full max-w-lg mt-4">
+              <div className="flex items-center w-full">
+                <TimelineNode isCompleted={currentStatusIndex >= 0} isCurrent={currentStatusIndex === 0}>Order<br/>Requested</TimelineNode>
+                <TimelineConnector isCompleted={currentStatusIndex >= 1} />
+                <TimelineNode isCompleted={currentStatusIndex >= 1} isCurrent={currentStatusIndex === 1}>In<br/>Progress</TimelineNode>
+                <TimelineConnector isCompleted={currentStatusIndex >= 2} />
+                <TimelineNode isCompleted={currentStatusIndex >= 2} isCurrent={currentStatusIndex === 2}>Order<br/>Delivered</TimelineNode>
+              </div>
+               {isCancelled && (
+                <p className="text-red-400 font-semibold mt-4 text-sm">This order has been cancelled.</p>
+              )}
+            </motion.div>
 
-                    <motion.div variants={contentItemVariants} className="w-full max-w-lg mt-4">
-                      <div className="flex items-center w-full">
-                        <TimelineNode isCompleted={currentStatusIndex >= 0} isCurrent={currentStatusIndex === 0}>Order<br/>Requested</TimelineNode>
-                        <TimelineConnector isCompleted={currentStatusIndex >= 1} />
-                        <TimelineNode isCompleted={currentStatusIndex >= 1} isCurrent={currentStatusIndex === 1}>In<br/>Progress</TimelineNode>
-                        <TimelineConnector isCompleted={currentStatusIndex >= 2} />
-                        <TimelineNode isCompleted={currentStatusIndex >= 2} isCurrent={currentStatusIndex === 2}>Order<br/>Delivered</TimelineNode>
-                      </div>
-                       {isCancelled && (
-                        <p className="text-red-400 font-semibold mt-4 text-sm">This order has been cancelled.</p>
-                      )}
-                    </motion.div>
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="mt-4 md:mt-6 bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 w-full max-w-lg">
+              <p className="font-semibold text-sm md:text-base max-w-md mx-auto text-white/90">
+              You’re one step away from chocolate happiness! Just contact us to confirm the final details.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 w-full justify-center">
+                <Button asChild variant="outline" className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base text-white border-white/50 bg-transparent hover:bg-white/10 hover:text-white rounded-full font-plex-sans shadow-lg">
+                  <a href="tel:+917411414007">
+                    <span className="flex items-center gap-2"><Phone className="h-4 w-4" /> Call Us</span>
+                  </a>
+                </Button>
+                <Button asChild className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base bg-white hover:bg-gray-200 text-custom-purple-dark rounded-full font-plex-sans shadow-lg font-semibold">
+                  <a href={whatsAppUrl} target="_blank" rel="noopener noreferrer">
+                    <span className="flex items-center gap-2"><SiWhatsapp className="h-5 w-5" /> Whatsapp</span>
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
 
-                    <motion.div variants={contentItemVariants} className="mt-4 md:mt-6 bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 w-full max-w-lg">
-                      <p className="font-semibold text-sm md:text-base max-w-md mx-auto text-white/90">
-                      You’re one step away from chocolate happiness! Just contact us to confirm the final details.
-                      </p>
-                      <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 w-full justify-center">
-                        <Button asChild variant="outline" className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base text-white border-white/50 bg-transparent hover:bg-white/10 hover:text-white rounded-full font-plex-sans shadow-lg">
-                          <a href="tel:+917411414007">
-                            <span className="flex items-center gap-2"><Phone className="h-4 w-4" /> Call Us</span>
-                          </a>
-                        </Button>
-                        <Button asChild className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base bg-white hover:bg-gray-200 text-custom-purple-dark rounded-full font-plex-sans shadow-lg font-semibold">
-                          <a href={whatsAppUrl} target="_blank" rel="noopener noreferrer">
-                            <span className="flex items-center gap-2"><SiWhatsapp className="h-5 w-5" /> Whatsapp</span>
-                          </a>
-                        </Button>
-                      </div>
-                    </motion.div>
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="w-full max-w-lg mt-2">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1" className="border-none">
+                  <AccordionTrigger className="w-full bg-white/10 hover:bg-white/20 text-white hover:no-underline rounded-xl px-4 py-3 font-semibold text-base">
+                    View Your Order Summary
+                  </AccordionTrigger>
+                  <AccordionContent className="mt-2">
+                    <OrderConfirmedSummary 
+                      order={confirmedOrder}
+                      products={orderedProducts}
+                      isMobile={isMobile ?? false}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </motion.div>
+            
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }} className="mt-6">
+              <Button onClick={handleContinueShopping} className="bg-custom-gold text-custom-purple-dark hover:bg-custom-gold/90 rounded-full px-8 font-bold text-base h-11">
+                Continue Shopping
+              </Button>
+            </motion.div>
 
-                    <motion.div variants={contentItemVariants} className="w-full max-w-lg mt-2">
-                      <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="item-1" className="border-none">
-                          <AccordionTrigger className="w-full bg-white/10 hover:bg-white/20 text-white hover:no-underline rounded-xl px-4 py-3 font-semibold text-base">
-                            View Your Order Summary
-                          </AccordionTrigger>
-                          <AccordionContent className="mt-2">
-                            <OrderConfirmedSummary 
-                              order={confirmedOrder}
-                              products={orderedProducts}
-                              isMobile={isMobile ?? false}
-                            />
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </motion.div>
-                    
-                    <motion.div variants={contentItemVariants} className="mt-6">
-                      <Button onClick={handleContinueShopping} className="bg-custom-gold text-custom-purple-dark hover:bg-custom-gold/90 rounded-full px-8 font-bold text-base h-11">
-                        Continue Shopping
-                      </Button>
-                    </motion.div>
-                </motion.div>
-            )}
-          </div>
+          </motion.div>
         </main>
         <Footer />
         <div className="h-16 flex-shrink-0 md:hidden" />
@@ -372,9 +324,7 @@ function OrderConfirmedPageComponent() {
       <OrderBackDialog
         open={isBackDialogOpen}
         onClose={() => setIsBackDialogOpen(false)}
-        onConfirm={handleConfirmNavigation}
-        order={confirmedOrder}
-      />
+        onConfirm={handleConfirmNavigation} order={confirmedOrder}      />
     </>
   );
 }

@@ -3,7 +3,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from 'next/navigation';
 import { cn } from "@/lib/utils";
 import { Logo } from "./header/logo";
 import { Navigation } from "./header/navigation";
@@ -12,10 +11,6 @@ import type { ActiveView } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { MobileHeader } from "./header/mobile-header";
-import { SearchBar } from "./header/search-bar";
-import { SearchSuggestions } from "./search-suggestions";
-import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from "@/app/actions";
-import type { SanityProduct } from "@/types";
 import { AnimatedSearchBar } from "./animated-search-bar";
 
 interface HeaderProps {
@@ -49,7 +44,6 @@ export function Header({
   isEnquireOpen,
   onEnquireOpenChange,
 }: HeaderProps) {
-  const router = useRouter();
   const { setIsGlobalLoading } = useAppContext();
   const isMobile = useIsMobile();
   const [isClient, setIsClient] = useState(false);
