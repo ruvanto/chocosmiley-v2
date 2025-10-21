@@ -189,22 +189,29 @@ export default function AdminClientPage() {
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
         />
-        <ProfileCompletionBanner isMobile={isMobile} />
         <div className="pt-20 md:pt-28 flex flex-col flex-grow min-h-0">
           <div className="relative w-full p-2 z-10 md:px-16 lg:px-32 md:bg-transparent pb-2 px-4 sticky top-20 md:top-auto bg-background">
-              <div className="relative flex items-center">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
-                  <Input
-                    placeholder="Search by Product or Customer..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-10 h-12 rounded-full bg-white/10 border-white/20 placeholder:text-gray-400"
-                  />
-                    <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
-                      <SheetTrigger asChild>
-                          <Button variant="ghost" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-12 w-12 text-white hover:bg-white/20 hover:text-white rounded-full">
+          <div className="flex items-center w-full h-12 bg-white/10 border border-white/20 rounded-full px-3">
+                      {/* Search Icon */}
+                      <Search className="h-5 w-5 text-white/80" />
+
+                      {/* Input Field */}
+                      <input
+                        type="text"
+                        placeholder="Search by Product or Customer..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="flex-grow bg-transparent border-none outline-none text-white placeholder:text-gray-400 px-3"
+                      />
+
+                      {/* Filter Button */}
+                      <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
+                        <SheetTrigger asChild>
+                          <button
+                            className="flex items-center justify-center h-8 w-8 rounded-full text-white/80 hover:bg-white/20 transition"
+                          >
                             <Filter className="h-5 w-5" />
-                          </Button>
+                      </button>
                       </SheetTrigger>
                       <SheetContent side="right" className="bg-custom-purple-dark text-white border-l-2 border-custom-gold w-3/4 max-w-sm p-0">
                         <SheetHeader className="p-4 border-b border-white/20">

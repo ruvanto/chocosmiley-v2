@@ -31,10 +31,9 @@ export function Navigation({ activeView }: NavigationProps) {
     const pathname = usePathname();
     const { isAdmin, setIsGlobalLoading } = useAppContext();
 
-    const handleClick = (linkId: 'about' | 'faq') => {
-        if (pathname === `/${linkId}`) return;
+    const handleLinkClick = (href: string) => {
+        if (pathname === href) return;
         setIsGlobalLoading(true);
-        router.push(`/${linkId}`);
     };
     
     const handleAdminClick = (path: string) => {
@@ -50,16 +49,17 @@ export function Navigation({ activeView }: NavigationProps) {
             {navLinks.map((link) => {
                 const isActive = activeView === link.id;
                 return (
-                    <button
+                    <Link
                         key={link.id}
-                        onClick={() => handleClick(link.id)}
+                        href={link.href}
+                        onClick={() => handleLinkClick(link.href)}
                         className={cn(
                             "transition-colors hover:text-custom-gold", 
                             isActive ? "text-custom-gold font-base" : "text-foreground/80"
                         )}
                     >
                         {link.label}
-                    </button>
+                    </Link>
                 )
             })}
              {isAdmin && (

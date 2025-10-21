@@ -102,7 +102,6 @@ export default function AnalyticsClientPage() {
                     setIsGlobalLoading(true);
                     router.push('/');
                 }} onNavigate={handleHeaderNavigate} activeView={'admin-analytics'} isEnquireOpen={isEnquireOpen} onEnquireOpenChange={setIsEnquireOpen} />
-                <ProfileCompletionBanner isMobile={isMobile} />
                 <main className={cn("flex-grow flex flex-col transition-all duration-300 relative min-h-0", "pt-24 md:pt-32" )}>
                     <div className="px-4 md:px-16 lg:px-32 flex-grow flex flex-col pb-12">
                         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">Analytics Dashboard</h1>
