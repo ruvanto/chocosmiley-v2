@@ -84,7 +84,7 @@ interface FlavourSelectionPopupProps {
 }
 
 export function FlavourSelectionPopup({ open, onOpenChange, onConfirm }: FlavourSelectionPopupProps) {
-  const { flavourSelection, setFlavourSelection, flavourSelections, toggleFlavourSelection, setFlavourSelectionsForProduct } = useAppContext();
+  const { flavourSelection, flavourSelections, toggleFlavourSelection } = useAppContext();
   const product = flavourSelection.product;
   const { toast } = useToast();
   

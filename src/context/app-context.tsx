@@ -80,6 +80,8 @@ interface AppContextType {
   updateOrderStatus: (uid: string, orderId: string, newStatus: Order['status'], cancelledBy?: 'user' | 'admin') => Promise<void>;
   adminStatusFilter: Order['status'] | 'All';
   handleAdminStatusFilterChange: (newFilter: Order['status'] | 'All') => void;
+  rateOrder: (uid: string, orderId: string, rating: number, feedback: string) => Promise<void>;
+  saveCancellationReason: (uid: string, orderId: string, reason: string) => Promise<void>;
 
   cart: Cart;
   updateCart: (productName: string, quantity: number, flavours?: string[]) => void;
@@ -769,6 +771,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     updateOrderStatus: handleUpdateOrderStatus,
     adminStatusFilter,
     handleAdminStatusFilterChange,
+    rateOrder,
+    saveCancellationReason,
     cart,
     updateCart,
     clearCart,

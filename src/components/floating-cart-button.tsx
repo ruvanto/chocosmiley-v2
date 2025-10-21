@@ -21,7 +21,6 @@ interface FloatingCartButtonProps {
 export function FloatingCartButton({
   activeView,
   isCartOpen,
-  isProfileOpen,
   onToggleCart,
   isCartButtonExpanded,
   cartMessage,
