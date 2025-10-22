@@ -10,6 +10,7 @@ import { useAppContext } from "@/context/app-context";
 import { Separator } from "./ui/separator";
 import { ChevronRight } from "lucide-react";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -149,13 +150,18 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
     setIsGlobalLoading(true);
     router.push(`/search?q=${encodeURIComponent(flavourName)}`);
   }
+  
+  const Wrapper = isMobile ? 'div' : motion.div;
+  const wrapperProps = isMobile ? {} : {
+    initial: { opacity: 0, y: 50 },
+    animate: { opacity: 1, y: 0 },
+    transition: { type: 'spring', stiffness: 80, damping: 15 }
+  };
 
   return (
-    <motion.div 
+    <Wrapper 
       className="bg-[#5D2B79] h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] mx-4 md:mx-20 lg:mx-32"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: 'spring', stiffness: 80, damping: 15 }}
+      {...wrapperProps}
     >
         <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
             <div className="flex-col overflow-y-auto no-scrollbar h-full">
@@ -212,6 +218,6 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                 </SectionTitle>
             </div>
         </div>
-    </motion.div>
+    </Wrapper>
   );
 }

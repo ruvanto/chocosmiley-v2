@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { ActiveView } from "@/types";
 import { X } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SearchBarProps {
     activeView: ActiveView;
@@ -35,6 +36,7 @@ const shuffleArray = (array: string[]) => {
 export function SearchBar({ activeView, onSubmit, searchInput, onSearchInputChange, onFocus }: SearchBarProps) {
     const [placeholder, setPlaceholder] = useState("");
     const inputRef = useRef<HTMLInputElement>(null);
+    const isMobile = useIsMobile();
 
     const type = useCallback((shuffledTexts: string[]) => {
         let textIndex = 0;
@@ -90,7 +92,7 @@ export function SearchBar({ activeView, onSubmit, searchInput, onSearchInputChan
         )}>
             <form 
                 onSubmit={handleSubmit} 
-                className={cn(`relative mx-auto transition-all duration-500 ease-in-out animate-slide-down`
+                className={cn(`relative mx-auto transition-all duration-500 ease-in-out`, !isMobile && 'animate-slide-down'
                 )}
                 style={{ 
                     animationDuration: '0.5s', animationDelay: '0.05s'

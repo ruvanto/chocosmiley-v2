@@ -5,6 +5,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LogoProps {
     onLogoClick: () => void;
@@ -12,8 +13,9 @@ interface LogoProps {
 }
 
 export function Logo({ onLogoClick, isEnquireOpen }: LogoProps) {
+    const isMobile = useIsMobile();
     return (
-        <div className="flex items-center gap-2 md:gap-4 lg:gap-8 transition-opacity duration-100 animate-slide-in-from-left" style={{ animationDuration: '0.5s' }}>
+        <div className={cn("flex items-center gap-2 md:gap-4 lg:gap-8 transition-opacity duration-100", !isMobile && "animate-slide-in-from-left")} style={{ animationDuration: '0.5s' }}>
             <Link href="/" className="flex items-center gap-2" onClick={onLogoClick}>
                 <Image 
                     src="/Choco Smiley Logo.png" 
