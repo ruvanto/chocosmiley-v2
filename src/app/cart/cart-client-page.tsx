@@ -31,7 +31,7 @@ import { useAppContext } from '@/context/app-context';
 import type { SanityProduct, ActiveView } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
-import { CartSkeleton } from '@/components/skeletons/cart-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
 import { client } from '@/lib/sanity';
 
@@ -223,10 +223,7 @@ export default function CartClientPage() {
 
   if (isPageLoading) {
     return (
-      <>
-        <CartSkeleton />
-        <BottomNavbar activeView={'cart'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-      </>
+      <CustomScreenLoader text="Just a moment, organizing your cart...." />
     );
   }
 
