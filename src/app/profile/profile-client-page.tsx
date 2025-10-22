@@ -109,7 +109,7 @@ export default function ProfileClientPage() {
 
   if (!isClient || !isProfileLoaded) {
     return (
-      <CustomScreenLoader text="Setting up your profile" />
+      <CustomScreenLoader text="Preparing your account details" />
     );
   }
 
