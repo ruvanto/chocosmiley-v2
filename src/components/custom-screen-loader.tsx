@@ -1,4 +1,3 @@
-
 // @/components/custom-screen-loader.tsx
 import React from 'react';
 
@@ -36,38 +35,32 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
     >
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
 
-      <div className="flex justify-between items-center space-x-4 w-28 h-6 mb-6">
+      <div className="flex justify-between items-center space-x-3 md:space-x-4 w-24 md:w-28 h-6 mb-6">
         <div 
           key="dot-1"
-          className="dot rounded-full"
+          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
-            width: '1.5rem',
-            height: '1.5rem',
           }}
         />
         <div 
           key="dot-2"
-          className="dot rounded-full"
+          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
-            width: '1.5rem',
-            height: '1.5rem',
             animationDelay: '0.4s', 
           }}
         />
         <div 
           key="dot-3"
-          className="dot rounded-full"
+          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
-            width: '1.5rem',
-            height: '1.5rem',
             animationDelay: '0.8s', 
           }}
         />
       </div>
-      <p style={{ color: DOT_GOLD }} className="text-lg font-semibold">
+      <p style={{ color: DOT_GOLD }} className="text-base md:text-lg font-semibold text-center px-4">
         {text}
       </p>
     </div>
