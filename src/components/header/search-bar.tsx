@@ -92,7 +92,7 @@ export function SearchBar({ activeView, onSubmit, searchInput, onSearchInputChan
         )}>
             <form 
                 onSubmit={handleSubmit} 
-                className={cn(`relative mx-auto transition-all duration-500 ease-in-out`, !isMobile && 'animate-slide-down'
+                className={cn(`relative mx-auto transition-all duration-500 ease-in-out`
                 )}
                 style={{ 
                     animationDuration: '0.5s', animationDelay: '0.05s'

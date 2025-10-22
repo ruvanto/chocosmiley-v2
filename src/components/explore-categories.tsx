@@ -151,21 +151,11 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
     router.push(`/search?q=${encodeURIComponent(flavourName)}`);
   }
   
-  const Wrapper = isMobile ? 'div' : motion.div;
-  const wrapperProps = isMobile ? {} : {
-    initial: { opacity: 0, y: 50 },
-    animate: { opacity: 1, y: 0 },
-    transition: { type: 'spring', stiffness: 80, damping: 15 }
-  };
+  const Wrapper = 'div';
 
   return (
     <Wrapper 
       className="bg-[#5D2B79] h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] mx-4 md:mx-20 lg:mx-32"
-      {...(isMobile ? {} : {
-        initial: { opacity: 0, y: 50 },
-        animate: { opacity: 1, y: 0 },
-        transition: { type: 'spring', stiffness: 80, damping: 15 }
-      })}
     >
         <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
             <div className="flex-col overflow-y-auto no-scrollbar h-full">
