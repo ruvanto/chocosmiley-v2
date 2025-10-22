@@ -1,3 +1,4 @@
+
 // @/components/custom-screen-loader.tsx
 import React from 'react';
 
@@ -66,7 +67,7 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
           }}
         />
       </div>
-      <p style={{ color: DOT_GOLD }} className="text-lg font-semibold animate-pulse">
+      <p style={{ color: DOT_GOLD }} className="text-lg font-semibold">
         {text}
       </p>
     </div>
