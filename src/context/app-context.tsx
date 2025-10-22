@@ -174,7 +174,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   const [authPopup, setAuthPopup] = useState<AuthPopupType>(null);
   const [flavourSelection, setFlavourSelection] = useState<{ product: SanityProduct | null; isOpen: boolean; preselectedFlavours?: string[] }>({ product: null, isOpen: false, preselectedFlavours: [] });
-  const [isGlobalLoading, setIsGlobalLoading] = useState(true);
+  const [isGlobalLoading, setIsGlobalLoading] = useState(false);
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
   const [isAuthenticating, _setIsAuthenticating] = useState(false);
   const [authMessage, setAuthMessage] = useState("Signing you in...");
@@ -817,5 +817,7 @@ export function useAppContext() {
 }
 
 export const AppContextConsumer = AppContext.Consumer;
+
+    
 
     
