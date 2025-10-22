@@ -19,11 +19,13 @@ const navItems = [
 ] as const;
 
 export function BottomNavbar({ activeView, onNavigate, cartItemCount = 0 }: BottomNavbarProps) {
-  const [isClient, setIsClient] = useState(false);
+  const [clientCartCount, setClientCartCount] = useState(0);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    // On the client, we update the state to match the prop.
+    // This avoids a hydration mismatch.
+    setClientCartCount(cartItemCount);
+  }, [cartItemCount]);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t border-white/20 md:hidden z-50">
@@ -43,9 +45,9 @@ export function BottomNavbar({ activeView, onNavigate, cartItemCount = 0 }: Bott
             >
               <div className="relative">
                 <item.icon className="h-6 w-6" />
-                {isClient && isCartItem && cartItemCount > 0 && (
+                {isCartItem && clientCartCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                    {cartItemCount}
+                    {clientCartCount}
                   </span>
                 )}
               </div>
