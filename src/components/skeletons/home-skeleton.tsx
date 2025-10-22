@@ -1,8 +1,8 @@
-
 // @/components/skeletons/home-skeleton.tsx
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { BottomNavbar } from "../bottom-navbar";
+import { House, ShoppingCart, User } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 const HeaderSkeleton = () => (
     <header className="fixed top-0 z-50 w-full pt-4 md:pt-6 pb-4 md:pb-4 bg-background">
@@ -75,6 +75,37 @@ const CategoriesSkeleton = () => (
     </div>
 );
 
+const navItems = [
+  { view: 'home', icon: House, label: 'Home' },
+  { view: 'cart', icon: ShoppingCart, label: 'Cart' },
+  { view: 'profile', icon: User, label: 'Account' },
+] as const;
+
+
+const BottomNavbarSkeleton = () => (
+    <div className="fixed bottom-0 left-0 right-0 h-16 bg-background border-t border-white/20 md:hidden z-50">
+      <div className="flex justify-around items-center h-full">
+        {navItems.map((item) => {
+          const isActive = item.view === 'home';
+          return (
+            <div
+              key={item.view}
+              className={cn(
+                'flex flex-col items-center justify-center gap-1 text-xs transition-colors w-full h-full',
+                isActive ? 'text-custom-gold' : 'text-white/70'
+              )}
+            >
+              <div className="relative">
+                <item.icon className="h-6 w-6" />
+              </div>
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+);
+
 
 export function HomeSkeleton() {
     return (
@@ -88,7 +119,7 @@ export function HomeSkeleton() {
                     <CategoriesSkeleton />
                  </div>
             </main>
-            <BottomNavbar activeView={'home'} onNavigate={() => {}} cartItemCount={0} />
+            <BottomNavbarSkeleton />
         </div>
     )
 }
