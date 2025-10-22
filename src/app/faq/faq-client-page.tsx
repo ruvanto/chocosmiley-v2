@@ -16,7 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
 import { BottomNavbar } from '@/components/bottom-navbar';
-import { FaqSkeleton } from '@/components/skeletons/faq-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 
 interface FaqPageClientProps {
@@ -58,12 +58,7 @@ export default function FaqPageClient({ faqData }: FaqPageClientProps) {
     const cartItemCount = Object.values(cart).reduce((acc, quantity) => acc + quantity.quantity, 0);
     
     if (!isClient) {
-        return (
-          <>
-            <FaqSkeleton />
-            <BottomNavbar activeView={'faq'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-          </>
-        );
+        return <CustomScreenLoader text="Loading" />;
     }
 
     return (

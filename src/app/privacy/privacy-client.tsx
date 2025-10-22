@@ -16,7 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
 import { BottomNavbar } from '@/components/bottom-navbar';
-import { PrivacySkeleton } from '@/components/skeletons/privacy-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 
 export default function PrivacyClientPage() {
@@ -54,12 +54,7 @@ export default function PrivacyClientPage() {
     const cartItemCount = Object.values(cart).reduce((acc, quantity) => acc + quantity.quantity, 0);
 
     if (!isClient) {
-        return (
-            <>
-                <PrivacySkeleton />
-                <BottomNavbar activeView={'home'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-            </>
-        );
+        return <CustomScreenLoader text="Loading" />;
     }
 
     return (

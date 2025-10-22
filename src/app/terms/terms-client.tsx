@@ -16,7 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
 import { BottomNavbar } from '@/components/bottom-navbar';
-import { TermsSkeleton } from '@/components/skeletons/terms-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 export default function TermsClientPage() {
     const isMobile = useIsMobile();
@@ -54,12 +54,7 @@ export default function TermsClientPage() {
     const cartItemCount = Object.values(cart).reduce((acc, quantity) => acc + quantity.quantity, 0);
 
     if (!isClient) {
-        return (
-            <>
-                <TermsSkeleton />
-                <BottomNavbar activeView={'home'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-            </>
-        );
+        return <CustomScreenLoader text="Loading" />;
     }
 
     return (

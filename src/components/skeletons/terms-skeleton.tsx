@@ -1,7 +1,6 @@
 // @/components/skeletons/terms-skeleton.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { StaticSparkleBackground } from "../static-sparkle-background";
@@ -63,19 +62,14 @@ const PolicyContentSkeleton = () => (
 
 export function TermsSkeleton() {
     const isMobile = useIsMobile();
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
 
     return (
         <div className="flex flex-col h-screen bg-background">
-            {isClient && (isMobile ? <StaticSparkleBackground /> : <SparkleBackground />)}
+            {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
             <HeaderSkeleton />
             <main className="flex flex-col flex-grow min-h-0 pt-24 md:pt-32">
                  <div className="flex-grow overflow-y-auto no-scrollbar">
-                    {isClient && <PolicyContentSkeleton />}
+                    <PolicyContentSkeleton />
                  </div>
             </main>
         </div>

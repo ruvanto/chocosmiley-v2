@@ -19,7 +19,7 @@ import { StaticSparkleBackground } from '@/components/static-sparkle-background'
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
 import type { SanityProduct, ActiveView } from '@/types';
-import { AboutSkeleton } from '@/components/skeletons/about-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 
 const containerVariants = {
@@ -100,12 +100,7 @@ export default function AboutPageClient() {
     const cartItemCount = Object.values(cart).reduce((acc, quantity) => acc + quantity.quantity, 0);
 
     if (!isClient) {
-        return (
-          <>
-            <AboutSkeleton />
-            <BottomNavbar activeView={'about'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-          </>
-        );
+        return <CustomScreenLoader text="Loading" />;
     }
 
     return (
