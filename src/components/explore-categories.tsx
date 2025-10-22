@@ -53,17 +53,12 @@ const textContainerVariants = {
 };
 
 const titleVariants = {
-    initial: { y: 14 },
-    hover: { y: -8 },
-};
-
-const mobileTitleVariants = {
-    initial: { y: 0 },
+    initial: { y: 12 },
     hover: { y: -8 },
 };
 
 const subtitleVariants = {
-    initial: { opacity: 0, y: 0 },
+    initial: { opacity: 1, y: 0 },
     hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
 };
 
@@ -122,11 +117,11 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
                 className="absolute inset-x-0 bottom-2 md:bottom-5 flex flex-col px-4"
             >
                 <motion.div
-                    variants={isMobile ? mobileTitleVariants : titleVariants}
+                    variants={titleVariants}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="flex items-center justify-center gap-1"
                 >
-                    <h3 className="text-white text-sm lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
+                    <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
                         {category.name}
                     </h3>
                     <motion.div variants={chevronVariants} style={{ overflow: 'hidden' }}>
@@ -136,7 +131,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
                 
                 <motion.p
                     variants={subtitleVariants}
-                    className="text-white/80 font-light text-[10px] lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)] -mt-2"
+                    className="text-white/80 font-light text-xs lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)] -mt-2"
                 >
                     {category.subtitle}
                 </motion.p>
@@ -166,7 +161,11 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
   return (
     <Wrapper 
       className="bg-[#5D2B79] h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] mx-4 md:mx-20 lg:mx-32"
-      {...wrapperProps}
+      {...(isMobile ? {} : {
+        initial: { opacity: 0, y: 50 },
+        animate: { opacity: 1, y: 0 },
+        transition: { type: 'spring', stiffness: 80, damping: 15 }
+      })}
     >
         <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
             <div className="flex-col overflow-y-auto no-scrollbar h-full">
