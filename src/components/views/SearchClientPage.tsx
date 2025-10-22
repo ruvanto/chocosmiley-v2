@@ -333,7 +333,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
              filters={initialFilters}
              isMobile={isMobile}
              onFilterChange={handleFilterChange}
-             onPriceRangeChange={onPriceRangeChange}
+             onPriceRangeChange={handlePriceRangeChange}
              onPriceCheckboxChange={handlePriceCheckboxChange}
              activeFilters={activeFilters}
              onRemoveFilter={handleRemoveFilter}
