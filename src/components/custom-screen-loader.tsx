@@ -5,7 +5,7 @@ import React from 'react';
  * Gold and Purple Pulsing Dotted Loader Component
  * Recreates the three-dot loader with sequential scaling/pulsing animation.
  */
-const CustomScreenLoader: React.FC = () => {
+const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while we prepare your treats" }) => {
   // Base colors from the app's theme
   const BG_PURPLE = '#5D2B79';
   const DOT_GOLD = '#FFD139';
@@ -67,7 +67,7 @@ const CustomScreenLoader: React.FC = () => {
         />
       </div>
       <p style={{ color: DOT_GOLD }} className="text-lg font-semibold animate-pulse">
-        Hold on while we prepare your treats
+        {text}
       </p>
     </div>
   );

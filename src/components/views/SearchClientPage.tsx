@@ -17,13 +17,12 @@ import { FloatingCartButton } from '@/components/floating-cart-button';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
 import { FlavourSelectionPopup } from '../flavour-selection-popup';
-import { Loader } from '../loader';
 import { MobileSearchView } from './MobileSearchView';
 import { ProfileCompletionBanner } from '../profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../search-suggestions';
 import { MobileSearchHeader } from '../header/mobile-search-header';
-import { SearchBar } from '../header/search-bar';
+import CustomScreenLoader from '../custom-screen-loader';
 
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];
@@ -31,10 +30,7 @@ interface SearchClientPageProps {
 }
 
 const LoadingFallback = () => (
-    <div className="flex h-screen w-full items-center justify-center bg-background flex-col gap-2">
-        <Loader />
-        <p>Just a moment</p>
-    </div>
+    <CustomScreenLoader text="Bringing you the best ChocoSmiley treats..." />
 );
 
 function formatCategoryTitleToKey(title: string) {
@@ -337,7 +333,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
              filters={initialFilters}
              isMobile={isMobile}
              onFilterChange={handleFilterChange}
-             onPriceRangeChange={handlePriceRangeChange}
+             onPriceRangeChange={onPriceRangeChange}
              onPriceCheckboxChange={handlePriceCheckboxChange}
              activeFilters={activeFilters}
              onRemoveFilter={handleRemoveFilter}
