@@ -60,7 +60,7 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
           }}
         />
       </div>
-      <p style={{ color: DOT_GOLD }} className="text-base md:text-lg font-poppins font-semibold text-center px-4">
+      <p style={{ color: DOT_GOLD }} className="text-base md:text-lg font-poppins font-normal text-center px-4">
         {text}
       </p>
     </div>

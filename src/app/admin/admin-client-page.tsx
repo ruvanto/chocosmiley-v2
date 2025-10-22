@@ -89,6 +89,7 @@ export default function AdminClientPage() {
     let filtered = allOrders.filter(order => {
       const searchMatch = !searchTerm || (
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customOrderId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.items.some(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
         order.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customerEmail?.toLowerCase().includes(searchTerm.toLowerCase())
