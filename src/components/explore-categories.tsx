@@ -58,7 +58,7 @@ const titleVariants = {
 };
 
 const subtitleVariants = {
-    initial: { opacity: 0, y: 0 },
+    initial: { opacity: 1, y: 0 },
     hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
 };
 
@@ -87,6 +87,23 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
 
+    const isMobileClient = isClient && isMobile;
+
+    const dynamicTitleVariants = {
+        initial: { y: isMobileClient ? -8 : 12 },
+        hover: { y: -8 },
+    };
+
+    const dynamicTextContainerVariants = {
+        initial: { alignItems: isMobileClient ? "flex-start" : "center" },
+        hover: { alignItems: "flex-start" },
+    };
+    
+    const dynamicChevronVariants = {
+        initial: { opacity: isMobileClient ? 1: 0, x: isMobileClient ? 0: -5, width: isMobileClient ? "auto" : 0 },
+        hover: { opacity: 1, x: 0, width: "auto", transition: { delay: 0.1 } },
+    }
+
     return (
         <motion.div
             key={category._key}
@@ -94,8 +111,8 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
             initial="initial"
-            animate={isClient && isMobile ? "hover" : "initial"}
             whileHover={isMobile ? undefined : "hover"}
+            animate={"initial"}
         >
             <Image
                 src={category.imageUrl}
@@ -112,19 +129,19 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             ></motion.div>
             
             <motion.div
-                variants={textContainerVariants}
+                variants={dynamicTextContainerVariants}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="absolute inset-x-0 bottom-2 md:bottom-5 flex flex-col px-4"
             >
                 <motion.div
-                    variants={titleVariants}
+                    variants={dynamicTitleVariants}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="flex items-center justify-center gap-1"
                 >
                     <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
                         {category.name}
                     </h3>
-                    <motion.div variants={chevronVariants} style={{ overflow: 'hidden' }}>
+                    <motion.div variants={dynamicChevronVariants} style={{ overflow: 'hidden' }}>
                         <ChevronRight className="h-6 w-6 text-white hidden md:block" />
                     </motion.div>
                 </motion.div>
@@ -151,10 +168,8 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
     router.push(`/search?q=${encodeURIComponent(flavourName)}`);
   }
   
-  const Wrapper = 'div';
-
   return (
-    <Wrapper 
+    <div 
       className="bg-[#5D2B79] h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] mx-4 md:mx-20 lg:mx-32"
     >
         <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
@@ -212,6 +227,6 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                 </SectionTitle>
             </div>
         </div>
-    </Wrapper>
+    </div>
   );
 }
