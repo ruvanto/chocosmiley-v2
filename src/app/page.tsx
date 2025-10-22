@@ -3,7 +3,7 @@
 import { client } from '@/lib/sanity';
 import { Suspense } from 'react';
 import HomeClient from './home-client';
-import { HomeSkeleton } from '@/components/skeletons/home-skeleton';
+import GoldTreatsLoader from '@/components/gold-treats-loader';
 import { getTrendingSuggestions } from './actions';
 
 export const revalidate = 300; // Revalidate this page at most every 300 seconds
@@ -37,7 +37,7 @@ export default async function Home() {
     const trendingSuggestions = await getTrendingSuggestions();
 
     return (
-        <Suspense fallback={<HomeSkeleton />}>
+        <Suspense fallback={<GoldTreatsLoader />}>
             <HomeClient
                 exploreCategories={homepageContent.exploreCategories}
                 exploreFlavours={homepageContent.exploreFlavours}

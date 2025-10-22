@@ -18,7 +18,7 @@ import { useAppContext } from '@/context/app-context';
 import type { SanityProduct } from '@/types';
 import type { ActiveView } from '@/types';
 import { FlavourSelectionPopup } from '@/components/flavour-selection-popup';
-import { HomeSkeleton } from '@/components/skeletons/home-skeleton';
+import GoldTreatsLoader from '@/components/gold-treats-loader';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
@@ -171,7 +171,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
 
   if (!isClient) {
     return (
-      <HomeSkeleton />
+      <GoldTreatsLoader />
     );
   }
 
