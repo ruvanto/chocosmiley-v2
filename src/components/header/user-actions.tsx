@@ -105,7 +105,7 @@ export function UserActions({
     }
     
     return (
-        <div className={cn("flex items-center", !isMobile && "animate-slide-in-from-right")} style={{ animationDuration: '0.5s' }}>
+        <div className={cn("flex items-center")}>
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center gap-1">
                 <Popover open={isEnquireOpen} onOpenChange={onEnquireOpenChange}>
@@ -145,7 +145,7 @@ export function UserActions({
                 </Popover>
                 
                 <div className={cn(
-                    "flex items-center gap-0 transition-opacity duration-100", 
+                    "flex items-center gap-0", 
                     isEnquireOpen && "opacity-50"
                 )}>
                     

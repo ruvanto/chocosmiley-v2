@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/app-context";
 import { ChevronRight } from "lucide-react";
 import React from "react";
+import { Separator } from "./ui/separator";
 
 interface ExploreItem {
   _key: string;
@@ -125,6 +126,10 @@ export function MobileExploreCategories({ exploreCategories, exploreFlavours }: 
                     </div>
                     ))}
                 </div>
+                <Separator className="flex justify-center bg-white/50" />
+                <SectionTitle className="flex justify-center font-body font-normal text-custom-gold text-xs md:text-base lg:text-lg mt-3 mb-3">
+                “Handcrafted with love, just for you”
+                </SectionTitle>
             </div>
         </div>
     </div>

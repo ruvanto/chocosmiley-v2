@@ -185,7 +185,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
       )}>
         <Header
           onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={true}
+          isContentScrolled={!!isMobile}
           onReset={() => {
             if (pathname === '/') return;
             setIsGlobalLoading(true);
