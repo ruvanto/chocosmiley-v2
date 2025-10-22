@@ -151,7 +151,7 @@ export default function AdminClientPage() {
 
 
   if (!isClient || (!isAllOrdersLoaded && allOrders.length === 0)) {
-    return <CustomScreenLoader text="Loading admin dashboard..." />;
+    return <CustomScreenLoader text="Loading admin dashboard" />;
   }
 
   if (!isAdmin) {

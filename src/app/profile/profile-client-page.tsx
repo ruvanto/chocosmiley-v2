@@ -19,7 +19,7 @@ import { FlavourSelectionPopup } from '@/components/flavour-selection-popup';
 import { MyProfileTab } from '@/components/my-profile-tab';
 import { WishlistView } from '@/components/wishlist-view';
 import { MyOrdersTab } from '@/components/my-orders-tab';
-import { AccountSkeleton } from '@/components/skeletons/account-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
 
 
@@ -109,12 +109,7 @@ export default function ProfileClientPage() {
 
   if (!isClient || !isProfileLoaded) {
     return (
-        <Suspense fallback={<AccountSkeleton />}>
-            <div className="flex flex-col h-screen bg-background">
-                <AccountSkeleton />
-                <BottomNavbar activeView={'profile'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-            </div>
-        </Suspense>
+      <CustomScreenLoader text="Setting up your profile" />
     );
   }
 
