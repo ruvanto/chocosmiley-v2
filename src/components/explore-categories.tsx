@@ -58,7 +58,7 @@ const titleVariants = {
 };
 
 const subtitleVariants = {
-    initial: { opacity: 1, y: 0 },
+    initial: { opacity: 0, y: 0 },
     hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
 };
 
