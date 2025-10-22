@@ -216,7 +216,7 @@ export default function CartClientPage() {
     return acc;
   }, {} as Record<string, SanityProduct>);
   
-  const isPageLoading = !isClient || !isCartLoaded || (isProductLoading && cartItems.length > 0);
+  const isPageLoading = !isClient || !isCartLoaded || (cartItems.length > 0 && productsInCart.length !== cartItems.length);
 
   if (isPageLoading) {
     return (
