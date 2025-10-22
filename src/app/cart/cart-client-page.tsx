@@ -220,7 +220,7 @@ export default function CartClientPage() {
 
   if (isPageLoading) {
     return (
-      <CustomScreenLoader text="Just a moment, organizing your cart...." />
+      <CustomScreenLoader text="Just a moment, organizing your cart" />
     );
   }
 

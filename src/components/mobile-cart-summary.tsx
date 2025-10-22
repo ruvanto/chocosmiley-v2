@@ -106,16 +106,16 @@ export const MobileCartSummary = React.forwardRef<HTMLDivElement, MobileCartSumm
         </div>
           
           <div className="space-y-1.5">
-              <SummaryRow label="Total MRP" value={totalMrp} isAnimated />
-              <SummaryRow label="Total Discount" value={-totalDiscount} valueClassName='text-green-600' isAnimated />
+              <SummaryRow label="Total MRP" value={totalMrp} isAnimated prefix="₹" />
+              <SummaryRow label="Total Discount" value={totalDiscount} valueClassName='text-green-600' isAnimated prefix="-₹" />
               <Separator className="bg-black/10 my-1.5" />
-              <SummaryRow label="Product Price" value={totalProductPrice} isAnimated />
-              <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated prefix="+"/>
+              <SummaryRow label="Product Price" value={totalProductPrice} isAnimated prefix="₹" />
+              <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated prefix="+₹"/>
               <Separator className="bg-black/10 my-1.5" />
-              <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated />
-              <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated />
+              <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated prefix="₹" />
+              <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated prefix="₹" />
               <div className="border-t border-black/20 my-2 h-[1.5px]" ></div>
-              <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated />
+              <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated prefix="₹" />
           </div>
 
           <Button onClick={onCheckout} className="w-full mt-4 bg-custom-gold text-custom-purple-dark font-bold hover:bg-custom-gold/90 h-10 text-base rounded-full" isLoading={isLoading}>
