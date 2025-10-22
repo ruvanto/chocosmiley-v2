@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from "next/image";
@@ -87,7 +88,6 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
             initial="initial"
-            animate={isMobile ? "hover" : "initial"}
             whileHover={isMobile ? undefined : "hover"}
         >
             <Image
@@ -157,7 +157,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     Explore Categories
                 </SectionTitle>
                 <motion.div 
-                    className="grid grid-cols-2 md:flex md:flex-row flex-grow justify-around items-center gap-4 md:gap-10 pt-1 pb-6 md:pb-12 px-2"
+                    className="grid grid-cols-2 md:flex md:flex-row flex-grow-0 justify-around items-center gap-4 md:gap-6 lg:gap-10 pt-1 pb-6 md:pb-12 px-2"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
