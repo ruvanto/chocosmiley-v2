@@ -9,7 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { Separator } from "./ui/separator";
 import { ChevronRight } from "lucide-react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -75,11 +75,20 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const router = useRouter();
     const isMobile = useIsMobile();
     const { setIsGlobalLoading } = useAppContext();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const handleCategoryClick = (categoryName: string) => {
         setIsGlobalLoading(true);
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
+
+    if (!isClient) {
+        return <div className="w-full aspect-[5/6] bg-white/10 rounded-[20px] md:rounded-[30px] lg:rounded-[40px]"></div>;
+    }
 
     return (
         <motion.div
@@ -87,8 +96,8 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             className="w-full aspect-[5/6] relative cursor-pointer"
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
-            initial="initial"
-            whileHover={isMobile ? undefined : "hover"}
+            initial={isMobile ? "hover" : "initial"}
+            whileHover={"hover"}
         >
             <Image
                 src={category.imageUrl}
