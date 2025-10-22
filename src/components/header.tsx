@@ -46,13 +46,8 @@ export function Header({
 }: HeaderProps) {
   const { setIsGlobalLoading } = useAppContext();
   const isMobile = useIsMobile();
-  const [isClient, setIsClient] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  
   const handleLogoClick = () => {
     if (activeView === 'home') return;
     setIsGlobalLoading(true);
@@ -106,7 +101,6 @@ export function Header({
                    {children}
                 </div>
             ) : (
-              isClient &&
               <Navigation 
                 onNavigate={onNavigate}
                 activeView={activeView}
@@ -117,15 +111,13 @@ export function Header({
         
         {/* Right Column */}
         <div className="flex items-center justify-end">
-          {isClient && (
-            <UserActions 
-              isEnquireOpen={isEnquireOpen}
-              onEnquireOpenChange={onEnquireOpenChange}
-              onProfileOpenChange={onProfileOpenChange}
-              onNavigate={onNavigate}
-              activeView={activeView}
-            />
-          )}
+          <UserActions 
+            isEnquireOpen={isEnquireOpen}
+            onEnquireOpenChange={onEnquireOpenChange}
+            onProfileOpenChange={onProfileOpenChange}
+            onNavigate={onNavigate}
+            activeView={activeView}
+          />
         </div>
       </div>
     </header>
