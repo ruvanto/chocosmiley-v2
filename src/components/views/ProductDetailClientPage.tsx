@@ -1,3 +1,4 @@
+
 // @/components/views/ProductDetailClientPage.tsx
 'use client';
 
@@ -30,6 +31,7 @@ import { SearchSuggestions } from '../search-suggestions';
 import { MobileProductStickyBar } from '../mobile-product-sticky-bar';
 import { MobileExpandedImageView } from '../mobile-image-gallery';
 import { SearchBar } from '../header/search-bar';
+import CustomScreenLoader from '../custom-screen-loader';
 
 interface ProductDetailClientPageProps {
   product: SanityProduct;
@@ -37,10 +39,7 @@ interface ProductDetailClientPageProps {
 }
 
 const LoadingFallback = () => (
-    <div className="flex h-screen w-full items-center justify-center bg-background flex-col gap-2">
-        <Loader />
-        <p className="text-white">Loading your Chocolate</p>
-    </div>
+    <CustomScreenLoader text="Loading your chocolate" />
 );
 
 export default function ProductDetailClientPage({ product, featuredProducts }: ProductDetailClientPageProps) {
