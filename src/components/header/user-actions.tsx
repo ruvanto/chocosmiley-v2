@@ -145,11 +145,11 @@ export function UserActions({
                 </Popover>
                 
                 <div className={cn(
-                    "flex items-center gap-1 transition-opacity duration-100", 
+                    "flex items-center gap-0 transition-opacity duration-100", 
                     isEnquireOpen && "opacity-50"
                 )}>
-                    <Separator orientation="vertical" className="h-6 bg-foreground/50 mx-1 lg:mx-2" />
-                     <div className="flex items-center gap-1 lg:gap-2">
+                    
+                     <div className="flex items-center gap-1 ml-2">
                         <a href="https://www.instagram.com/chocosmileygifts/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                             <AiOutlineInstagram className="h-7 w-7 lg:h-8 lg:w-8 transition-colors hover:text-custom-gold" />
                         </a>

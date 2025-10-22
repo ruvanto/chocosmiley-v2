@@ -35,17 +35,17 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
     >
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
 
-      <div className="flex justify-between items-center space-x-2 md:space-x-4 w-24 md:w-28 h-6 mb-6">
+      <div className="flex justify-between items-center space-x-3 md:space-x-4 w-24 md:w-28 h-6 mb-6">
         <div 
           key="dot-1"
-          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
+          className="dot rounded-full w-5 h-5 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
           }}
         />
         <div 
           key="dot-2"
-          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
+          className="dot rounded-full w-5 h-5 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
             animationDelay: '0.4s', 
@@ -53,7 +53,7 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
         />
         <div 
           key="dot-3"
-          className="dot rounded-full w-4 h-4 md:w-6 md:h-6"
+          className="dot rounded-full w-5 h-5 md:w-6 md:h-6"
           style={{ 
             backgroundColor: DOT_GOLD,
             animationDelay: '0.8s', 

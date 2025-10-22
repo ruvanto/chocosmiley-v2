@@ -105,7 +105,7 @@ export function WishlistView({
 
   if (!isWishlistLoaded || !areProductsLoaded) {
     return (
-      <div className="flex flex-col flex-grow items-center justify-center h-full pt-24">
+      <div className="flex flex-col flex-grow items-center justify-center h-full pt-24 md:pt-16">
         <Loader />
       </div>
     );
