@@ -71,7 +71,7 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
     return (
         <div 
             onClick={onClick}
-            className="bg-white/90 p-3 md:p-4 text-black w-full relative overflow-hidden rounded-xl md:rounded-2xl shadow-md text-left flex flex-col cursor-pointer"
+            className="bg-white/90 p-3 md:p-4 text-black w-full relative overflow-hidden rounded-xl md:rounded-2xl shadow-md text-left flex flex-col cursor-pointer hover:bg-white"
         >
             <div className="flex flex-col gap-2 mb-2">
                 <div className="flex items-center overflow-x-auto no-scrollbar gap-2 pb-1">
@@ -115,12 +115,12 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
             
             <Separator className="bg-custom-purple-dark/20" />
 
-            <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center justify-between mt-1">
                 <div onClick={(e) => e.stopPropagation()}>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="link" className="p-0 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline">
-                                <RotateCcw className="h-3.5 w-3.5" />
+                            <Button variant="link" className="p-0 mt-1 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline">
+                                <RotateCcw className="h-3.5 w-3" />
                                 Order Again
                             </Button>
                         </AlertDialogTrigger>

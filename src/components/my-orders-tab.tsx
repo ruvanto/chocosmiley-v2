@@ -14,6 +14,7 @@ import type { Order } from '@/types';
 import { CancellationFeedbackPopup } from './cancellation-feedback-popup';
 import { OrderItemCardSkeleton } from './skeletons/order-item-card-skeleton';
 import { cn } from '@/lib/utils';
+import { ScrollArea } from './ui/scroll-area';
 
 interface MyOrdersTabProps {
   isMobile?: boolean;
@@ -165,23 +166,25 @@ export function MyOrdersTab({ isMobile = false }: MyOrdersTabProps) {
                   <h2 className="text-3xl font-normal font-poppins self-start">My Orders</h2>
                 </div>
                  {orders.length > 0 ? (
-                    <div className="flex-grow overflow-y-auto pr-2 no-scrollbar space-y-4 pb-4">
-                        {orders.map(order => (
-                            <OrderItemCard 
-                                key={order.id} 
-                                order={order} 
-                                onClick={() => setSelectedOrder(order)} 
-                                onRate={() => setRatingOrder(order)} 
-                                onCancel={() => handleCancelOrder(order)}
-                                onReorder={() => reorder(order.id)}
-                            />
-                        ))}
-                        {hasMoreUserOrders && (
-                          <div ref={loaderRef}>
-                            <OrderItemCardSkeleton />
-                          </div>
-                        )}
-                    </div>
+                    <ScrollArea className="flex-grow pr-4 -mr-4 custom-scrollbar pb-4">
+                        <div className="space-y-4">
+                            {orders.map(order => (
+                                <OrderItemCard 
+                                    key={order.id} 
+                                    order={order} 
+                                    onClick={() => setSelectedOrder(order)} 
+                                    onRate={() => setRatingOrder(order)} 
+                                    onCancel={() => handleCancelOrder(order)}
+                                    onReorder={() => reorder(order.id)}
+                                />
+                            ))}
+                            {hasMoreUserOrders && (
+                              <div ref={loaderRef}>
+                                <OrderItemCardSkeleton />
+                              </div>
+                            )}
+                        </div>
+                    </ScrollArea>
                 ) : (
                     <div className="flex-grow flex flex-col items-center justify-center h-full text-center gap-4">
                        <EmptyState
