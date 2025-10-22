@@ -247,8 +247,7 @@ const fullAddressFromState = useMemo(() => {
                 <h2 className="text-3xl font-normal font-poppins">My Profile</h2>
             </div>
             
-            <ScrollArea className="flex-grow min-h-0 custom-scrollbar -mr-8 pr-8">
-              <div className="px-4 pt-4 pb-20 md:p-8 md:pt-2">
+            <div className="overflow-y-auto no-scrollbar flex-grow min-h-0 px-4 pt-4 pb-20 md:p-8 md:pt-2">
                   <div className="bg-white/10 rounded-xl p-4 flex items-center gap-4">
                       <Avatar className="w-16 h-16">
                       <AvatarImage src={user?.photoURL ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(name || profile.email)}&background=random`} alt="User avatar" data-ai-hint="person portrait" onDragStart={(e) => e.preventDefault()}/>
@@ -354,8 +353,8 @@ const fullAddressFromState = useMemo(() => {
                           </div>
                       </ProfileSection>
                   </div>
-              </div>
-            </ScrollArea>
+              
+            </div>
              <AnimatePresence>
                 {hasAnyChanges && (
                     <motion.div
