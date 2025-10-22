@@ -1,4 +1,3 @@
-
 // @/app/admin/admin-client-page.tsx
 'use client';
 
@@ -31,8 +30,8 @@ import {
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { Loader } from '@/components/loader';
 import { AdminOrderItemCardSkeleton } from '@/components/skeletons/admin-order-item-card-skeleton';
-import { AdminSkeleton } from '@/components/skeletons/admin-skeleton';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 
 type StatusFilter = Order['status'] | 'All';
@@ -151,7 +150,7 @@ export default function AdminClientPage() {
 
 
   if (!isClient || (!isAllOrdersLoaded && allOrders.length === 0)) {
-    return <AdminSkeleton />;
+    return <CustomScreenLoader text="Loading admin dashboard..." />;
   }
 
   if (!isAdmin) {

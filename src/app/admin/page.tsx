@@ -1,12 +1,11 @@
-
 // @/app/admin/page.tsx
 import { Suspense } from 'react';
 import AdminClientPage from './admin-client-page';
-import { AdminSkeleton } from '@/components/skeletons/admin-skeleton';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 export default async function AdminPage() {
     return (
-        <Suspense fallback={<AdminSkeleton />}>
+        <Suspense fallback={<CustomScreenLoader text="Loading admin dashboard..." />}>
             <AdminClientPage />
         </Suspense>
     );
