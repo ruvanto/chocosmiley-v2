@@ -5,7 +5,6 @@ import Image from "next/image";
 import { SectionTitle } from "./section-title";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { Separator } from "./ui/separator";
 import { ChevronRight } from "lucide-react";
@@ -58,7 +57,7 @@ const titleVariants = {
 };
 
 const subtitleVariants = {
-    initial: { opacity: 1, y: 0 },
+    initial: { opacity: 0, y: 10 },
     hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
 };
 
@@ -74,35 +73,12 @@ const overlayVariants = {
 
 const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const router = useRouter();
-    const isMobile = useIsMobile();
     const { setIsGlobalLoading } = useAppContext();
-    const [isClient, setIsClient] = React.useState(false);
-
-    React.useEffect(() => {
-        setIsClient(true);
-    }, []);
 
     const handleCategoryClick = (categoryName: string) => {
         setIsGlobalLoading(true);
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
-
-    const isMobileClient = isClient && isMobile;
-
-    const dynamicTitleVariants = {
-        initial: { y: isMobileClient ? -8 : 12 },
-        hover: { y: -8 },
-    };
-
-    const dynamicTextContainerVariants = {
-        initial: { alignItems: isMobileClient ? "flex-start" : "center" },
-        hover: { alignItems: "flex-start" },
-    };
-    
-    const dynamicChevronVariants = {
-        initial: { opacity: isMobileClient ? 1: 0, x: isMobileClient ? 0: -5, width: isMobileClient ? "auto" : 0 },
-        hover: { opacity: 1, x: 0, width: "auto", transition: { delay: 0.1 } },
-    }
 
     return (
         <motion.div
@@ -111,7 +87,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
             initial="initial"
-            whileHover={isMobile ? undefined : "hover"}
+            whileHover={"hover"}
             animate={"initial"}
         >
             <Image
@@ -129,19 +105,19 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             ></motion.div>
             
             <motion.div
-                variants={dynamicTextContainerVariants}
+                variants={textContainerVariants}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="absolute inset-x-0 bottom-2 md:bottom-5 flex flex-col px-4"
             >
                 <motion.div
-                    variants={dynamicTitleVariants}
+                    variants={titleVariants}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="flex items-center justify-center gap-1"
                 >
                     <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
                         {category.name}
                     </h3>
-                    <motion.div variants={dynamicChevronVariants} style={{ overflow: 'hidden' }}>
+                    <motion.div variants={chevronVariants} style={{ overflow: 'hidden' }}>
                         <ChevronRight className="h-6 w-6 text-white hidden md:block" />
                     </motion.div>
                 </motion.div>
@@ -160,7 +136,6 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
 
 export function ExploreCategories({ exploreCategories, exploreFlavours }: ExploreCategoriesProps) {
   const router = useRouter();
-  const isMobile = useIsMobile();
   const { setIsGlobalLoading } = useAppContext();
 
   const handleFlavourClick = (flavourName: string) => {
@@ -202,7 +177,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                         key={flavour._key} 
                         className="w-24 md:flex-1 md:max-w-xs flex-shrink-0 aspect-square md:aspect-[5/6] relative group cursor-pointer" 
                         variants={itemVariants}
-                        whileHover={isMobile ? {} : { scale: 1.02 }}
+                        whileHover={{ scale: 1.02 }}
                         onClick={() => handleFlavourClick(flavour.name)}
                     >
                         <Image

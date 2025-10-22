@@ -23,6 +23,7 @@ import { ProfileCompletionBanner } from '@/components/profile-completion-banner'
 import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
 import { FloatingCartButton } from '@/components/floating-cart-button';
+import { MobileExploreCategories } from '@/components/mobile-explore-categories';
 
 interface HomepageContent {
   exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string }[];
@@ -227,7 +228,11 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
             </div>
           </div>
           <div className="mt-8 md:mt-20 w-full flex-grow min-h-0">
-            <ExploreCategories exploreCategories={exploreCategories} exploreFlavours={exploreFlavours} />
+            {isMobile ? (
+              <MobileExploreCategories exploreCategories={exploreCategories} exploreFlavours={exploreFlavours} />
+            ) : (
+              <ExploreCategories exploreCategories={exploreCategories} exploreFlavours={exploreFlavours} />
+            )}
           </div>
           
         </main>
