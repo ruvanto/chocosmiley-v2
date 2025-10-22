@@ -1,6 +1,8 @@
+
 // @/components/skeletons/home-skeleton.tsx
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { BottomNavbar } from "../bottom-navbar";
 
 const HeaderSkeleton = () => (
     <header className="fixed top-0 z-50 w-full pt-4 md:pt-6 pb-4 md:pb-4 bg-background">
@@ -86,6 +88,7 @@ export function HomeSkeleton() {
                     <CategoriesSkeleton />
                  </div>
             </main>
+            <BottomNavbar activeView={'home'} onNavigate={() => {}} cartItemCount={0} />
         </div>
     )
 }

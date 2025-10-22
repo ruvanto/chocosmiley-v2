@@ -171,25 +171,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
 
   if (!isClient) {
     return (
-      <>
-        <Header 
-          onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={!!isMobile}
-          onReset={handleResetToHome}
-          onNavigate={handleHeaderNavigate}
-          activeView={'home'}
-          onSearchSubmit={(query) => {
-            setIsGlobalLoading(true);
-            router.push(`/search?q=${encodeURIComponent(query)}`);
-          }}
-          searchInput={searchInput}
-          onSearchInputChange={handleSearchInputChange}
-          isEnquireOpen={isEnquireOpen}
-          onEnquireOpenChange={setIsEnquireOpen}
-        />
-        <HomeSkeleton />
-        <BottomNavbar activeView={'home'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
-      </>
+      <HomeSkeleton />
     );
   }
 
