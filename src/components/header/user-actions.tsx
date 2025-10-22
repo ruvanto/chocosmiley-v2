@@ -160,7 +160,7 @@ export function UserActions({
                     <Separator orientation="vertical" className="h-6 bg-foreground/50 mx-1 lg:mx-2" />
                     <Popover open={isCompletionDropdownOpen} onOpenChange={handleDropdownOpenChange}>
                         <PopoverTrigger asChild>
-                            <button onClick={handleProfileClick} aria-label="Profile" className="ml-1 lg:ml-2">
+                            <button onClick={handleProfileClick} aria-label="Profile" className="ml-1">
                                 <Image src="/icons/account_icon.png" alt="Profile" width={36} height={36} className="h-8 w-8 lg:h-9 lg:w-9 transition-colors hover:opacity-80" onDragStart={(e) => e.preventDefault()} />
                             </button>
                         </PopoverTrigger>

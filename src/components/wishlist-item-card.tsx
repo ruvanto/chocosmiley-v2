@@ -124,42 +124,45 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
           />
         </div>
 
-        <div className="flex flex-col justify-between flex-grow self-stretch min-w-0">
-          <div>
-            <div className="flex justify-between items-start gap-2">
-                <h3 className="font-bold text-lg leading-tight flex-1 truncate">{product.name}</h3>
-                <button onClick={handleUnlikeClick} className="p-1 flex-shrink-0">
-                  <Heart className="h-6 w-6 text-red-500 fill-red-500" />
-                </button>
+        <div className="flex flex-col flex-grow self-stretch min-w-0">
+            <div>
+              <div className="flex justify-between items-start gap-2">
+                  <h3 className="font-bold text-lg leading-tight flex-1 truncate">{product.name}</h3>
+                  <button onClick={handleUnlikeClick} className="p-1 flex-shrink-0">
+                    <Heart className="h-6 w-6 text-red-500 fill-red-500" />
+                  </button>
+              </div>
+              <p className="text-sm text-black/70 truncate mt-1">{subtitle}</p>
             </div>
-            <p className="text-sm text-black/70 truncate mt-1">{subtitle}</p>
-          </div>
-          <div className="flex justify-between items-end gap-2">
-            {product.discountedPrice && <p className="font-bold text-xl text-custom-purple-dark truncate">₹{product.discountedPrice}</p>}
+            
+            <div className="flex-grow"></div>
 
-            {isOutOfStock ? (
-              <Button
-                size="sm"
-                disabled
-                className="h-9 px-4 rounded-full bg-gray-400 text-white cursor-not-allowed text-sm"
-              >
-                OUT OF STOCK
-              </Button>
-            ) : (
-              <Button
-                size="sm"
-                onClick={handleAddToCartClick}
-                className={cn(
-                  "rounded-full uppercase border-2 border-b-[3px] h-9 px-6 text-sm transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
-                  isInCart
-                    ? 'bg-custom-purple-dark text-white hover:bg-custom-purple-dark/90'
-                    : 'bg-transparent text-custom-purple-dark hover:bg-custom-purple-dark hover:text-white'
-                )}
-              >
-                {isInCart ? 'ADDED' : 'ADD'}
-              </Button>
-            )}
-          </div>
+            <div className="flex justify-between items-end gap-2">
+              {product.discountedPrice && <p className="font-bold text-xl text-custom-purple-dark truncate">₹{product.discountedPrice}</p>}
+
+              {isOutOfStock ? (
+                <Button
+                  size="sm"
+                  disabled
+                  className="h-9 px-4 rounded-full bg-gray-400 text-white cursor-not-allowed text-sm"
+                >
+                  OUT OF STOCK
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  onClick={handleAddToCartClick}
+                  className={cn(
+                    "rounded-full uppercase border-2 border-b-[3px] h-9 px-6 text-sm transition-colors duration-300 border-custom-purple-dark flex-shrink-0",
+                    isInCart
+                      ? 'bg-custom-purple-dark text-white hover:bg-custom-purple-dark/90'
+                      : 'bg-transparent text-custom-purple-dark hover:bg-custom-purple-dark hover:text-white'
+                  )}
+                >
+                  {isInCart ? 'ADDED' : 'ADD'}
+                </Button>
+              )}
+            </div>
         </div>
       </div>
     </Link>
