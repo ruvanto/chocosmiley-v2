@@ -30,7 +30,7 @@ interface SearchClientPageProps {
 }
 
 const LoadingFallback = () => (
-    <CustomScreenLoader text="Bringing you the best ChocoSmiley treats..." />
+    <CustomScreenLoader text="Preparing your search results" />
 );
 
 function formatCategoryTitleToKey(title: string) {

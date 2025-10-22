@@ -23,14 +23,12 @@ import { ProductPopupFooter } from '../product-popup-footer';
 import { ImageGallery, ExpandedImageView } from '../image-gallery';
 import { FlavoursSection } from '../flavours-section';
 import { FlavourSelectionPopup } from '../flavour-selection-popup';
-import { Loader } from '../loader';
 import { ProfileCompletionBanner } from '../profile-completion-banner';
 import { MobileSearchView } from './MobileSearchView';
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../search-suggestions';
 import { MobileProductStickyBar } from '../mobile-product-sticky-bar';
 import { MobileExpandedImageView } from '../mobile-image-gallery';
-import { SearchBar } from '../header/search-bar';
 import CustomScreenLoader from '../custom-screen-loader';
 
 interface ProductDetailClientPageProps {
