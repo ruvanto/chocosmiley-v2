@@ -1,4 +1,3 @@
-
 // @/components/my-profile-tab.tsx
 'use client';
 
@@ -19,6 +18,7 @@ import { DeleteAccountPopup } from './delete-account-popup';
 import { Separator } from './ui/separator';
 import { StateSelectionPopup } from './state-selection-popup';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ScrollArea } from './ui/scroll-area';
 
 const parseAddress = (fullAddress: string | undefined) => {
     if (!fullAddress) return { address: '', pincode: '', city: '', state: '' };
@@ -247,113 +247,115 @@ const fullAddressFromState = useMemo(() => {
                 <h2 className="text-3xl font-normal font-poppins">My Profile</h2>
             </div>
             
-            <div className="overflow-y-auto no-scrollbar flex-grow min-h-0 px-4 pt-4 pb-20 md:p-8 md:pt-2">
-                <div className="bg-white/10 rounded-xl p-4 flex items-center gap-4">
-                    <Avatar className="w-16 h-16">
-                    <AvatarImage src={user?.photoURL ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(name || profile.email)}&background=random`} alt="User avatar" data-ai-hint="person portrait" onDragStart={(e) => e.preventDefault()}/>
-                    <AvatarFallback>{profile.name?.charAt(0).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <div className="min-w-0">
-                        <h2 className="text-lg font-bold text-white truncate">{name || "Guest User"}</h2>
-                        <p className="text-sm text-white/70 truncate">{profile.email}</p>
-                        {isGoogleSignIn && (
-                            <div className="flex items-center gap-1.5 bg-black/20 text-white text-xs px-2 py-0.5 rounded-full mt-1 w-fit">
-                                <Image src="/icons/google.png" alt="Google" width={12} height={12} onDragStart={(e) => e.preventDefault()} />
-                                <span>Google Account</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
+            <ScrollArea className="flex-grow min-h-0 custom-scrollbar -mr-8 pr-8">
+              <div className="px-4 pt-4 pb-20 md:p-8 md:pt-2">
+                  <div className="bg-white/10 rounded-xl p-4 flex items-center gap-4">
+                      <Avatar className="w-16 h-16">
+                      <AvatarImage src={user?.photoURL ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(name || profile.email)}&background=random`} alt="User avatar" data-ai-hint="person portrait" onDragStart={(e) => e.preventDefault()}/>
+                      <AvatarFallback>{profile.name?.charAt(0).toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0">
+                          <h2 className="text-lg font-bold text-white truncate">{name || "Guest User"}</h2>
+                          <p className="text-sm text-white/70 truncate">{profile.email}</p>
+                          {isGoogleSignIn && (
+                              <div className="flex items-center gap-1.5 bg-black/20 text-white text-xs px-2 py-0.5 rounded-full mt-1 w-fit">
+                                  <Image src="/icons/google.png" alt="Google" width={12} height={12} onDragStart={(e) => e.preventDefault()} />
+                                  <span>Google Account</span>
+                              </div>
+                          )}
+                      </div>
+                  </div>
 
-                <div className="space-y-4 mt-6">
-                    <ProfileSection title="Personal Details" icon={<User size={18} />}>
-                        <FormField id="name-mobile" label="Full Name" message={nameChanged ? 'You have unsaved changes' : undefined}>
-                            <Input 
-                                id="name-mobile"
-                                type="search"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base" 
-                            />
-                        </FormField>
-                        <FormField id="phone-mobile" label="Phone Number" message={phoneIsInvalid ? "Phone number must be 10 digits" : (phoneChanged ? 'You have unsaved changes' : undefined)} messageType={phoneIsInvalid ? 'error' : 'info'}>
-                            <div className="flex items-center bg-white/5 border border-white/20 rounded-lg h-11 overflow-hidden">
-                                <span className="text-white/70 font-montserrat px-3 border-r border-white/20">+91</span>
-                                <Input 
-                                    id="phone-mobile" 
-                                    type="tel"
-                                    autoComplete="off"
-                                    value={phone}
-                                    onChange={handlePhoneChange}
-                                    className="bg-transparent border-none text-white h-full text-base focus-visible:ring-0 focus-visible:ring-offset-0" 
-                                />
-                            </div>
-                        </FormField>
-                    </ProfileSection>
+                  <div className="space-y-4 mt-6">
+                      <ProfileSection title="Personal Details" icon={<User size={18} />}>
+                          <FormField id="name-mobile" label="Full Name" message={nameChanged ? 'You have unsaved changes' : undefined}>
+                              <Input 
+                                  id="name-mobile"
+                                  type="search"
+                                  value={name}
+                                  onChange={(e) => setName(e.target.value)}
+                                  className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base" 
+                              />
+                          </FormField>
+                          <FormField id="phone-mobile" label="Phone Number" message={phoneIsInvalid ? "Phone number must be 10 digits" : (phoneChanged ? 'You have unsaved changes' : undefined)} messageType={phoneIsInvalid ? 'error' : 'info'}>
+                              <div className="flex items-center bg-white/5 border border-white/20 rounded-lg h-11 overflow-hidden">
+                                  <span className="text-white/70 font-montserrat px-3 border-r border-white/20">+91</span>
+                                  <Input 
+                                      id="phone-mobile" 
+                                      type="tel"
+                                      autoComplete="off"
+                                      value={phone}
+                                      onChange={handlePhoneChange}
+                                      className="bg-transparent border-none text-white h-full text-base focus-visible:ring-0 focus-visible:ring-offset-0" 
+                                  />
+                              </div>
+                          </FormField>
+                      </ProfileSection>
 
-                    <ProfileSection title="Delivery Address" icon={<Home size={18} />}>
-                        <FormField id="address-mobile" label="Address" message={addressChanged ? 'You have unsaved changes' : undefined}>
-                            <Textarea
-                                id="address-mobile"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                placeholder="House No, Building, Street..."
-                                className="bg-white/5 border-white/20 text-white rounded-lg h-32 no-scrollbar text-base"
-                            />
-                        </FormField>
-                        <div className="grid grid-cols-2 gap-4">
-                            <FormField id="pincode-mobile" label="Pincode" message={pincodeIsInvalid ? "Pincode must be 6 digits" : (pincodeChanged ? 'You have unsaved changes' : undefined)} messageType={pincodeIsInvalid ? 'error' : 'info'}>
-                                <Input
-                                    id="pincode-mobile"
-                                    type="tel"
-                                    value={pincode}
-                                    onChange={handlePincodeChange}
-                                    className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base"
-                                />
-                            </FormField>
-                            <FormField id="city-mobile" label="District / City" message={cityChanged ? 'You have unsaved changes' : undefined}>
-                                <Input
-                                    id="city-mobile"
-                                    type="search"
-                                    value={city}
-                                    onChange={(e) => setCity(e.target.value)}
-                                    className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base"
-                                />
-                            </FormField>
-                        </div>
-                        <FormField id="state-mobile" label="State" message={stateChanged ? 'You have unsaved changes' : undefined}>
-                            <Button
-                                variant="outline"
-                                onClick={() => setIsStatePopupOpen(true)}
-                                className="w-full justify-start text-left font-normal bg-white/5 border-white/20 text-white rounded-lg h-11 text-base hover:bg-white/10 hover:text-white"
-                            >
-                                {state ? states.find(s => s.value === state)?.label : "Select state..."}
-                            </Button>
-                        </FormField>
-                    </ProfileSection>
+                      <ProfileSection title="Delivery Address" icon={<Home size={18} />}>
+                          <FormField id="address-mobile" label="Address" message={addressChanged ? 'You have unsaved changes' : undefined}>
+                              <Textarea
+                                  id="address-mobile"
+                                  value={address}
+                                  onChange={(e) => setAddress(e.target.value)}
+                                  placeholder="House No, Building, Street..."
+                                  className="bg-white/5 border-white/20 text-white rounded-lg h-32 no-scrollbar text-base"
+                              />
+                          </FormField>
+                          <div className="grid grid-cols-2 gap-4">
+                              <FormField id="pincode-mobile" label="Pincode" message={pincodeIsInvalid ? "Pincode must be 6 digits" : (pincodeChanged ? 'You have unsaved changes' : undefined)} messageType={pincodeIsInvalid ? 'error' : 'info'}>
+                                  <Input
+                                      id="pincode-mobile"
+                                      type="tel"
+                                      value={pincode}
+                                      onChange={handlePincodeChange}
+                                      className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base"
+                                  />
+                              </FormField>
+                              <FormField id="city-mobile" label="District / City" message={cityChanged ? 'You have unsaved changes' : undefined}>
+                                  <Input
+                                      id="city-mobile"
+                                      type="search"
+                                      value={city}
+                                      onChange={(e) => setCity(e.target.value)}
+                                      className="bg-white/5 border-white/20 text-white rounded-lg h-11 text-base"
+                                  />
+                              </FormField>
+                          </div>
+                          <FormField id="state-mobile" label="State" message={stateChanged ? 'You have unsaved changes' : undefined}>
+                              <Button
+                                  variant="outline"
+                                  onClick={() => setIsStatePopupOpen(true)}
+                                  className="w-full justify-start text-left font-normal bg-white/5 border-white/20 text-white rounded-lg h-11 text-base hover:bg-white/10 hover:text-white"
+                              >
+                                  {state ? states.find(s => s.value === state)?.label : "Select state..."}
+                              </Button>
+                          </FormField>
+                      </ProfileSection>
 
-                    <ProfileSection title="Security" icon={<Lock size={18} />}>
-                        <div className="flex flex-col md:flex-row gap-3">
-                            {!isGoogleSignIn && (
-                                <Button
-                                  onClick={() => setIsSecurityPopupOpen(true)} 
-                                  className="w-auto md:w-full bg-custom-gold text-custom-purple-dark hover:bg-custom-gold/90"
-                                >
-                                    Change Password
-                                </Button>
-                            )}
+                      <ProfileSection title="Security" icon={<Lock size={18} />}>
+                          <div className="flex flex-col md:flex-row gap-3">
+                              {!isGoogleSignIn && (
+                                  <Button
+                                    onClick={() => setIsSecurityPopupOpen(true)} 
+                                    className="w-auto md:w-full bg-custom-gold text-custom-purple-dark hover:bg-custom-gold/90"
+                                  >
+                                      Change Password
+                                  </Button>
+                              )}
 
-                            <Button 
-                              onClick={() => setIsDeletePopupOpen(true)} 
-                              variant="destructive"
-                              className="w-auto md:w-full"
-                            >
-                                Delete Account
-                            </Button>
-                        </div>
-                    </ProfileSection>
-                </div>
-            </div>
+                              <Button 
+                                onClick={() => setIsDeletePopupOpen(true)} 
+                                variant="destructive"
+                                className="w-auto md:w-full"
+                              >
+                                  Delete Account
+                              </Button>
+                          </div>
+                      </ProfileSection>
+                  </div>
+              </div>
+            </ScrollArea>
              <AnimatePresence>
                 {hasAnyChanges && (
                     <motion.div

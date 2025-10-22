@@ -106,7 +106,7 @@ export function MyOrdersTab({ isMobile = false }: MyOrdersTabProps) {
             <>
                 <div className={cn("flex flex-col", orders.length > 0 ? "min-h-screen" : "h-full" ,"text-white px-4 pb-4")}>
                      {orders.length > 0 ? (
-                        <div className="bg-transparent flex flex-col overflow-y-auto no-scrollbar pt-4">
+                        <ScrollArea className="flex-grow pr-4 -mr-4 custom-scrollbar pb-4">
                             <div className="space-y-4">
                                 {orders.map((order) => (
                                     <OrderItemCard 
@@ -126,7 +126,7 @@ export function MyOrdersTab({ isMobile = false }: MyOrdersTabProps) {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </ScrollArea>
                     ) : (
                         <div className="flex-grow flex items-center justify-center h-full pt-24">
                             <EmptyState
