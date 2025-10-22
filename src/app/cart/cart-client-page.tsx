@@ -78,12 +78,8 @@ export default function CartClientPage() {
     let isMounted = true;
     const fetchProductDetails = async () => {
       // Don't show a full loader on quantity updates, only on initial load.
-      if (isCartLoaded) {
-        if (productsInCart.length > 0) {
-            setIsCartUpdating(true);
-        } else {
-            setIsProductLoading(true);
-        }
+      if (isCartLoaded && !isCartUpdating) {
+        setIsProductLoading(true);
       }
       
       if (productNamesInCart.length > 0) {
@@ -155,6 +151,7 @@ export default function CartClientPage() {
   }
 
   const handleQuantityChange = (productName: string, newQuantity: number) => {
+    setIsCartUpdating(true);
     updateCart(productName, newQuantity);
   };
 
@@ -219,7 +216,7 @@ export default function CartClientPage() {
     return acc;
   }, {} as Record<string, SanityProduct>);
   
-  const isPageLoading = !isClient || !isCartLoaded || (isProductLoading && productsInCart.length === 0);
+  const isPageLoading = !isClient || !isCartLoaded || (isProductLoading && cartItems.length > 0);
 
   if (isPageLoading) {
     return (
