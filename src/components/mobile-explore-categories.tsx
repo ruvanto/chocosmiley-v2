@@ -50,18 +50,18 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             ></div>
             
             <div
-                className="absolute inset-x-0 bottom-2 flex flex-col px-4 items-start"
+                className="absolute inset-x-0 bottom-2 flex flex-col px-3 items-start"
             >
                 <div
                     className="flex items-center justify-center gap-1"
                 >
-                    <h3 className="text-white text-base font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
+                    <h3 className="text-white text-sm font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
                         {category.name}
                     </h3>
                 </div>
                 
                 <p
-                    className="text-white/80 font-light text-xs [text-shadow:0_1px_1px_rgba(0,0,0,1)] -mt-2"
+                    className="text-white/80 font-light text-[10px] [text-shadow:0_1px_1px_rgba(0,0,0,1)]"
                 >
                     {category.subtitle}
                 </p>

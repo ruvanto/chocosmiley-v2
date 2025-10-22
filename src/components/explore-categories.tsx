@@ -52,7 +52,7 @@ const textContainerVariants = {
 };
 
 const titleVariants = {
-    initial: { y: 12 },
+    initial: { y: 18 },
     hover: { y: -8 },
 };
 

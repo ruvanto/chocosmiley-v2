@@ -2,9 +2,9 @@
 // @/app/profile/profile-client-page.tsx
 'use client';
 
-import { useState, useEffect, type UIEvent, Suspense } from 'react';
+import { useState, useEffect, type UIEvent } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import type { SanityProduct, ActiveView } from '@/types';
+import type { ActiveView } from '@/types';
 import { Header } from '@/components/header';
 import { BottomNavbar } from '@/components/bottom-navbar';
 import { SparkleBackground } from '@/components/sparkle-background';

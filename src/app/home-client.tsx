@@ -183,18 +183,16 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
         "flex flex-col h-screen",
         (isProfileOpen || flavourSelection.isOpen || isEnquireOpen) ? 'opacity-50' : ''
       )}>
-        <Header 
+        <Header
           onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={!!isMobile}
-          onReset={handleResetToHome}
+          isContentScrolled={true}
+          onReset={() => {
+            if (pathname === '/') return;
+            setIsGlobalLoading(true);
+            router.push('/');
+          }}
           onNavigate={handleHeaderNavigate}
           activeView={'home'}
-          onSearchSubmit={(query) => {
-            setIsGlobalLoading(true);
-            router.push(`/search?q=${encodeURIComponent(query)}`);
-          }}
-          searchInput={searchInput}
-          onSearchInputChange={handleSearchInputChange}
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
         />
