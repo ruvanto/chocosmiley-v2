@@ -75,6 +75,11 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const router = useRouter();
     const isMobile = useIsMobile();
     const { setIsGlobalLoading } = useAppContext();
+    const [isClient, setIsClient] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const handleCategoryClick = (categoryName: string) => {
         setIsGlobalLoading(true);
@@ -88,10 +93,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
             initial="initial"
-            // --- THE FIX IS HERE ---
-            // On mobile, animate directly to the 'hover' state without interaction.
-            // On desktop, the state is 'initial' and changes on hover.
-            animate={isMobile ? "hover" : "initial"}
+            animate={isClient && isMobile ? "hover" : "initial"}
             whileHover={isMobile ? undefined : "hover"}
         >
             <Image
