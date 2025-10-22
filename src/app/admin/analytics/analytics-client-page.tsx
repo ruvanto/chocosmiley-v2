@@ -1,4 +1,3 @@
-
 // @/app/admin/analytics/analytics-client-page.tsx
 'use client';
 
@@ -14,7 +13,7 @@ import { EmptyState } from '@/components/empty-state';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
-import { Loader } from '@/components/loader';
+import CustomScreenLoader from '@/components/custom-screen-loader';
 
 const MetricCard = ({ title, value, icon, description }: { title: string, value: string | number, icon: React.ReactNode, description?: string }) => (
     <Card className="bg-white/10 text-white border-white/20">
@@ -79,11 +78,7 @@ export default function AnalyticsClientPage() {
 
 
     if (!isAllOrdersLoaded) {
-        return (
-            <div className="flex h-screen w-full items-center justify-center bg-background">
-                <Loader />
-            </div>
-        );
+        return <CustomScreenLoader text="Preparing analytics and data" />;
     }
 
     if (!isAdmin) {
