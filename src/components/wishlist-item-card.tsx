@@ -1,3 +1,4 @@
+
 // @/components/wishlist-item-card.tsx
 'use client';
 
@@ -60,7 +61,7 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
           </div>
 
           <div className="flex flex-col justify-between flex-grow self-stretch min-w-0">
-            <div className="">
+            <div>
               <div className="flex justify-between items-start gap-2">
                   <h3 className="font-bold text-sm leading-tight flex-1 truncate">{product.name}</h3>
                   <button onClick={handleUnlikeClick} className="flex-shrink-0">
@@ -125,15 +126,15 @@ export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isU
         </div>
 
         <div className="flex flex-col flex-grow self-stretch min-w-0">
-            <div>
-              <div className="flex justify-between items-start gap-2">
-                  <h3 className="font-bold text-lg leading-tight flex-1 truncate">{product.name}</h3>
-                  <button onClick={handleUnlikeClick} className="p-1 flex-shrink-0">
-                    <Heart className="h-6 w-6 text-red-500 fill-red-500" />
-                  </button>
-              </div>
-              <p className="text-sm text-black/70 truncate mt-1">{subtitle}</p>
+          <div>
+            <div className="flex justify-between items-start gap-2">
+                <h3 className="font-bold text-lg leading-tight flex-1 truncate">{product.name}</h3>
+                <button onClick={handleUnlikeClick} className="p-1 flex-shrink-0">
+                  <Heart className="h-6 w-6 text-red-500 fill-red-500" />
+                </button>
             </div>
+            <p className="text-sm text-black/70 truncate mt-1">{subtitle}</p>
+          </div>
             
             <div className="flex-grow"></div>
 
