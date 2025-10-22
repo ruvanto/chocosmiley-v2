@@ -129,9 +129,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
     : null;
 
     return (
-        <Link
-            href={`/product/${product.slug.current}`}
-            onClick={handleImageClick}
+        <div
             className={cn(
                 "w-full bg-transparent p-3 text-black relative transition-all duration-300 overflow-hidden block",
                 !isLastItem && "border-b border-black/10"
@@ -140,7 +138,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
             <div className="flex gap-3">
                 {/* Left Column: Image and Quantity Stepper */}
                 <div className="w-1/4 flex-shrink-0 flex flex-col items-center gap-2">
-                    <div className="cursor-pointer w-full">
+                    <Link href={`/product/${product.slug.current}`} onClick={handleImageClick} className="cursor-pointer w-full">
                       <Image
                           src={product.images?.[0] || "/placeholder.png"}
                           alt={item.name}
@@ -150,7 +148,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                           data-ai-hint="chocolate box"
                           onDragStart={(e) => e.preventDefault()}
                       />
-                    </div>
+                    </Link>
                     <div className="flex items-center justify-between w-full max-w-[100px] rounded-full text-black h-8 bg-gray-200 overflow-hidden">
                         <Button
                             size="icon"
@@ -246,6 +244,6 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }

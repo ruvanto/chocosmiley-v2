@@ -39,7 +39,7 @@ export function FloatingCartButton({
         onClick={onToggleCart}
         className={cn(
           "shadow-lg bg-custom-gold hover:bg-custom-gold/90 transition-all duration-300 ease-in-out flex items-center justify-center overflow-hidden w-14 h-14",
-          isCartButtonExpanded && !isCartOpen ? 'w-64 h-14 rounded-full' : 'w-14 h-14 rounded-full'
+          isCartButtonExpanded && !isCartOpen ? 'w-80 h-14 rounded-full' : 'w-14 h-14 rounded-full'
         )}
         size="icon"
       >

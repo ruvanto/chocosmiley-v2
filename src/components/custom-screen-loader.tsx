@@ -7,8 +7,8 @@ import React from 'react';
  */
 const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while we prepare your treats" }) => {
   // Base colors from the app's theme
-  const BG_PURPLE = '#5D2B79';
-  const DOT_GOLD = '#FFD139';
+  const BG_PURPLE = '#5c2881';
+  const DOT_GOLD = '#efc140';
 
   // Define the custom keyframes and dot class styles.
   const animationStyles = `
@@ -35,7 +35,7 @@ const CustomScreenLoader: React.FC<{ text?: string }> = ({ text = "Hold on while
     >
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
 
-      <div className="flex justify-between items-center space-x-3 md:space-x-4 w-24 md:w-28 h-6 mb-6">
+      <div className="flex justify-between items-center space-x-2 md:space-x-4 w-24 md:w-28 h-6 mb-6">
         <div 
           key="dot-1"
           className="dot rounded-full w-4 h-4 md:w-6 md:h-6"

@@ -9,7 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { Separator } from "./ui/separator";
 import { ChevronRight } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -75,20 +75,11 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const router = useRouter();
     const isMobile = useIsMobile();
     const { setIsGlobalLoading } = useAppContext();
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
 
     const handleCategoryClick = (categoryName: string) => {
         setIsGlobalLoading(true);
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
-
-    if (!isClient) {
-        return <div className="w-full aspect-[5/6] bg-white/10 rounded-[20px] md:rounded-[30px] lg:rounded-[40px]"></div>;
-    }
 
     return (
         <motion.div
@@ -96,8 +87,12 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             className="w-full aspect-[5/6] relative cursor-pointer"
             variants={itemVariants}
             onClick={() => handleCategoryClick(category.name)}
-            initial={isMobile ? "hover" : "initial"}
-            whileHover={"hover"}
+            initial="initial"
+            // --- THE FIX IS HERE ---
+            // On mobile, animate directly to the 'hover' state without interaction.
+            // On desktop, the state is 'initial' and changes on hover.
+            animate={isMobile ? "hover" : "initial"}
+            whileHover={isMobile ? undefined : "hover"}
         >
             <Image
                 src={category.imageUrl}
@@ -161,12 +156,12 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
       transition={{ type: 'spring', stiffness: 80, damping: 15 }}
     >
         <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
-            <div className="flex-col  overflow-y-auto no-scrollbar h-full">
-                <SectionTitle className="flex justify-center md:justify-start text-lg pt-4 md:pt-6 md:text-2xl md:pl-8 mb-2 md:mb-4">
+            <div className="flex-col overflow-y-auto no-scrollbar h-full">
+                <SectionTitle className="flex justify-center md:justify-start text-lg md:text-xl lg:text-2xl pt-4 md:pt-6 md:pl-8 mb-2 md:mb-4">
                     Explore Categories
                 </SectionTitle>
                 <motion.div 
-                    className="grid grid-cols-2 md:flex md:flex-row flex-grow-0 justify-around items-center gap-4 md:gap-6 lg:gap-10 pt-1 pb-6 md:pb-12 px-2"
+                    className="grid grid-cols-2 md:flex md:flex-row flex-1 justify-around items-center gap-4 md:gap-6 lg:gap-8 pt-1 pb-6 md:pb-10 px-2"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
@@ -180,7 +175,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     Explore Flavours
                 </SectionTitle>
                 <motion.div 
-                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-1 md:justify-around items-center gap-4 md:gap-8 px-2 md:px-0 pb-6 md:pb-10 pt-1"
+                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-1 md:justify-around items-center gap-4 md:gap-8 px-2 pb-6 md:pb-10 pt-1"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
