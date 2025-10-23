@@ -106,17 +106,13 @@ export function FlavourSelectionPopup({ open, onOpenChange, onConfirm }: Flavour
     }, {} as Record<string, string>);
 
     selectedFlavourNames.forEach(flavourName => {
-        const flavourId = flavourIdMap[flavourName];
-        if(flavourId) {
-            distribution[flavourId] = baseCount;
-        }
+        distribution[flavourName] = baseCount;
     });
     
     for (let i = 0; i < remainder; i++) {
         const flavourName = reversedSelectedFlavourNames[i];
-        const flavourId = flavourIdMap[flavourName];
-        if (distribution[flavourId] !== undefined) {
-          distribution[flavourId]++;
+        if (distribution[flavourName] !== undefined) {
+          distribution[flavourName]++;
         }
     }
 
@@ -157,7 +153,7 @@ export function FlavourSelectionPopup({ open, onOpenChange, onConfirm }: Flavour
   const selectedFlavoursWithDetails = availableFlavours
     .filter(f => selectedFlavourNames.includes(f.name))
     .map(f => {
-        const pieces = chocolateDistribution[f._id] || 0;
+        const pieces = chocolateDistribution[f.name] || 0;
         return {
             ...f,
             pieces,
@@ -221,7 +217,7 @@ export function FlavourSelectionPopup({ open, onOpenChange, onConfirm }: Flavour
                             isSelected={isSelected}
                             isDisabled={!isSelected && isMaxFlavoursReached}
                             onSelect={() => handleToggleFlavour(flavour.name)}
-                            pieces={chocolateDistribution[flavour._id] || 0}
+                            pieces={chocolateDistribution[flavour.name] || 0}
                         />
                       );
                   })}
