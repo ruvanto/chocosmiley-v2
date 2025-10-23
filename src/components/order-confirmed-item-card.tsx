@@ -1,4 +1,3 @@
-
 // @/components/order-confirmed-item-card.tsx
 'use client';
 
@@ -19,12 +18,11 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
   const { setIsGlobalLoading } = useAppContext();
   const router = useRouter();
 
-  const handleProductClick = (e: React.MouseEvent) => {
-    if (!item.slug) return;
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-        e.preventDefault();
+  const handleProductClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!item.slug?.current) return;
+    // Let Next.js Link handle navigation, but show loader for client-side transitions
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
         setIsGlobalLoading(true);
-        router.push(`/product/${item.slug.current}`);
     }
   }
 
@@ -39,7 +37,12 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
     : null;
 
   const cardContent = (
-    <>
+    <div 
+      className={cn(
+        "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors",
+        item.slug?.current && "hover:bg-white/80 cursor-pointer"
+      )}
+    >
       <div className={cn("flex items-start gap-3")}>
         <div className={cn("flex-shrink-0 relative", isMobile ? "w-16 h-16" : "w-20 h-20")}>
           <Image
@@ -98,34 +101,16 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
           </div>
         </>
       )}
-    </>
-  );
-
-  const Wrapper = ({ children }: { children: React.ReactNode }) => {
-    if (item.slug?.current) {
-      return (
-        <Link 
-          href={`/product/${item.slug.current}`} 
-          onClick={handleProductClick}
-          className="block"
-        >
-          {children}
-        </Link>
-      );
-    }
-    return <>{children}</>;
-  }
-
-  return (
-    <div 
-      className={cn(
-        "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors",
-        item.slug?.current && "hover:bg-white/80 cursor-pointer"
-      )}
-    >
-      <Wrapper>
-        {cardContent}
-      </Wrapper>
     </div>
   );
+
+  if (item.slug?.current) {
+    return (
+      <Link href={`/product/${item.slug.current}`} onClick={handleProductClick} className="block">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return cardContent;
 }
