@@ -119,9 +119,9 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
                 <div onClick={(e) => e.stopPropagation()}>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="link" className="p-0 mt-1 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline">
+                            <Button variant="link" className="p-0 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline flex items-center gap-1">
                                 <RotateCcw className="h-3.5 w-3" />
-                                Order Again
+                                <span>Order Again</span>
                             </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
@@ -145,7 +145,9 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
                     <div onClick={(e) => e.stopPropagation()}>
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                               <Button variant="link" className="p-0 h-auto text-red-600 font-poppins text-xs md:text-sm hover:no-underline">Cancel Order</Button>
+                               <Button variant="link" className="p-0 h-auto text-red-600 font-poppins text-xs md:text-sm hover:no-underline flex items-center gap-1">
+                                 <span>Cancel Order</span>
+                                </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
