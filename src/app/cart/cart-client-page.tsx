@@ -53,7 +53,7 @@ export default function CartClientPage() {
   const [isEnquireOpen, setIsEnquireOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const { cart, updateCart, clearCart, addOrder, isAuthenticated, setAuthPopup, isCartLoaded, setIsGlobalLoading, isProcessingOrder, setIsProcessingOrder, profileInfo } = useAppContext();
+  const { cart, updateCart, clearCart, addOrder, isAuthenticated, setAuthPopup, isCartLoaded, setIsGlobalLoading, isProcessingOrder, setIsProcessingOrder, profileInfo, isProfileLoaded } = useAppContext();
   const isMobile = useIsMobile();
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -77,7 +77,6 @@ export default function CartClientPage() {
   useEffect(() => {
     let isMounted = true;
     const fetchProductDetails = async () => {
-      // Don't show a full loader on quantity updates, only on initial load.
       if (isCartLoaded && !isCartUpdating) {
         setIsProductLoading(true);
       }
@@ -216,7 +215,7 @@ export default function CartClientPage() {
     return acc;
   }, {} as Record<string, SanityProduct>);
   
-  const isPageLoading = !isClient || !isCartLoaded || (cartItems.length > 0 && productsInCart.length === 0 && isProductLoading);
+  const isPageLoading = !isClient || !isCartLoaded || !isProfileLoaded || (isAuthenticated && isProductLoading);
 
   if (isPageLoading) {
     return (
