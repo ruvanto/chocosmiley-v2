@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { OrderItem } from '@/types';
 import { Separator } from './ui/separator';
+import Link from 'next/link';
 import { useAppContext } from '@/context/app-context';
-import { useRouter } from 'next/navigation';
 
 interface OrderConfirmedItemCardProps {
     item: OrderItem;
@@ -15,12 +15,14 @@ interface OrderConfirmedItemCardProps {
 
 export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCardProps) {
   const { setIsGlobalLoading } = useAppContext();
-  const router = useRouter();
 
-  const handleProductClick = () => {
-    if (!item.slug?.current) return;
-    setIsGlobalLoading(true);
-    router.push(`/product/${item.slug.current}`);
+  const handleProductClick = (e: React.MouseEvent) => {
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        if (!item.slug?.current) return;
+        setIsGlobalLoading(true);
+        window.location.href = `/product/${item.slug.current}`;
+    }
   }
 
   const pricePerItem = item.finalProductPrice && item.quantity > 0 ? item.finalProductPrice / item.quantity : 0;
@@ -33,10 +35,16 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
     ? `Contains ${item.numberOfChocolates} chocolate pieces`
     : null;
 
-  const cardContent = (
-    <div 
+  if (!item.slug?.current) {
+      return <div>Item details unavailable</div>;
+  }
+    
+  return (
+    <Link 
+      href={`/product/${item.slug.current}`} 
+      onClick={handleProductClick}
       className={cn(
-        "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors",
+        "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors cursor-pointer",
       )}
     >
       <div className={cn("flex items-start gap-3")}>
@@ -82,7 +90,8 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
 
                     const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                     const remainder = item.numberOfChocolates % selectedFlavoursCount;
-                    const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
+                    
+                    const sortedFlavours = item.flavours?.map(f => f.name).sort((a, b) => a.localeCompare(b)) || [];
                     
                     const flavourIndexInSorted = sortedFlavours.indexOf(flavour.name);
 
@@ -101,8 +110,6 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
           </div>
         </>
       )}
-    </div>
+    </Link>
   );
-
-  return cardContent;
 }
