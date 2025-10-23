@@ -1,3 +1,4 @@
+
 // @/components/wishlist-item-card.tsx
 'use client';
 
@@ -22,13 +23,11 @@ interface WishlistItemCardProps {
 export function WishlistItemCard({ product, onAddToCart, onUnlike, isInCart, isUnliking, onAnimationEnd, isLastItem, isMobile = false }: WishlistItemCardProps) {
   
   const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     onAddToCart();
   };
   
   const handleUnlikeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     onUnlike();
   };
