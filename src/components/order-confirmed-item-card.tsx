@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { OrderItem } from '@/types';
 import { Separator } from './ui/separator';
-import Link from 'next/link';
 import { useAppContext } from '@/context/app-context';
 import { useRouter } from 'next/navigation';
 
@@ -18,12 +17,10 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
   const { setIsGlobalLoading } = useAppContext();
   const router = useRouter();
 
-  const handleProductClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleProductClick = () => {
     if (!item.slug?.current) return;
-    // Let Next.js Link handle navigation, but show loader for client-side transitions
-    if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
-        setIsGlobalLoading(true);
-    }
+    setIsGlobalLoading(true);
+    router.push(`/product/${item.slug.current}`);
   }
 
   const pricePerItem = item.finalProductPrice && item.quantity > 0 ? item.finalProductPrice / item.quantity : 0;
@@ -40,7 +37,6 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
     <div 
       className={cn(
         "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors",
-        item.slug?.current && "hover:bg-white/80 cursor-pointer"
       )}
     >
       <div className={cn("flex items-start gap-3")}>
@@ -86,7 +82,11 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
 
                     const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                     const remainder = item.numberOfChocolates % selectedFlavoursCount;
-                    const pieces = baseCount + (idx < remainder ? 1 : 0);
+                    const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
+                    
+                    const flavourIndexInSorted = sortedFlavours.indexOf(flavour.name);
+
+                    const pieces = baseCount + (flavourIndexInSorted < remainder ? 1 : 0);
                     const flavourTotal = flavour.price * pieces;
 
                     return (
@@ -103,14 +103,6 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
       )}
     </div>
   );
-
-  if (item.slug?.current) {
-    return (
-      <Link href={`/product/${item.slug.current}`} onClick={handleProductClick} className="block">
-        {cardContent}
-      </Link>
-    );
-  }
 
   return cardContent;
 }
