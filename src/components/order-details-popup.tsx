@@ -236,7 +236,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                     <div className="space-y-3 px-6 py-4">
                         {order.items.map((item, index) => {
                             return (
-                                <div key={`${item.name}-${index}`} className="cursor-pointer">
+                                <div key={`${item.name}-${index}`}>
                                     <OrderConfirmedItemCard item={item} isMobile={false} />
                                 </div>
                             );
