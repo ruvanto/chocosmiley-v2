@@ -99,20 +99,14 @@ const BillDetails = ({ order }: { order: Order }) => {
                              const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                              const remainder = item.numberOfChocolates % selectedFlavoursCount;
                              
-                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
-                             const reversedSelectedFlavourNames = [...itemFlavourNames].reverse();
-
                              const distribution: Record<string, number> = {};
-                             itemFlavourNames.forEach(name => distribution[name] = baseCount);
+                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
 
-                             for (let i = 0; i < remainder; i++) {
-                                const flavourName = reversedSelectedFlavourNames[i];
-                                if (distribution[flavourName] !== undefined) {
-                                  distribution[flavourName]++;
-                                }
-                             }
+                             itemFlavourNames.forEach((name, index) => {
+                                distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                             });
 
-                             return item.flavours?.map((flavour, idx) => {
+                             return item.flavours?.map((flavour) => {
                                  const pieces = distribution[flavour.name] || 0;
                                  if (flavour.price > 0 && pieces > 0) {
                                      const flavourTotal = flavour.price * pieces * item.quantity;
@@ -458,7 +452,7 @@ const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Ord
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitleComponent>Are you sure?</AlertDialogTitleComponent>
                                                     <AlertDialogDescriptionComponent>
-                                                        The user&apos;s order will be cancelled. You can change the status back if you wish.
+                                                        The user&apos_s order will be cancelled. You can change the status back if you wish.
                                                     </AlertDialogDescriptionComponent>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>

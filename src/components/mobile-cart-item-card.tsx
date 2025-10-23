@@ -1,4 +1,5 @@
 
+
 // @/components/mobile-cart-item-card.tsx
 'use client';
 
@@ -82,19 +83,10 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
         
         const baseCount = Math.floor(product.numberOfChocolates / selectedCount);
         const remainder = product.numberOfChocolates % selectedCount;
-
-        const reversedSelectedFlavourNames = [...selectedFlavours].reverse();
         
-        selectedFlavours.forEach(flavourName => {
-            distribution[flavourName] = baseCount;
+        selectedFlavours.forEach((flavourName, index) => {
+            distribution[flavourName] = baseCount + (index < remainder ? 1 : 0);
         });
-
-        for (let i = 0; i < remainder; i++) {
-            const flavourName = reversedSelectedFlavourNames[i];
-            if (distribution[flavourName] !== undefined) {
-              distribution[flavourName]++;
-            }
-        }
         
         return distribution;
     }, [item.flavours, product.numberOfChocolates]);

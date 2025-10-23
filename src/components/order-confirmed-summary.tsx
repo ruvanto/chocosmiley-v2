@@ -1,4 +1,5 @@
 
+
 // @/components/order-confirmed-summary.tsx
 'use client';
 
@@ -89,20 +90,14 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
                              const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                              const remainder = item.numberOfChocolates % selectedFlavoursCount;
                              
-                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
-                             const reversedSelectedFlavourNames = [...itemFlavourNames].reverse();
-
                              const distribution: Record<string, number> = {};
-                             itemFlavourNames.forEach(name => distribution[name] = baseCount);
+                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
+                             
+                             itemFlavourNames.forEach((name, index) => {
+                                distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                             });
 
-                            for (let i = 0; i < remainder; i++) {
-                                const flavourName = reversedSelectedFlavourNames[i];
-                                if (distribution[flavourName] !== undefined) {
-                                    distribution[flavourName]++;
-                                }
-                            }
-
-                             return item.flavours?.map((flavour, idx) => {
+                             return item.flavours?.map((flavour) => {
                                  const pieces = distribution[flavour.name] || 0;
                                  if (flavour.price > 0 && pieces > 0) {
                                      const flavourTotal = flavour.price * pieces * item.quantity;

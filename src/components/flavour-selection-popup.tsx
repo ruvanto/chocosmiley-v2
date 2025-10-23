@@ -98,23 +98,9 @@ export function FlavourSelectionPopup({ open, onOpenChange, onConfirm }: Flavour
     const baseCount = Math.floor(product.numberOfChocolates / selectedCount);
     const remainder = product.numberOfChocolates % selectedCount;
     
-    const reversedSelectedFlavourNames = [...selectedFlavourNames].reverse();
-
-    const flavourIdMap = (product.availableFlavours || []).reduce((acc, f) => {
-        acc[f.name] = f._id;
-        return acc;
-    }, {} as Record<string, string>);
-
-    selectedFlavourNames.forEach(flavourName => {
-        distribution[flavourName] = baseCount;
+    selectedFlavourNames.forEach((flavourName, index) => {
+        distribution[flavourName] = baseCount + (index < remainder ? 1 : 0);
     });
-    
-    for (let i = 0; i < remainder; i++) {
-        const flavourName = reversedSelectedFlavourNames[i];
-        if (distribution[flavourName] !== undefined) {
-          distribution[flavourName]++;
-        }
-    }
 
     return distribution;
   }, [product, selectedFlavourNames, selectedCount]);
