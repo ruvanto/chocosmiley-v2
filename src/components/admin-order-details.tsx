@@ -85,7 +85,7 @@ const BillDetails = ({ order }: { order: Order }) => {
                 <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
                 <div className="flex justify-between text-green-400"><span className="text-white/80">Total Discount:</span> <span>-₹{totalDiscount.toFixed(2)}</span></div>
                 <Separator className="bg-white/20 my-1"/>
-                <div className="flex justify-between"><span className="text-white/80">Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
+                <div className="flex justify-between"><span className="text-white/80">Total Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
                 <div className="flex justify-between items-start">
                     <span className="text-white/80">Flavours &amp; Fillings:</span>
                     <span>+₹{totalFlavoursCost.toFixed(2)}</span>
@@ -93,32 +93,32 @@ const BillDetails = ({ order }: { order: Order }) => {
                 {totalFlavoursCost > 0 && (
                     <div className="pl-4 text-xs space-y-1 text-white/70">
                         {order.items.map(item => {
-                             const selectedFlavoursCount = item.flavours?.length || 0;
-                             if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
+                            const selectedFlavoursCount = item.flavours?.length || 0;
+                            if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
 
-                             const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
-                             const remainder = item.numberOfChocolates % selectedFlavoursCount;
-                             
+                            const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
+                            const remainder = item.numberOfChocolates % selectedFlavoursCount;
+                            
+                            const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
                              const distribution: Record<string, number> = {};
-                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
 
-                             itemFlavourNames.forEach((name, index) => {
+                            sortedFlavours.forEach((name, index) => {
                                 distribution[name] = baseCount + (index < remainder ? 1 : 0);
-                             });
+                            });
 
-                             return item.flavours?.map((flavour) => {
-                                 const pieces = distribution[flavour.name] || 0;
-                                 if (flavour.price > 0 && pieces > 0) {
-                                     const flavourTotal = flavour.price * pieces * item.quantity;
-                                     return (
-                                         <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
-                                             <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
-                                             <span>+₹{flavourTotal.toFixed(2)}</span>
-                                         </div>
-                                     );
-                                 }
-                                 return null;
-                             });
+                            return item.flavours?.map((flavour) => {
+                                const pieces = distribution[flavour.name] || 0;
+                                if (flavour.price > 0 && pieces > 0) {
+                                    const flavourTotal = flavour.price * pieces * item.quantity;
+                                    return (
+                                        <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
+                                            <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
+                                            <span>+₹{flavourTotal.toFixed(2)}</span>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            });
                         })}
                     </div>
                 )}

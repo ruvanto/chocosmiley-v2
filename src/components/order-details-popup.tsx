@@ -180,7 +180,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                     <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
                     <div className="flex justify-between text-green-400"><span className="text-white/80">Total Discount:</span> <span>-₹{totalDiscount.toFixed(2)}</span></div>
                     <Separator className="bg-white/20 my-1"/>
-                    <div className="flex justify-between"><span className="text-white/80">Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-white/80">Total Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
                     <div className="flex justify-between items-start">
                         <span className="text-white/80">Flavours &amp; Fillings:</span>
                         <span>+₹{totalFlavoursCost.toFixed(2)}</span>
@@ -193,10 +193,16 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
 
                                 const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                                 const remainder = item.numberOfChocolates % selectedFlavoursCount;
+                                
+                                const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
+                                 const distribution: Record<string, number> = {};
+                                sortedFlavours.forEach((name, index) => {
+                                    distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                                });
 
-                                return item.flavours?.map((flavour, idx) => {
+                                return item.flavours?.map((flavour) => {
                                     if (flavour.price > 0) {
-                                        const pieces = baseCount + (idx < remainder ? 1 : 0);
+                                        const pieces = distribution[flavour.name] || 0;
                                         const flavourTotal = flavour.price * pieces * item.quantity;
                                         return (
                                             <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
@@ -269,7 +275,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                                 <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
                                 <div className="flex justify-between text-green-400"><span className="text-white/80">Total Discount:</span> <span>-₹{totalDiscount.toFixed(2)}</span></div>
                                 <Separator className="bg-white/20 my-1"/>
-                                <div className="flex justify-between"><span className="text-white/80">Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
+                                <div className="flex justify-between"><span className="text-white/80">Total Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
                                 <div className="flex justify-between items-start">
                                     <span className="text-white/80">Flavours &amp; Fillings:</span>
                                     <span>+₹{totalFlavoursCost.toFixed(2)}</span>
@@ -282,10 +288,16 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
 
                                             const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                                             const remainder = item.numberOfChocolates % selectedFlavoursCount;
+                                            
+                                            const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
+                                             const distribution: Record<string, number> = {};
+                                            sortedFlavours.forEach((name, index) => {
+                                                distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                                            });
 
-                                            return item.flavours?.map((flavour, idx) => {
+                                            return item.flavours?.map((flavour) => {
                                                 if (flavour.price > 0) {
-                                                    const pieces = baseCount + (idx < remainder ? 1 : 0);
+                                                    const pieces = distribution[flavour.name] || 0;
                                                     const flavourTotal = flavour.price * pieces * item.quantity;
                                                     return (
                                                         <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">

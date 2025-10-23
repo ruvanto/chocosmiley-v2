@@ -19,11 +19,11 @@ interface OrderSummaryProps {
 }
 
 
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean }) => (
+const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string }) => (
     <div className={cn("flex justify-between items-center text-sm", isBold ? "font-bold text-base" : "text-black/80")}>
         <span>{label}</span>
         {isAnimated ? (
-          <AnimatedNumber value={value} prefix={value < 0 ? "-₹" : "₹"} className={valueClassName} />
+          <AnimatedNumber value={value} prefix={prefix} className={valueClassName} />
         ) : (
           <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `₹${value.toFixed(2)}`}</span>
         )}
@@ -112,14 +112,14 @@ export function OrderSummary({ cart, allProducts, onFinalizeOrder, isLoading }: 
 
         <div className="flex-shrink-0">
           <div className="space-y-1.5 pt-2">
-            <SummaryRow label="Total MRP" value={totalMrp} isAnimated />
-            <SummaryRow label="Total Discount" value={-totalDiscount} valueClassName='text-green-600' isAnimated />
+            <SummaryRow label="Total MRP" value={totalMrp} isAnimated prefix="₹"/>
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName='text-green-600' isAnimated prefix="-₹" />
             <Separator className="bg-black/10 my-1.5" />
-            <SummaryRow label="Product Price" value={totalProductPrice} isAnimated />
-            <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated />
+            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated prefix="₹"/>
+            <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated prefix="+₹"/>
             <Separator className="bg-black/10 my-1.5" />
-            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated />
-            <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated />
+            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated prefix="₹"/>
+            <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated prefix="+₹" />
           </div>
         
           <Separator className="bg-black/10 my-4 flex-shrink-0" />

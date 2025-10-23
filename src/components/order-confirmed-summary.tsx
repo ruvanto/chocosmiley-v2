@@ -74,9 +74,9 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
             {/* Financial Breakdown */}
             <div className="space-y-1.5 flex-shrink-0">
                 <SummaryRow label="Total MRP" value={`₹${totalMrp.toFixed(2)}`} />
-                <SummaryRow label="Total Discount" value={`- ₹${totalDiscount.toFixed(2)}`} valueClass="text-green-600" />
+                <SummaryRow label="Total Discount" value={`-₹${totalDiscount.toFixed(2)}`} valueClass="text-green-600" />
                 <Separator className="bg-black/20 my-2" />
-                <SummaryRow label="Product Price" value={`₹${totalProductPrice.toFixed(2)}`} />
+                <SummaryRow label="Total Product Price" value={`₹${totalProductPrice.toFixed(2)}`} />
                 <div className="flex justify-between items-start">
                     <span className="text-sm text-black/70">Flavours & Fillings</span>
                     <span className="text-sm font-medium text-black">+₹{totalFlavoursCost.toFixed(2)}</span>
@@ -84,18 +84,16 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
                  {totalFlavoursCost > 0 && (
                     <div className="pl-4 text-xs space-y-1 text-black/60">
                         {order.items.map(item => {
-                             const selectedFlavoursCount = item.flavours?.length || 0;
-                             if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
-
+                            const selectedFlavoursCount = item.flavours?.length || 0;
+                            if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
                              const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
-                             const remainder = item.numberOfChocolates % selectedFlavoursCount;
-                             
+                            const remainder = item.numberOfChocolates % selectedFlavoursCount;
+                            
+                            const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
                              const distribution: Record<string, number> = {};
-                             const itemFlavourNames = item.flavours?.map(f => f.name) || [];
-                             
-                             itemFlavourNames.forEach((name, index) => {
+                            sortedFlavours.forEach((name, index) => {
                                 distribution[name] = baseCount + (index < remainder ? 1 : 0);
-                             });
+                            });
 
                              return item.flavours?.map((flavour) => {
                                  const pieces = distribution[flavour.name] || 0;
@@ -115,7 +113,7 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
                 )}
                 <Separator className="bg-black/20 my-2" />
                 <SummaryRow label="Subtotal" value={`₹${subtotal.toFixed(2)}`} />
-                <SummaryRow label={`GST (${order.gstPercentage}%)`} value={`+ ₹${gstAmount.toFixed(2)}`} />
+                <SummaryRow label={`GST (${order.gstPercentage}%)`} value={`+₹${gstAmount.toFixed(2)}`} />
                 <Separator className="bg-black/20 my-2" />
                 <div className="flex justify-between items-center text-custom-purple-dark text-base md:text-lg font-bold">
                     <span>Total Payable</span>
