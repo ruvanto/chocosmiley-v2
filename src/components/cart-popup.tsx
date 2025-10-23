@@ -26,6 +26,7 @@ import { useAppContext } from '@/context/app-context';
 import { client } from '@/lib/sanity';
 import { Loader } from './loader';
 import { ScrollArea } from './ui/scroll-area';
+import { AnimatePresence } from 'framer-motion';
 
 interface CartPopupProps {
   onClose: () => void;
@@ -47,7 +48,6 @@ async function getProductsForCart(productNames: string[]): Promise<SanityProduct
 
 export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopupProps) {
   const { cart, updateCart, clearCart } = useAppContext();
-  const [removingItems, setRemovingItems] = useState<string[]>([]);
   const router = useRouter();
   const [productsInCart, setProductsInCart] = useState<SanityProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,12 +97,7 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
 
 
   const handleRemove = (productName: string) => {
-    setRemovingItems(prev => [...prev, productName]);
-  };
-
-  const handleAnimationEnd = (productName: string) => {
     updateCart(productName, 0);
-    setRemovingItems(prev => prev.filter(item => item !== productName));
   };
 
   const showInitialLoader = isLoading && productsInCart.length === 0 && productNamesInCart.length > 0;
@@ -162,24 +157,24 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
           {/* Left Section (Items) */}
           <div className="w-[60%] flex flex-col">
             <ScrollArea className="flex-grow pr-4 min-h-0 custom-scrollbar">
-              <div className="space-y-4 pb-4">
-                {cartItems.map((item) => {
-                  const product = productsByName[item.name];
-                  if (!product) return null; // Don't render if product details haven't loaded yet
-                  return (
-                    <DesktopCartItemCard
-                      key={item.name}
-                      item={item}
-                      product={product}
-                      onQuantityChange={(productName, quantity, flavours) => updateCart(productName, quantity, flavours)}
-                      onRemove={() => handleRemove(item.name)}
-                      isRemoving={removingItems.includes(item.name)}
-                      onAnimationEnd={() => handleAnimationEnd(item.name)}
-                      onProductClick={onProductClick}
-                    />
-                  )
-                })}
-              </div>
+              <ul className="space-y-4 pb-4">
+                <AnimatePresence>
+                  {cartItems.map((item) => {
+                    const product = productsByName[item.name];
+                    if (!product) return null; // Don't render if product details haven't loaded yet
+                    return (
+                      <DesktopCartItemCard
+                        key={item.name}
+                        item={item}
+                        product={product}
+                        onQuantityChange={(productName, quantity, flavours) => updateCart(productName, quantity, flavours)}
+                        onRemove={() => handleRemove(item.name)}
+                        onProductClick={onProductClick}
+                      />
+                    )
+                  })}
+                </AnimatePresence>
+              </ul>
             </ScrollArea>
           </div>
 

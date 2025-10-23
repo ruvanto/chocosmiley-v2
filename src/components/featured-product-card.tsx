@@ -35,21 +35,25 @@ export function FeaturedProductCard({
   }, []);
 
   const handleAddToCartClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
   };
 
   const handleIncrement = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onAddToCart(product);
   };
 
   const handleDecrement = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onRemoveFromCart(product);
   };
   
   const handleLikeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     toggleLike(product, product._id);
   }

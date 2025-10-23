@@ -11,18 +11,17 @@ import type { SanityProduct, SanityFlavour } from '@/types';
 import { useMemo } from 'react';
 import { AnimatedNumber } from './ui/animated-number';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 interface CartItemCardProps {
     item: { name: string; quantity: number; flavours?: string[] };
     product: SanityProduct;
     onQuantityChange: (productName: string, quantity: number, flavours?: string[]) => void;
     onRemove: (productName: string) => void;
-    isRemoving: boolean;
-    onAnimationEnd: () => void;
     onProductClick: (product: SanityProduct) => void;
 }
 
-export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove, isRemoving, onAnimationEnd, onProductClick }: CartItemCardProps) {
+export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove, onProductClick }: CartItemCardProps) {
     const handleIncrement = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -109,110 +108,128 @@ export function DesktopCartItemCard({ item, product, onQuantityChange, onRemove,
     ? `Contains ${product.numberOfChocolates} chocolate pieces`
     : null;
 
+    const variants = {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { 
+        opacity: 0, 
+        x: -50, 
+        height: 0, 
+        padding: 0, 
+        margin: 0,
+        transition: { duration: 0.3 }
+      },
+    };
 
     return (
-        <Link 
-            href={`/product/${product.slug.current}`}
-            onClick={handleClick}
-            onAnimationEnd={onAnimationEnd}
-            className={cn(
-                "w-full bg-white/80 rounded-2xl p-3 text-black relative transition-all duration-300 overflow-hidden block",
-                "hover:bg-gray-50",
-                isRemoving && 'animate-fade-out-slide-up'
-            )}
+        <motion.li
+            layout
+            variants={variants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
         >
-            <div className="flex gap-4">
-                {/* Left Column: Image and Quantity Stepper */}
-                <div className="w-1/4 flex-shrink-0 flex flex-col items-center gap-2">
-                    <div className="cursor-pointer w-full">
-                      <Image
-                          src={product.images?.[0] || "/placeholder.png"}
-                          alt={item.name}
-                          width={100}
-                          height={100}
-                          className="rounded-lg object-cover w-full aspect-square"
-                          onDragStart={(e) => e.preventDefault()}
-                      />
+            <Link 
+                href={`/product/${product.slug.current}`}
+                onClick={handleClick}
+                className={cn(
+                    "w-full bg-white/80 rounded-2xl p-3 text-black relative transition-all duration-300 overflow-hidden block",
+                    "hover:bg-gray-50",
+                )}
+            >
+                <div className="flex gap-4">
+                    {/* Left Column: Image and Quantity Stepper */}
+                    <div className="w-1/4 flex-shrink-0 flex flex-col items-center gap-2">
+                        <div className="cursor-pointer w-full">
+                          <Image
+                              src={product.images?.[0] || "/placeholder.png"}
+                              alt={item.name}
+                              width={100}
+                              height={100}
+                              className="rounded-lg object-cover w-full aspect-square"
+                              onDragStart={(e) => e.preventDefault()}
+                          />
+                        </div>
+                        <div className="flex items-center justify-between w-full rounded-full text-black h-8 bg-gray-200 overflow-hidden">
+                            <Button
+                                size="icon"
+                                variant="ghost"
+                                onClick={handleDecrement}
+                                className="h-full rounded-none bg-transparent hover:bg-gray-300 text-black flex-1"
+                                disabled={item.quantity <= 1}
+                            >
+                                <Minus className="h-4 w-4" />
+                            </Button>
+                            <span className="font-bold px-1 text-sm flex-1 text-center">{item.quantity}</span>
+                            <Button
+                                size="icon"
+                                variant="ghost"
+                                onClick={handleIncrement}
+                                className="h-full rounded-none bg-transparent hover:bg-gray-300 text-black flex-1"
+                                disabled={item.quantity >= 99}
+                            >
+                                <Plus className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
-                    <div className="flex items-center justify-between w-full rounded-full text-black h-8 bg-gray-200 overflow-hidden">
-                        <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={handleDecrement}
-                            className="h-full rounded-none bg-transparent hover:bg-gray-300 text-black flex-1"
-                            disabled={item.quantity <= 1}
-                        >
-                            <Minus className="h-4 w-4" />
-                        </Button>
-                        <span className="font-bold px-1 text-sm flex-1 text-center">{item.quantity}</span>
-                        <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={handleIncrement}
-                            className="h-full rounded-none bg-transparent hover:bg-gray-300 text-black flex-1"
-                            disabled={item.quantity >= 99}
-                        >
-                            <Plus className="h-4 w-4" />
-                        </Button>
+
+                    {/* Right Column: Details */}
+                    <div className="flex flex-col justify-between flex-grow self-stretch min-w-0">
+                        {/* Top part: Title and Delete Icon */}
+                        <div>
+                            <div className="flex justify-between items-start gap-2">
+                                <h3 className="font-bold md:text-base xl:text-lg leading-tight flex-1 truncate">{item.name}</h3>
+                                <button onClick={handleRemove} className="text-black/80 hover:text-red-500 transition-colors flex-shrink-0">
+                                    <FaTrash size={16} />
+                                </button>
+                            </div>
+                            <p className="md:text-xs xl:text-sm text-black/80 truncate mt-0">{subtitle}</p>
+                        </div>
+                        <div className="mt-1 md:text-[10px] lg:text-xs text-black/60">
+                            {chocolateCountText}
+                        </div>
+
+                        {/* Flavours Section */}
+                        {sortedFlavoursForDisplay.length > 0 && (
+                           <div className="mt-1 mb-2 md:text-[10px] lg:text-xs xl:text-sm">
+                             <div className="bg-white/30 p-2 rounded-md">
+                               <p className="font-semibold text-xs mb-1">Selected Flavours:</p>
+                               <ul className="space-y-0.5">
+                                {sortedFlavoursForDisplay.map((flavourName, index) => {
+                                    const flavourDetails = availableFlavoursMap?.[flavourName];
+                                    const price = flavourDetails?.price ?? 0;
+                                    const pieces = chocolateDistribution[flavourName] || 0;
+                                    const flavourTotal = pieces * price;
+                                    return (
+                                    <li key={index} className="flex justify-between items-center text-black/80 text-xs">
+                                        <span className="w-2/5 truncate">{flavourName}</span>
+                                        <span className="w-1/5 text-center text-black/60 text-[10px]">{`${pieces} pcs x ₹${price.toFixed(0)}`}</span>
+                                        <span className="w-2/5 font-semibold text-right">+₹{flavourTotal.toFixed(2)}</span>
+                                    </li>
+                                    );
+                                })}
+                               </ul>
+                             </div>
+                           </div>
+                           
+                        )}
+
+                        {/* Bottom part: Price and Discount */}
+                        <div className="flex items-end justify-between mt-auto">
+                            <div className="flex items-baseline gap-2">
+                                {product.mrp && <p className="md:text-xs lg:text-sm line-through text-black/70 font-semibold">₹{product.mrp.toFixed(2)}</p>}
+                                {discountPercentage && (
+                                    <div className="flex items-center gap-1 text-white bg-green-600/80 px-1.5 py-0.5 rounded-md">
+                                        <svg className="md:h-3 md:w-3 lg:h-4 lg:w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
+                                        <span className="md:text-xs lg:text-sm font-semibold">{discountPercentage}%</span>
+                                    </div>
+                                )}
+                            </div>
+                            <AnimatedNumber value={itemPrice} prefix="₹" className="md:text-sm lg:text-lg xl:text-xl font-bold text-black" />
+                        </div>
                     </div>
                 </div>
-
-                {/* Right Column: Details */}
-                <div className="flex flex-col justify-between flex-grow self-stretch min-w-0">
-                    {/* Top part: Title and Delete Icon */}
-                    <div>
-                        <div className="flex justify-between items-start gap-2">
-                            <h3 className="font-bold md:text-base xl:text-lg leading-tight flex-1 truncate">{item.name}</h3>
-                            <button onClick={handleRemove} className="text-black/80 hover:text-red-500 transition-colors flex-shrink-0">
-                                <FaTrash size={16} />
-                            </button>
-                        </div>
-                        <p className="md:text-xs xl:text-sm text-black/80 truncate mt-0">{subtitle}</p>
-                    </div>
-                    <div className="mt-1 md:text-[10px] lg:text-xs text-black/60">
-                        {chocolateCountText}
-                    </div>
-
-                    {/* Flavours Section */}
-                    {sortedFlavoursForDisplay.length > 0 && (
-                       <div className="mt-1 mb-2 md:text-[10px] lg:text-xs xl:text-sm">
-                         <div className="bg-white/30 p-2 rounded-md">
-                           <p className="font-semibold text-xs mb-1">Selected Flavours:</p>
-                           <ul className="space-y-0.5">
-                            {sortedFlavoursForDisplay.map((flavourName, index) => {
-                                const flavourDetails = availableFlavoursMap?.[flavourName];
-                                const price = flavourDetails?.price ?? 0;
-                                const pieces = chocolateDistribution[flavourName] || 0;
-                                const flavourTotal = pieces * price;
-                                return (
-                                <li key={index} className="flex justify-between items-center text-black/80 text-xs">
-                                    <span className="w-2/5 truncate">{flavourName}</span>
-                                    <span className="w-1/5 text-center text-black/60 text-[10px]">{`${pieces} pcs x ₹${price.toFixed(0)}`}</span>
-                                    <span className="w-2/5 font-semibold text-right">+₹{flavourTotal.toFixed(2)}</span>
-                                </li>
-                                );
-                            })}
-                           </ul>
-                         </div>
-                       </div>
-                       
-                    )}
-
-                    {/* Bottom part: Price and Discount */}
-                    <div className="flex items-end justify-between mt-auto">
-                        <div className="flex items-baseline gap-2">
-                            {product.mrp && <p className="md:text-xs lg:text-sm line-through text-black/70 font-semibold">₹{product.mrp.toFixed(2)}</p>}
-                            {discountPercentage && (
-                                <div className="flex items-center gap-1 text-white bg-green-600/80 px-1.5 py-0.5 rounded-md">
-                                    <svg className="md:h-3 md:w-3 lg:h-4 lg:w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
-                                    <span className="md:text-xs lg:text-sm font-semibold">{discountPercentage}%</span>
-                                </div>
-                            )}
-                        </div>
-                        <AnimatedNumber value={itemPrice} prefix="₹" className="md:text-sm lg:text-lg xl:text-xl font-bold text-black" />
-                    </div>
-                </div>
-            </div>
-        </Link>
+            </Link>
+        </motion.li>
     );
 }
