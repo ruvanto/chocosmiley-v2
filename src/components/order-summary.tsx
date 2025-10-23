@@ -1,4 +1,5 @@
 
+
 // @/components/order-summary.tsx
 'use client';
 
@@ -25,7 +26,7 @@ const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated =
         {isAnimated ? (
           <AnimatedNumber value={value} prefix={prefix} className={valueClassName} />
         ) : (
-          <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `₹${value.toFixed(2)}`}</span>
+          <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
         )}
     </div>
 );

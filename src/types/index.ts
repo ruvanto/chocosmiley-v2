@@ -74,7 +74,6 @@ export interface Order {
   status: 'Order Requested' | 'In Progress' | 'Order Delivered' | 'Order Cancelled';
   total: number;
   totalDiscount?: number;
-  gstPercentage?: number;
   customerName?: string;
   customerEmail?: string;
   customerPhone?: string;
@@ -96,3 +95,4 @@ export type ActiveView =
   | 'product-detail' 
   | 'admin'
   | 'admin-analytics';
+

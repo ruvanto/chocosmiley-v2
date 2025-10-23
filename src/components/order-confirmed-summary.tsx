@@ -113,7 +113,7 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
                 )}
                 <Separator className="bg-black/20 my-2" />
                 <SummaryRow label="Subtotal" value={`₹${subtotal.toFixed(2)}`} />
-                <SummaryRow label={`GST (${order.gstPercentage}%)`} value={`+₹${gstAmount.toFixed(2)}`} />
+                <SummaryRow label={`GST (5%)`} value={`+₹${gstAmount.toFixed(2)}`} />
                 <Separator className="bg-black/20 my-2" />
                 <div className="flex justify-between items-center text-custom-purple-dark text-base md:text-lg font-bold">
                     <span>Total Payable</span>

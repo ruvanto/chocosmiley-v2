@@ -467,16 +467,13 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
         const subtotal = totalProductPrice + totalFlavoursCost;
         const totalDiscount = totalMrp - totalProductPrice;
-        const gstRate = 0.05;
-        const gstAmount = subtotal * gstRate;
-        const total = subtotal + gstAmount;
+        const total = subtotal * 1.05; // Fixed 5% GST
 
-        const newOrderData: Omit<Order, 'id' | 'uid' | 'date' | 'customOrderId'> = {
+        const newOrderData: Omit<Order, 'id' | 'uid' | 'date' | 'customOrderId' | 'gstPercentage'> = {
             items: orderItems,
             status: 'Order Requested',
             total: total > 0 ? total : 0,
             totalDiscount: totalDiscount,
-            gstPercentage: gstRate * 100,
         };
 
         const newOrderId = await addUserOrder(user.uid, newOrderData);
@@ -822,3 +819,4 @@ export const AppContextConsumer = AppContext.Consumer;
     
 
     
+

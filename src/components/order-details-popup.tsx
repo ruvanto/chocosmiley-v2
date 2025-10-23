@@ -1,4 +1,5 @@
 
+
 // @/components/order-details-popup.tsx
 import * as React from "react";
 import {
@@ -218,7 +219,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                     )}
                     <Separator className="bg-white/20 my-1"/>
                     <div className="flex justify-between font-bold"><span className="text-white/80">Subtotal:</span> <span>₹{subtotal.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span className="text-white/80">GST ({order.gstPercentage}%):</span> <span>+₹{gstAmount.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-white/80">GST (5%):</span> <span>+₹{gstAmount.toFixed(2)}</span></div>
                     <Separator className="bg-white/20 my-1"/>
                     <div className="flex justify-between font-bold text-base"><span className="text-custom-gold">Total Payable:</span> <span className="text-custom-gold">₹{totalPayable.toFixed(2)}</span></div>
                 </div>
@@ -313,7 +314,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                                 )}
                                 <Separator className="bg-white/20 my-1"/>
                                 <div className="flex justify-between font-bold"><span className="text-white/80">Subtotal:</span> <span>₹{subtotal.toFixed(2)}</span></div>
-                                <div className="flex justify-between"><span className="text-white/80">GST ({order.gstPercentage}%):</span> <span>+₹{gstAmount.toFixed(2)}</span></div>
+                                <div className="flex justify-between"><span className="text-white/80">GST (5%):</span> <span>+₹{gstAmount.toFixed(2)}</span></div>
                                 <Separator className="bg-white/20 my-1"/>
                                 <div className="flex justify-between font-bold text-base"><span className="text-custom-gold">Total Payable:</span> <span className="text-custom-gold">₹{totalPayable.toFixed(2)}</span></div>
                             </div>
