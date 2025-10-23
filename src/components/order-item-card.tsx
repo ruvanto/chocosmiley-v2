@@ -115,7 +115,7 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
             
             <Separator className="bg-custom-purple-dark/20" />
 
-            <div className="flex items-center justify-between mt-1">
+            <div className="flex items-center justify-between mt-2">
                 <div onClick={(e) => e.stopPropagation()}>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
@@ -173,7 +173,9 @@ export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, 
                                 ))}
                             </div>
                         ) : (
-                            <Button onClick={(e) => { e.stopPropagation(); onRate(); }} variant="link" className="p-0 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline">Rate Order</Button>
+                            <Button onClick={(e) => { e.stopPropagation(); onRate(); }} variant="link" className="p-0 h-auto text-custom-purple-dark font-poppins text-xs md:text-sm hover:no-underline">
+                                <span>Rate Order</span>
+                            </Button>
                         )}
                     </>
                 )}
