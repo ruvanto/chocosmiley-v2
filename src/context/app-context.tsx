@@ -454,6 +454,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
             
             return {
                 name: product.name,
+                slug: product.slug,
                 quantity: cartItem.quantity,
                 flavours: flavoursWithPrices,
                 mrp: product.mrp,

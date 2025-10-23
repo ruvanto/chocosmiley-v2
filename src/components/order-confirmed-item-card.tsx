@@ -1,3 +1,4 @@
+
 // @/components/order-confirmed-item-card.tsx
 'use client';
 
@@ -5,6 +6,9 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { OrderItem } from '@/types';
 import { Separator } from './ui/separator';
+import Link from 'next/link';
+import { useAppContext } from '@/context/app-context';
+import { useRouter } from 'next/navigation';
 
 interface OrderConfirmedItemCardProps {
     item: OrderItem;
@@ -12,6 +16,18 @@ interface OrderConfirmedItemCardProps {
 }
 
 export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCardProps) {
+  const { setIsGlobalLoading } = useAppContext();
+  const router = useRouter();
+
+  const handleProductClick = (e: React.MouseEvent) => {
+    if (!item.slug) return;
+    if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        e.preventDefault();
+        setIsGlobalLoading(true);
+        router.push(`/product/${item.slug.current}`);
+    }
+  }
+
   const pricePerItem = item.finalProductPrice && item.quantity > 0 ? item.finalProductPrice / item.quantity : 0;
   const itemMrp = item.mrp ?? pricePerItem;
   const itemDiscount = (itemMrp * item.quantity) - (item.finalProductPrice ?? 0);
@@ -85,11 +101,31 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
     </>
   );
 
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
+    if (item.slug?.current) {
+      return (
+        <Link 
+          href={`/product/${item.slug.current}`} 
+          onClick={handleProductClick}
+          className="block"
+        >
+          {children}
+        </Link>
+      );
+    }
+    return <>{children}</>;
+  }
+
   return (
     <div 
-      className={cn("bg-gray-100 w-full flex flex-col text-black hover:bg-white/80 rounded-lg p-3 transition-colors")}
+      className={cn(
+        "bg-gray-100 w-full flex flex-col text-black rounded-lg p-3 transition-colors",
+        item.slug?.current && "hover:bg-white/80 cursor-pointer"
+      )}
     >
-      {cardContent}
+      <Wrapper>
+        {cardContent}
+      </Wrapper>
     </div>
   );
 }

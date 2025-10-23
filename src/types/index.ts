@@ -1,3 +1,4 @@
+
 // src/types/index.ts
 import type { PortableTextBlock } from '@portabletext/react';
 
@@ -45,6 +46,7 @@ export interface StructuredFilter {
 export type OrderItem = {
   name: string;
   quantity: number;
+  slug?: { current: string };
   flavours?: { name: string, price: number }[];
   mrp?: number;
   finalProductPrice?: number;
