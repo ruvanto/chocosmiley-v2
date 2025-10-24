@@ -13,10 +13,10 @@ import { cn } from '@/lib/utils';
 import { Loader } from './loader';
 import { Textarea } from './ui/textarea';
 import { states } from '@/lib/states';
-import { SecurityUpdatePopup } from './security-update-popup';
-import { DeleteAccountPopup } from './delete-account-popup';
+import { SecurityUpdatePopup } from './popups/security-update-popup';
+import { DeleteAccountPopup } from './popups/delete-account-popup';
 import { Separator } from './ui/separator';
-import { StateSelectionPopup } from './state-selection-popup';
+import { StateSelectionPopup } from './popups/state-selection-popup';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ScrollArea } from './ui/scroll-area';
 

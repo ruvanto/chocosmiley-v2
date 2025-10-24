@@ -10,13 +10,13 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { X, CheckCircle2 } from "lucide-react";
 import type { SanityFlavour } from "@/types";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAppContext } from "@/context/app-context";
 

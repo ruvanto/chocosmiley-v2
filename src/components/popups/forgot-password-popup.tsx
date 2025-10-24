@@ -9,13 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { AuthLayout } from "./ui/auth-layout";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { AuthLayout } from "../ui/auth-layout";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { sendPasswordReset } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { Loader } from './loader';
+import { Loader } from '../loader';
 
 interface ForgotPasswordPopupProps {
     open: boolean;

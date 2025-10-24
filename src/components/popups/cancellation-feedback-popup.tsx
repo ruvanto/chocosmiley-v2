@@ -9,8 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
+import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 import { useToast } from '@/hooks/use-toast';
 import type { Order } from '@/types';
 import { useAppContext } from '@/context/app-context';

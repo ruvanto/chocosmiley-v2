@@ -9,11 +9,6 @@ import { FlavoursSection } from '../flavours-section';
 import { Separator } from '../ui/separator';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 
-type Cart = Record<string, {
-  name: string;
-  quantity: number;
-  flavours?: string[];
-}>;
 
 interface ProductInfoCardProps {
     product: SanityProduct;
@@ -21,15 +16,6 @@ interface ProductInfoCardProps {
     onLikeToggle: (productId: string) => void;
 }
 
-const SpecItem = ({ icon, text }: { icon: React.ReactNode, text: string | undefined }) => {
-    if (!text) return null;
-    return (
-        <div className="flex items-center gap-2">
-            <div className="text-custom-gold">{icon}</div>
-            <span className="text-sm text-white/90">{text}</span>
-        </div>
-    );
-};
 const DetailSection = ({ title, children, isMobile }: { title: string, children: React.ReactNode, isMobile?: boolean }) => {
     if (!children) return null;
     return (

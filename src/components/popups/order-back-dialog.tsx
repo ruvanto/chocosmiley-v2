@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Phone } from 'lucide-react';
 import { SiWhatsapp } from "react-icons/si";
 import type { Order } from '@/types';

@@ -25,10 +25,10 @@ import {
 } from "@/components/ui/accordion";
 import { OrderConfirmedSummary } from '@/components/order-confirmed-summary';
 import CheckmarkAnimation from '../../../public/animations/Checkmark.json';
-import { Header } from '@/components/header';
+import { Header } from '@/components/desktop/header';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
-import { OrderBackDialog } from '@/components/order-back-dialog';
+import { OrderBackDialog } from '@/components/popups/order-back-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { client } from '@/lib/sanity';
 

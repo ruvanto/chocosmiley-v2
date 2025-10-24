@@ -9,16 +9,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
-import { Separator } from './ui/separator';
-import { Textarea } from './ui/textarea';
+import { Separator } from '../ui/separator';
+import { Textarea } from '../ui/textarea';
 import { states } from '@/lib/states';
 import { StateSelectionPopup } from './state-selection-popup';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 
 interface CompleteDetailsPopupProps {
     open: boolean;

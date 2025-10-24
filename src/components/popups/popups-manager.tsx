@@ -3,17 +3,17 @@
 'use client';
 
 import { CartPopup } from '@/components/desktop/cart-popup';
-import { ProfilePopup } from '@/components/desktop/profile-popup';
+import { ProfilePopup } from '@/components/desktop/account-popup';
 import type { SanityProduct } from '@/types';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { LoginPopup } from '../login-popup';
-import { SignUpPopup } from '../signup-popup';
-import { CompleteDetailsPopup } from '../provide-details-popup';
+import { LoginPopup } from './login-popup';
+import { SignUpPopup } from './signup-popup';
+import { CompleteDetailsPopup } from './provide-details-popup';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
-import { ForgotPasswordPopup } from '../forgot-password-popup';
+import { ForgotPasswordPopup } from './forgot-password-popup';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PopupsManagerProps {

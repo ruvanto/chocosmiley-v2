@@ -3,18 +3,17 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { OrderItemCard } from './order-item-card';
+import { OrderItemCard } from './my-orders-card';
 import { EmptyState } from './empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
 import { Loader } from './loader';
-import { OrderDetailsPopup } from './order-details-popup';
-import { RatingPopup } from './rating-popup';
+import { OrderDetailsPopup } from './popups/order-details-popup';
+import { RatingPopup } from './popups/rating-popup';
 import type { Order } from '@/types';
-import { CancellationFeedbackPopup } from './cancellation-feedback-popup';
+import { CancellationFeedbackPopup } from './popups/cancellation-feedback-popup';
 import { OrderItemCardSkeleton } from './skeletons/order-item-card-skeleton';
 import { cn } from '@/lib/utils';
-import { ScrollArea } from './ui/scroll-area';
 
 interface MyOrdersTabProps {
   isMobile?: boolean;

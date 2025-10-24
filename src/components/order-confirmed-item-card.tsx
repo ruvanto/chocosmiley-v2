@@ -7,7 +7,6 @@ import type { OrderItem } from '@/types';
 import { Separator } from './ui/separator';
 import Link from 'next/link';
 import { useAppContext } from '@/context/app-context';
-import { useRouter } from 'next/navigation';
 
 interface OrderConfirmedItemCardProps {
     item: OrderItem;
@@ -16,7 +15,6 @@ interface OrderConfirmedItemCardProps {
 
 export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCardProps) {
   const { setIsGlobalLoading } = useAppContext();
-  const router = useRouter();
 
   const handleProductClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!item.slug?.current) return;
@@ -30,7 +28,6 @@ export function OrderConfirmedItemCard({ item, isMobile }: OrderConfirmedItemCar
   const itemMrp = item.mrp ?? pricePerItem;
   const itemDiscount = (itemMrp * item.quantity) - (item.finalProductPrice ?? 0);
 
-  const itemFlavourCost = (item.finalSubtotal || 0) - (item.finalProductPrice || 0);
   
   const chocolateCountText = item.numberOfChocolates
     ? `Contains ${item.numberOfChocolates} chocolate pieces`

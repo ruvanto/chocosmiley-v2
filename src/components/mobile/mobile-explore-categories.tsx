@@ -6,7 +6,6 @@ import Image from "next/image";
 import { SectionTitle } from "../section-title";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/app-context";
-import { ChevronRight } from "lucide-react";
 import React from "react";
 import { Separator } from "../ui/separator";
 

@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { AuthLayout } from "./ui/auth-layout";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { AuthLayout } from "../ui/auth-layout";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { signUpWithEmail, signInWithGoogle } from '@/lib/firebase';

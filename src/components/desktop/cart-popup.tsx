@@ -25,7 +25,7 @@ import { useAppContext } from '@/context/app-context';
 import { client } from '@/lib/sanity';
 import { Loader } from '../loader';
 import { ScrollArea } from '../ui/scroll-area';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 interface CartPopupProps {
   onClose: () => void;
@@ -44,12 +44,6 @@ async function getProductsForCart(productNames: string[]): Promise<SanityProduct
     return products;
 }
 
-const itemVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, x: -50 },
-  transition: { type: 'tween', duration: 0.2 },
-};
 
 
 export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopupProps) {

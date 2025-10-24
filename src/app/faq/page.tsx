@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import { client } from '@/lib/sanity';
 import { LoadingFallback } from '@/components/loading-fallback';
 import FaqPageClient from './faq-client-page';
-import type { FaqItem } from '@/components/faq-content';
+import type { FaqItem } from '@/app/faq/faq-content';
 
 // Fetch the data from Sanity - This remains a server-side function
 async function getFaqData(): Promise<FaqItem[]> {

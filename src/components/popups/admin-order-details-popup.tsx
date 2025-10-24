@@ -28,17 +28,17 @@ import {
   AlertDialogTitle as AlertDialogTitleComponent,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { X, User, Mail, Phone, Home, Star, MessageSquareWarning, Copy } from "lucide-react";
 import type { Order } from "@/types";
 import { cn } from "@/lib/utils";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
-import { OrderConfirmedItemCard } from "./order-confirmed-item-card";
-import { ScrollArea } from "./ui/scroll-area";
+import { OrderConfirmedItemCard } from "../order-confirmed-item-card";
+import { ScrollArea } from "../ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
-import { BillDetails } from "./bill-details";
+import { BillDetails } from "../bill-details";
 
 
 interface AdminOrderDetailsProps {
@@ -58,7 +58,7 @@ const DetailRow = ({ icon, label, value, action }: { icon: React.ReactNode, labe
     </div>
 );
 
-const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Order, onOpenChange: (open: boolean) => void }) => {
+const OrderDetailsContent = ({ order: initialOrder }: { order: Order, onOpenChange: (open: boolean) => void }) => {
     const { updateOrderStatus, allOrders } = useAppContext();
     const { toast } = useToast();
     const isMobile = useIsMobile();

@@ -1,21 +1,19 @@
 // @/app/admin/admin-client-page.tsx
 'use client';
 
-import { useState, useMemo, UIEvent, useEffect, useRef, useCallback } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Header } from '@/components/header';
+import { Header } from '@/components/desktop/header';
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
 import type { Order } from '@/types';
 import { EmptyState } from '@/components/empty-state';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Search, Filter } from 'lucide-react';
 import { AdminOrderItemCard } from '@/components/admin-order-item-card';
-import { AdminOrderDetails } from '@/components/admin-order-details';
+import { AdminOrderDetails } from '@/components/popups/admin-order-details-popup';
 import { Separator } from '@/components/ui/separator';
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -30,7 +28,6 @@ import {
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { Loader } from '@/components/loader';
 import { AdminOrderItemCardSkeleton } from '@/components/skeletons/admin-order-item-card-skeleton';
-import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 
 

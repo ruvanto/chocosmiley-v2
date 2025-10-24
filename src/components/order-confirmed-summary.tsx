@@ -1,7 +1,6 @@
 // @/components/order-confirmed-summary.tsx
 'use client';
 
-import { cn } from '@/lib/utils';
 import type { Order, SanityProduct } from '@/types';
 import { Separator } from './ui/separator';
 import { OrderConfirmedItemCard } from './order-confirmed-item-card';

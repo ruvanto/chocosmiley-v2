@@ -2,16 +2,16 @@
 // @/components/header.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { Logo } from "./header/logo";
-import { Navigation } from "./header/navigation";
-import { UserActions } from "./header/user-actions";
+import { Logo } from "../header/logo";
+import { Navigation } from "../header/navigation";
+import { UserActions } from "../header/user-actions";
 import type { ActiveView } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
-import { MobileHeader } from "./mobile/mobile-header";
-import { AnimatedSearchBar } from "./animated-search-bar";
+import { MobileHeader } from "../mobile/mobile-header";
+import { AnimatedSearchBar } from "../animated-search-bar";
 
 interface HeaderProps {
   onProfileOpenChange: (isOpen: boolean) => void;

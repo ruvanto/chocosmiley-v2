@@ -5,7 +5,7 @@
 import { useState, useEffect, useCallback, type UIEvent, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Header } from "@/components/header";
+import { Header } from "@/components/desktop/header";
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
@@ -17,7 +17,7 @@ import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-back
 import { useAppContext } from '@/context/app-context';
 import type { SanityProduct } from '@/types';
 import type { ActiveView } from '@/types';
-import { FlavourSelectionPopup } from '@/components/flavour-selection-popup';
+import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-popup';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from './actions';

@@ -7,7 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import type { ActiveView } from '@/types';
 import { TermsContent } from './terms-content';
 import { LoadingFallback } from '@/components/loading-fallback';
-import { Header } from "@/components/header";
+import { Header } from "@/components/desktop/header";
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { Footer } from '@/components/footer';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';

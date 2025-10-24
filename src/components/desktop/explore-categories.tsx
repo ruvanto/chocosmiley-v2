@@ -9,7 +9,6 @@ import { useAppContext } from "@/context/app-context";
 import { Separator } from "../ui/separator";
 import { ChevronRight } from "lucide-react";
 import React from "react";
-import { cn } from "@/lib/utils";
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -4,7 +4,7 @@
 
 import { useState, useEffect, type UIEvent, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { Header } from '@/components/header';
+import { Header } from '@/components/desktop/header';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { cn } from '@/lib/utils';

@@ -10,9 +10,9 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { X, Star } from "lucide-react";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import type { Order } from '@/types';

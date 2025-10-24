@@ -10,11 +10,11 @@ import {
   DialogTitle,
   DialogClose
 } from "@/components/ui/dialog"
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { X, Check } from "lucide-react";
 import { states } from '@/lib/states';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 import { cn } from '@/lib/utils';
 
 interface StateSelectionPopupProps {

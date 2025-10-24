@@ -6,7 +6,7 @@ import * as React from 'react';
 import { useState, UIEvent, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Header } from "@/components/header";
+import { Header } from "@/components/desktop/header";
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { Footer } from '@/components/footer';
 import { SectionTitle } from "@/components/section-title";
@@ -17,7 +17,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
-import type { SanityProduct, ActiveView } from '@/types';
+import type { ActiveView } from '@/types';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 
 

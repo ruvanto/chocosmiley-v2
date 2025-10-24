@@ -10,14 +10,14 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { reauthenticateAndChangePassword } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { Loader } from './loader';
+import { Loader } from '../loader';
 import { X, Eye, EyeOff, Lock } from 'lucide-react';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 
 interface SecurityUpdatePopupProps {
     open: boolean;

@@ -4,10 +4,10 @@
 
 import { Suspense, useState, type UIEvent, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { FaqContent, type FaqItem } from '@/components/faq-content';
+import { FaqContent, type FaqItem } from '@/app/faq/faq-content';
 import type { SanityProduct, ActiveView } from '@/types';
 import { LoadingFallback } from '@/components/loading-fallback';
-import { Header } from "@/components/header";
+import { Header } from "@/components/desktop/header";
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { Footer } from '@/components/footer';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';

@@ -10,12 +10,12 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { deleteUserAccount, reauthenticateWithGoogle } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { Loader } from './loader';
+import { Loader } from '../loader';
 import { X, Eye, EyeOff, ShieldAlert } from 'lucide-react';
 import { useAppContext } from '@/context/app-context';
 
