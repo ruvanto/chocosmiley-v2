@@ -134,8 +134,8 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
       <div ref={ref} className={cn(summaryClasses, "flex flex-col")}>
         <h3 className={headerClasses}>Order Summary</h3>
 
-        <div className="flex-grow min-h-0 mb-2">
-          <ScrollArea className="h-full custom-scrollbar pr-2">
+        <div className="flex-grow min-h-0 mb-4">
+          <ScrollArea className="h-full custom-scrollbar">
               <div className="space-y-2 p-2 rounded-lg bg-white/30">
                   {itemsWithPrices.map((item, index) => {
                       const product = productsByName[item!.name];

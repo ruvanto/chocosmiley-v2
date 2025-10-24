@@ -15,13 +15,13 @@ interface BillDetailsProps {
   showTotalPayable?: boolean;
 }
 
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean }) => (
-    <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm")}>
-        <span className={cn(isTotalPayable && "text-custom-gold")}>{label}</span>
+const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, isOrderContext }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, isOrderContext: boolean }) => (
+    <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", !isOrderContext && "text-black")}>
+        <span className={cn(isTotalPayable && isOrderContext && "text-custom-gold")}>{label}</span>
         {isAnimated ? (
-          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && "text-custom-gold")} />
+          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold")} />
         ) : (
-          <span className={cn(valueClassName, isTotalPayable && "text-custom-gold")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+          <span className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
         )}
     </div>
 );
@@ -40,6 +40,8 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     let totalDiscount = 0;
     let itemsToDisplay: { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] }[] = [];
     
+    const isOrderContext = !!order;
+
     if (cart && allProducts) {
         // Calculation logic for cart view
         const productsByName = allProducts.reduce((acc, product) => {
@@ -96,11 +98,11 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
 
     return (
         <div className="space-y-1.5">
-            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹"/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn(order ? "text-green-400" : "text-green-600")} isAnimated={!!cart} prefix="-₹" />
-            <Separator className="my-1.5 bg-black/10" />
-            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹"/>
-            <div className={cn("flex justify-between items-start text-sm", order ? "text-white/80" : "text-black/80")}>
+            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn("text-green-400")} isAnimated={!!cart} prefix="-₹" isOrderContext={isOrderContext} />
+            <Separator className={cn("my-1.5", isOrderContext ? "bg-white/20" : "bg-black/10")} />
+            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
+            <div className={cn("flex justify-between items-start text-sm", isOrderContext ? "text-white/80" : "text-black/80")}>
                 <span>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
@@ -110,7 +112,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             </div>
 
             {totalFlavoursCost > 0 && (
-                <div className={cn("pl-4 text-xs space-y-1", order ? "text-white/70" : "text-black/60")}>
+                <div className={cn("pl-4 text-xs space-y-1", isOrderContext ? "text-white/70" : "text-black/60")}>
                     {itemsToDisplay.map(item => {
                         const selectedFlavoursCount = item.flavours?.length || 0;
                         if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
@@ -141,17 +143,16 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 </div>
             )}
             
-            <Separator className="my-1.5 bg-black/10" />
-            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" />
-            <SummaryRow label={<>GST <span className={cn("font-normal", order ? "text-white/60" : "text-black/60")}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
+            <Separator className={cn("my-1.5", isOrderContext ? "bg-white/20" : "bg-black/10")} />
+            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
+            <SummaryRow label={<>GST <span className={cn("font-normal", isOrderContext ? "text-white/60" : "text-black/60")}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" isOrderContext={isOrderContext} />
 
             {showTotalPayable && (
                 <>
-                    <div className="my-2 h-[1.5px] border-t border-black/20" ></div>
-                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} />
+                    <div className={cn("my-2 h-[1.5px] border-t", isOrderContext ? "border-white/20" : "border-black/20")} ></div>
+                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} isOrderContext={isOrderContext} />
                 </>
             )}
         </div>
     );
 }
-
