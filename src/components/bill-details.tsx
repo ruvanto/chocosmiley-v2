@@ -1,11 +1,10 @@
-
 // @/components/bill-details.tsx
 'use client';
 
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
 import type { Cart } from '@/context/app-context';
-import type { SanityProduct, Order } from '@/types';
+import type { SanityProduct, Order, OrderItem } from '@/types';
 import { AnimatedNumber } from './ui/animated-number';
 
 interface BillDetailsProps {
@@ -35,7 +34,7 @@ const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated =
 
 export function BillDetails({ order, cart, allProducts, showTotalPayable = false, variant = 'light' }: BillDetailsProps) {
     if (!order && (!cart || !allProducts)) {
-        return null; // Cannot compute without either an order or a cart
+        return null;
     }
     
     let totalMrp = 0;
@@ -45,7 +44,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     let gstAmount = 0;
     let total = 0;
     let totalDiscount = 0;
-    let itemsToDisplay: { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] }[] = [];
+    let itemsToDisplay: (OrderItem | { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] })[] = [];
     
     if (cart && allProducts) {
         // Calculation logic for cart view
@@ -81,7 +80,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 };
             }
             return null;
-        }).filter(Boolean) as any;
+        }).filter(Boolean) as (OrderItem | { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] })[];
 
         totalDiscount = totalMrp - totalProductPrice;
         subtotal = totalProductPrice + totalFlavoursCost;
@@ -121,7 +120,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
 
             {totalFlavoursCost > 0 && (
                 <div className={cn("pl-4 text-xs space-y-1", lightTextColor)}>
-                    {itemsToDisplay.map(item => {
+                    {itemsToDisplay.map((item, itemIndex) => {
                         if (!item.flavours || item.flavours.length === 0) return null;
 
                         const selectedFlavoursCount = item.flavours.length;
@@ -130,13 +129,26 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         
                         const sortedFlavours = [...item.flavours].sort((a,b) => a.name.localeCompare(b.name));
 
-                        return sortedFlavours.map((flavour, index) => {
+                        return sortedFlavours.map((flavour, flavourIndex) => {
                             if (flavour.price > 0) {
-                                const pieces = baseCount + (index < remainder ? 1 : 0);
+                                // Correctly determine piece count based on the item's original flavour list order if it's a cart item
+                                let pieces = 0;
+                                if (cart) {
+                                     const cartItem = Object.values(cart).find(ci => ci.name === item.name);
+                                     const originalFlavourIndex = cartItem?.flavours?.indexOf(flavour.name) ?? -1;
+                                     if (originalFlavourIndex !== -1) {
+                                        pieces = baseCount + (originalFlavourIndex < remainder ? 1 : 0);
+                                     }
+                                } else {
+                                    // For order items, the distribution is not stored, so we have to estimate
+                                    pieces = baseCount + (flavourIndex < remainder ? 1 : 0);
+                                }
+                                
                                 const flavourTotal = flavour.price * pieces * item.quantity;
+
                                 if (pieces > 0) {
                                     return (
-                                        <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
+                                        <div key={`${item.name}-${flavour.name}-${itemIndex}`} className="flex justify-between items-center">
                                             <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
                                             <span>+₹{flavourTotal.toFixed(2)}</span>
                                         </div>
