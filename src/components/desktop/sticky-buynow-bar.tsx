@@ -10,16 +10,21 @@ interface StickyBuyNowBarProps {
     onAddToCart: () => void;
     onRemoveFromCart: () => void;
     quantity: number;
-    onToggleCartPopup: () => void;
+    onToggleCartPopup?: () => void;
+    onBuyNow?: () => void;
 }
 
-export function StickyBuyNowBar({ product, onAddToCart, onRemoveFromCart, quantity, onToggleCartPopup }: StickyBuyNowBarProps) {
+export function StickyBuyNowBar({ product, onAddToCart, onRemoveFromCart, quantity, onToggleCartPopup, onBuyNow }: StickyBuyNowBarProps) {
 
-    const handleBuyNow = () => {
-        if (quantity === 0) {
-            onAddToCart();
+    const handleBuyNowClick = () => {
+        if (onBuyNow) {
+            onBuyNow();
+        } else if (onToggleCartPopup) {
+            if (quantity === 0) {
+                onAddToCart();
+            }
+            onToggleCartPopup();
         }
-        onToggleCartPopup();
     };
 
     const isOutOfStock = product.isOutOfStock;
@@ -98,7 +103,7 @@ export function StickyBuyNowBar({ product, onAddToCart, onRemoveFromCart, quanti
                                 )}
                                 <Button
                                     size="lg"
-                                    onClick={handleBuyNow}
+                                    onClick={handleBuyNowClick}
                                     className="w-full rounded-full font-semibold text-sm bg-custom-gold text-custom-purple-dark hover:bg-custom-gold/90"
                                 >
                                     Buy Now
