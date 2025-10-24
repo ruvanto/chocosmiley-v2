@@ -3,7 +3,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Plus, Minus, ChevronDown, FaTrash } from 'lucide-react';
+import { Plus, Minus, ChevronDown, Trash } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import type { SanityProduct, SanityFlavour } from '@/types';
@@ -93,6 +93,7 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
     }, [item.flavours, availableFlavoursMap, chocolateDistribution]);
         
     const itemPrice = ((product.discountedPrice || 0) + totalFlavourPrice) * item.quantity;
+    const itemMrp = (product.mrp || product.discountedPrice || 0) * item.quantity;
     
     const sortedFlavoursForDisplay = useMemo(() => 
         (item.flavours && availableFlavoursMap)
@@ -186,7 +187,7 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
                             <div className="flex justify-between items-start gap-2">
                                 <h3 className={cn("font-bold leading-tight flex-1 truncate", isMobile ? "text-base" : "md:text-base xl:text-lg")}>{item.name}</h3>
                                 <button onClick={handleRemove} className="text-black/80 hover:text-red-500 transition-colors flex-shrink-0">
-                                    <FaTrash size={isMobile ? 18 : 16} />
+                                    <Trash size={isMobile ? 18 : 16} />
                                 </button>
                             </div>
                             <p className={cn("text-black/80 truncate mt-0", isMobile ? "text-xs" : "md:text-xs xl:text-sm")}>{subtitle}</p>
@@ -255,7 +256,7 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
                         
                         <div className="flex items-end justify-between mt-auto">
                             <div className="flex items-baseline gap-2">
-                                {product.mrp && <p className={cn("line-through text-black/70 font-semibold", isMobile ? "text-xs" : "md:text-xs lg:text-sm")}>₹{product.mrp.toFixed(2)}</p>}
+                                {product.mrp && <p className={cn("line-through text-black/70 font-semibold", isMobile ? "text-xs" : "md:text-xs lg:text-sm")}>₹{itemMrp.toFixed(2)}</p>}
                                 {discountPercentage && (
                                     <div className={cn("flex items-center gap-1 px-1.5 py-0.5 rounded-md", isMobile ? "text-black bg-green-400" : "text-white bg-green-600/80")}>
                                         <svg className={cn("h-3 w-3", isMobile ? "md:h-3 md:w-3" : "lg:h-4 lg:w-4")} viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
