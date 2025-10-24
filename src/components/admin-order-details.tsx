@@ -38,6 +38,7 @@ import { useAppContext } from "@/context/app-context";
 import { OrderConfirmedItemCard } from "./order-confirmed-item-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
+import { BillDetails } from "./bill-details";
 
 
 interface AdminOrderDetailsProps {
@@ -56,80 +57,6 @@ const DetailRow = ({ icon, label, value, action }: { icon: React.ReactNode, labe
          {action && <div className="flex-shrink-0">{action}</div>}
     </div>
 );
-
-const BillDetails = ({ order }: { order: Order }) => {
-    const totalMrp = order.items.reduce((acc, item) => {
-        const itemMrp = item.mrp || 0;
-        return acc + (itemMrp * item.quantity);
-    }, 0);
-
-    const totalDiscount = order.totalDiscount || 0;
-
-    const totalProductPrice = order.items.reduce((acc, item) => {
-        return acc + (item.finalProductPrice || 0);
-    }, 0);
-
-    const totalFlavoursCost = order.items.reduce((acc, item) => {
-        return acc + ((item.finalSubtotal || 0) - (item.finalProductPrice || 0));
-    }, 0);
-    
-    const subtotal = totalProductPrice + totalFlavoursCost;
-    const gstAmount = order.total - subtotal;
-    const totalPayable = order.total;
-
-    return (
-        <div>
-            <h4 className="font-bold mb-2 text-lg">Bill Details</h4>
-            <div className="space-y-1.5 bg-white/5 p-3 rounded-lg text-sm">
-                <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
-                <div className="flex justify-between text-green-400"><span className="text-white/80">Total Discount:</span> <span>-₹{totalDiscount.toFixed(2)}</span></div>
-                <Separator className="bg-white/20 my-1"/>
-                <div className="flex justify-between"><span className="text-white/80">Total Product Price:</span> <span>₹{totalProductPrice.toFixed(2)}</span></div>
-                <div className="flex justify-between items-start">
-                    <span className="text-white/80">Flavours &amp; Fillings:</span>
-                    <span>+₹{totalFlavoursCost.toFixed(2)}</span>
-                </div>
-                {totalFlavoursCost > 0 && (
-                    <div className="pl-4 text-xs space-y-1 text-white/70">
-                        {order.items.map(item => {
-                            const selectedFlavoursCount = item.flavours?.length || 0;
-                            if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
-
-                            const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
-                            const remainder = item.numberOfChocolates % selectedFlavoursCount;
-                            
-                            const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
-                             const distribution: Record<string, number> = {};
-
-                            sortedFlavours.forEach((name, index) => {
-                                distribution[name] = baseCount + (index < remainder ? 1 : 0);
-                            });
-
-                            return item.flavours?.map((flavour) => {
-                                const pieces = distribution[flavour.name] || 0;
-                                if (flavour.price > 0 && pieces > 0) {
-                                    const flavourTotal = flavour.price * pieces * item.quantity;
-                                    return (
-                                        <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
-                                            <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
-                                            <span>+₹{flavourTotal.toFixed(2)}</span>
-                                        </div>
-                                    );
-                                }
-                                return null;
-                            });
-                        })}
-                    </div>
-                )}
-                <Separator className="bg-white/20 my-1"/>
-                <div className="flex justify-between font-bold"><span className="text-white/80">Subtotal:</span> <span>₹{subtotal.toFixed(2)}</span></div>
-                <div className="flex justify-between"><span className="text-white/80">GST (5%):</span> <span>+₹{gstAmount.toFixed(2)}</span></div>
-                <Separator className="bg-white/20 my-1"/>
-                <div className="flex justify-between font-bold text-base"><span className="text-custom-gold">Total Payable:</span> <span className="text-custom-gold">₹{totalPayable.toFixed(2)}</span></div>
-            </div>
-        </div>
-    );
-};
 
 const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Order, onOpenChange: (open: boolean) => void }) => {
     const { updateOrderStatus, allOrders } = useAppContext();
@@ -232,7 +159,10 @@ const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Ord
 
                         <Separator className="bg-white/20" />
                         
-                        <BillDetails order={order} />
+                         <div className="bg-white/5 p-3 rounded-lg text-sm text-black">
+                            <h4 className="font-bold mb-2 text-lg text-white">Bill Details</h4>
+                            <BillDetails order={order} />
+                         </div>
                         
                         {(order.rating || order.feedback) && (
                             <>
@@ -375,7 +305,10 @@ const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Ord
 
                 <Separator className="bg-white/20" />
                 
-                <BillDetails order={order} />
+                 <div className="bg-white/5 p-3 rounded-lg text-sm text-black">
+                    <h4 className="font-bold mb-2 text-lg text-white">Bill Details</h4>
+                    <BillDetails order={order} />
+                 </div>
                 
                 {(order.rating || order.feedback) && (
                      <>
