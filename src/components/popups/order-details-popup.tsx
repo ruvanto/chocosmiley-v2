@@ -22,7 +22,7 @@ import { Separator } from "../ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { OrderConfirmedItemCard } from "../cards/order-confirmed-item-card";
+import { OrderDetailsItemCard } from "../cards/order-details-item-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { BillDetails } from "../bill-details";
 
@@ -143,7 +143,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                             key={`${item.name}-${index}`}
                             className={cn("cursor-pointer")}
                         >
-                            <OrderConfirmedItemCard
+                            <OrderDetailsItemCard
                                 item={item}
                                 isMobile={isMobile ?? false}
                             />
@@ -174,7 +174,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                         {order.items.map((item, index) => {
                             return (
                                 <div key={`${item.name}-${index}`}>
-                                    <OrderConfirmedItemCard item={item} isMobile={false} />
+                                    <OrderDetailsItemCard item={item} isMobile={false} />
                                 </div>
                             );
                         })}
