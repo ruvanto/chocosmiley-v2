@@ -12,7 +12,7 @@ import { PopupsManager } from '@/components/popups/popups-manager';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { CartItemCard } from '@/components/cart-item-card';
-import { MobileCartSummary } from '@/components/mobile-cart-summary';
+import { OrderSummary } from '@/components/order-summary';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -313,7 +313,14 @@ export default function CartClientPage() {
                       </div>
                     </div>
                     {cartItems.length > 0 && productsInCart.length > 0 && (
-                      <MobileCartSummary ref={summaryRef} cart={cart} allProducts={productsInCart} onCheckout={handleCheckout} isLoading={isProcessingOrder || isCartUpdating} />
+                      <OrderSummary 
+                        ref={summaryRef} 
+                        cart={cart} 
+                        allProducts={productsInCart} 
+                        onFinalizeOrder={handleCheckout} 
+                        isLoading={isProcessingOrder || isCartUpdating} 
+                        isMobile={true}
+                      />
                     )}
                   </div>
                   <div className="h-16" />

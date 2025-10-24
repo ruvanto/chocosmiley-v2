@@ -48,7 +48,8 @@ async function getProductsForCart(productNames: string[]): Promise<SanityProduct
 const itemVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
+  exit: { opacity: 0, x: -50 },
+  transition: { type: 'tween', duration: 0.2 },
 };
 
 
@@ -189,11 +190,11 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
           {/* Right Section (Summary & Footer) */}
           <div className="w-[40%] flex flex-col pr-0">
               <OrderSummary
-                viewContext='cart'
                 cart={cart}
                 allProducts={productsInCart}
                 onFinalizeOrder={onFinalizeOrder}
                 isLoading={isLoading}
+                isMobile={false}
               />
           </div>
         </div>
