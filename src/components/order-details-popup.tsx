@@ -154,9 +154,9 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
             
             <Separator className="bg-white/20" />
 
-            <div className="bg-white/5 p-3 rounded-lg text-sm text-black">
-                <h4 className="font-bold mb-2 text-lg text-white">Bill Details</h4>
-                <BillDetails order={order} />
+            <div className="bg-white/5 p-3 rounded-lg text-sm text-white">
+                <h4 className="font-bold mb-2 text-lg">Bill Details</h4>
+                <BillDetails order={order} showTotalPayable />
             </div>
 
         </div>
@@ -205,9 +205,9 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
 
                         <Separator className="bg-white/20" />
 
-                         <div className="bg-white/5 p-3 rounded-lg text-sm text-black">
-                            <h4 className="font-bold mb-2 text-lg text-white">Bill Details</h4>
-                            <BillDetails order={order} />
+                         <div className="bg-white/5 p-3 rounded-lg text-sm text-white">
+                            <h4 className="font-bold mb-2 text-lg">Bill Details</h4>
+                            <BillDetails order={order} showTotalPayable />
                          </div>
                     </div>
                 </ScrollArea>

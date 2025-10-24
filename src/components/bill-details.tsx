@@ -14,13 +14,13 @@ interface BillDetailsProps {
   showTotalPayable?: boolean;
 }
 
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string }) => (
-    <div className={cn("flex justify-between items-center text-sm", isBold ? "font-bold text-base" : "text-black/80")}>
-        <span>{label}</span>
+const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean }) => (
+    <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm")}>
+        <span className={cn(isTotalPayable && "text-custom-gold")}>{label}</span>
         {isAnimated ? (
-          <AnimatedNumber value={value} prefix={prefix} className={valueClassName} />
+          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && "text-custom-gold")} />
         ) : (
-          <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+          <span className={cn(valueClassName, isTotalPayable && "text-custom-gold")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
         )}
     </div>
 );
@@ -83,23 +83,27 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
         gstAmount = total - subtotal;
     }
 
+    const parentHasTextWhite = (
+        cart ? false : true
+    );
+
     return (
-        <div className="space-y-1.5">
+        <div className={cn("space-y-1.5", parentHasTextWhite ? "text-white" : "text-black")}>
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹"/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName='text-green-600' isAnimated={!!cart} prefix="-₹" />
-            <Separator className="bg-black/10 my-1.5" />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={parentHasTextWhite ? 'text-green-400' : 'text-green-600'} isAnimated={!!cart} prefix="-₹" />
+            <Separator className={cn("my-1.5", parentHasTextWhite ? "bg-white/20" : "bg-black/10")} />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹"/>
-            <div className="flex justify-between items-start text-sm">
-                <span className={cn(!!cart ? 'text-black/80' : 'text-white/80')}>Flavours &amp; Fillings:</span>
+            <div className={cn("flex justify-between items-start text-sm", parentHasTextWhite ? 'text-white/80' : 'text-black/80')}>
+                <span>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
                 ) : (
-                    <span className="font-medium text-black">+₹{totalFlavoursCost.toFixed(2)}</span>
+                    <span className="font-medium">+₹{totalFlavoursCost.toFixed(2)}</span>
                 )}
             </div>
 
             {totalFlavoursCost > 0 && (
-                <div className={cn("pl-4 text-xs space-y-1", !!cart ? 'text-black/60' : 'text-white/70')}>
+                <div className={cn("pl-4 text-xs space-y-1", parentHasTextWhite ? 'text-white/70' : 'text-black/60')}>
                     {itemsToDisplay.map(item => {
                         const selectedFlavoursCount = item.flavours?.length || 0;
                         if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
@@ -130,14 +134,14 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 </div>
             )}
             
-            <Separator className="bg-black/10 my-1.5" />
+            <Separator className={cn("my-1.5", parentHasTextWhite ? "bg-white/20" : "bg-black/10")} />
             <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" />
-            <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
+            <SummaryRow label={<>GST <span className={cn("font-normal", parentHasTextWhite ? 'text-white/60' : 'text-black/60')}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
 
             {showTotalPayable && (
                 <>
-                    <div className="border-t border-black/20 my-2 h-[1.5px]" ></div>
-                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" />
+                    <div className={cn("my-2 h-[1.5px]", parentHasTextWhite ? 'border-t border-white/20' : 'border-t border-black/20' )} ></div>
+                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} />
                 </>
             )}
         </div>
