@@ -7,6 +7,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { ActiveView } from '@/types';
+import { RiShoppingBasketFill } from "react-icons/ri";
 
 interface FloatingCartButtonProps {
   activeView: ActiveView;
@@ -38,24 +39,25 @@ export function FloatingCartButton({
       <Button
         onClick={onToggleCart}
         className={cn(
-          "shadow-lg bg-custom-gold hover:bg-custom-gold/90 transition-all duration-300 ease-in-out flex items-center justify-center overflow-hidden w-14 h-14",
+          "shadow-lg bg-custom-gold hover:bg-custom-gold/90 transition-all duration-300 ease-in-out flex items-center justify-center",
           isCartButtonExpanded && !isCartOpen ? 'w-80 h-14 rounded-full' : 'w-14 h-14 rounded-full'
         )}
         size="icon"
       >
         <div className={cn(
-            "transition-transform duration-500 ease-in-out transform-gpu",
-            isCartOpen && "rotate-180"
+            "relative transition-transform duration-500 ease-in-out transform-gpu"
+,
+            isCartOpen && "scale-x-[-1]"
         )}>
           {isCartButtonExpanded && !isCartOpen ? (
             <span className="text-custom-purple-dark font-semibold whitespace-nowrap">{cartMessage}</span>
           ) : isCartOpen ? (
-            <X className="h-8 w-8 text-custom-purple-dark" />
+            <X style={{ width: '20px', height: '20px' }} className="text-custom-purple-dark" />
           ) : (
             <>
-              <Image src="/icons/cart.png" alt="Cart" width={24} height={24} onDragStart={(e) => e.preventDefault()}/>
+              <RiShoppingBasketFill style={{ width: '32px', height: '32px' }} className="text-custom-purple-dark"/>
               {totalQuantity > 0 && (
-                <div className="absolute -top-1 -right-1 bg-custom-purple-dark text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                <div className="absolute -top-1 right-0 bg-custom-purple-dark text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
                   {totalQuantity}
                 </div>
               )}

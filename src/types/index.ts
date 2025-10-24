@@ -88,7 +88,7 @@ export type ActiveView =
   | 'home' 
   | 'search' 
   | 'cart' 
-  | 'profile' 
+  | 'account' 
   | 'about' 
   | 'faq' 
   | 'order-confirmed' 

@@ -3,6 +3,7 @@
 'use client';
 
 import { House, ShoppingCart, User } from 'lucide-react';
+import { RiShoppingBasketLine } from "react-icons/ri";
 import { cn } from '@/lib/utils';
 import type { ActiveView } from '@/types';
 import { useState, useEffect } from 'react';
@@ -15,7 +16,7 @@ interface BottomNavbarProps {
 
 const navItems = [
   { view: 'home', icon: House, label: 'Home' },
-  { view: 'cart', icon: ShoppingCart, label: 'Cart' },
+  { view: 'cart', icon: RiShoppingBasketLine, label: 'Cart' },
   { view: 'account', icon: User, label: 'Account' },
 ] as const;
 

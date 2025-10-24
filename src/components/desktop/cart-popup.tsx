@@ -2,11 +2,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ShoppingCart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { CartItemCard } from '../cards/cart-item-card';
 import { Button } from '../ui/button';
-import Image from 'next/image';
+import { RiShoppingBasketFill } from "react-icons/ri";
 import { OrderSummary } from '../order-summary';
 import {
   AlertDialog,
@@ -105,9 +106,9 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
   return (
     <div className={cn("bg-custom-purple-dark rounded-t-[40px] pt-4 text-white h-full overflow-hidden relative flex flex-col ring-4 ring-custom-gold animate-slide-up-fade-in")}>
       <div className="flex justify-between items-center mb-5 px-6">
-        <div className="flex items-center rounded-3xl gap-3 bg-custom-gold border-none py-1 px-4">
-            <Image src="/icons/cart.png" alt="Cart" width={20} height={20} />
-            <h2 className="text-lg text-custom-purple-dark font-bold">My Cart</h2>
+        <div className="flex items-center rounded-3xl gap-2 bg-custom-gold border-none py-1 px-4">
+        <RiShoppingBasketFill size={24} className='text-custom-purple-dark'/>
+            <h2 className="text-lg text-custom-purple-dark font-semibold">My Cart</h2>
         </div>
         {cartItems.length > 0 && (
           <AlertDialog>

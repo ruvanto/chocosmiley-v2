@@ -73,11 +73,11 @@ export function ProgressBarComponent() {
           'fixed inset-0 z-[200] h-screen w-full flex items-center justify-center', 
           'transition-opacity duration-300 flex-col', 
           // New Deep Purple Background Color
-          `bg-[${BG_PURPLE}]`, // Using dynamic color variable
           isVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
         style={{
           transitionProperty: 'opacity',
+          backgroundColor: BG_PURPLE, // use inline style for full-screen solid background
         }}
         onTransitionEnd={handleTransitionEnd}
         aria-busy={isGlobalLoading}
