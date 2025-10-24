@@ -127,7 +127,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                         const remainder = item.numberOfChocolates % selectedFlavoursCount;
                         
-                        const flavourNames = item.flavours?.map(f => f.name).sort() || [];
+                        const flavourNames = item.flavours?.map(f => f.name) || [];
                         const distribution: Record<string, number> = {};
                          flavourNames.forEach((name, index) => {
                              distribution[name] = baseCount + (index < remainder ? 1 : 0);
@@ -151,7 +151,6 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             )}
             
             <Separator className={cn("my-1.5", separatorClass)} />
-            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" variant={variant} />
             <SummaryRow label={<>GST <span className={cn("font-normal", subTextColor)}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} />
 
             {showTotalPayable && (
