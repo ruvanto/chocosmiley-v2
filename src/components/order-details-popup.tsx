@@ -1,5 +1,3 @@
-
-
 // @/components/order-details-popup.tsx
 import * as React from "react";
 import {
@@ -26,6 +24,7 @@ import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { OrderConfirmedItemCard } from "./order-confirmed-item-card";
 import { ScrollArea } from "./ui/scroll-area";
+import { BillDetails } from "./bill-details";
 
 interface OrderDetailsPopupProps {
     order: Order | null;
@@ -92,25 +91,6 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
     const formattedDate = orderDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const formattedTime = orderDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
     
-    const totalMrp = order.items.reduce((acc, item) => {
-        const itemMrp = item.mrp || 0;
-        return acc + (itemMrp * item.quantity);
-    }, 0);
-
-    const totalDiscount = order.totalDiscount || 0;
-
-    const totalProductPrice = order.items.reduce((acc, item) => {
-        return acc + (item.finalProductPrice || 0);
-    }, 0);
-    
-    const totalFlavoursCost = order.items.reduce((acc, item) => {
-        return acc + ((item.finalSubtotal || 0) - (item.finalProductPrice || 0));
-    }, 0);
-    
-    const subtotal = totalProductPrice + totalFlavoursCost;
-    const gstAmount = order.total - subtotal;
-    const totalPayable = order.total;
-    
     const statusSteps = ['Order Requested', 'In Progress', 'Order Delivered'];
     const currentStatusIndex = statusSteps.indexOf(order.status);
     const isCancelled = order.status === 'Order Cancelled';
@@ -175,7 +155,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
             
             <Separator className="bg-white/20" />
             
-            <div>
+            {/* <div>
                  <h4 className="font-bold mb-2">Bill Details</h4>
                  <div className="space-y-1.5 bg-white/5 p-3 rounded-lg text-sm">
                     <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
@@ -223,7 +203,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                     <Separator className="bg-white/20 my-1"/>
                     <div className="flex justify-between font-bold text-base"><span className="text-custom-gold">Total Payable:</span> <span className="text-custom-gold">₹{totalPayable.toFixed(2)}</span></div>
                 </div>
-            </div>
+            </div> */}
         </div>
       );
     }
@@ -270,7 +250,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
 
                         <Separator className="bg-white/20" />
 
-                        <div>
+                        {/* <div>
                             <h4 className="font-bold mb-2 text-lg">Bill Details</h4>
                             <div className="space-y-1.5 bg-white/5 p-3 rounded-lg text-sm">
                                 <div className="flex justify-between"><span className="text-white/80">Total MRP:</span> <span>₹{totalMrp.toFixed(2)}</span></div>
@@ -318,7 +298,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                                 <Separator className="bg-white/20 my-1"/>
                                 <div className="flex justify-between font-bold text-base"><span className="text-custom-gold">Total Payable:</span> <span className="text-custom-gold">₹{totalPayable.toFixed(2)}</span></div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </ScrollArea>
             </div>

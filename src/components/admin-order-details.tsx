@@ -1,5 +1,3 @@
-
-
 // @/components/admin-order-details.tsx
 'use client';
 

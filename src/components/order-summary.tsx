@@ -3,12 +3,13 @@
 
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
-import type { Cart, CartItem } from '@/context/app-context';
+import type { Cart } from '@/context/app-context';
 import type { SanityProduct } from '@/types';
 import { Button } from './ui/button';
 import React from 'react';
 import { AnimatedNumber } from './ui/animated-number';
 import { ScrollArea } from './ui/scroll-area';
+import { BillDetails } from './bill-details';
 
 interface OrderSummaryProps {
   cart: Cart;
@@ -17,17 +18,6 @@ interface OrderSummaryProps {
   onFinalizeOrder?: () => void;
   isLoading?: boolean;
 }
-
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string }) => (
-    <div className={cn("flex justify-between items-center text-sm", isBold ? "font-bold text-base" : "text-black/80")}>
-        <span>{label}</span>
-        {isAnimated ? (
-          <AnimatedNumber value={value} prefix={prefix} className={valueClassName} />
-        ) : (
-          <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
-        )}
-    </div>
-);
 
 const SummaryItem = ({ product, quantity, isMobile = false }: { product: SanityProduct, quantity: number, isMobile?: boolean }) => {
   const price = product?.discountedPrice || 0;
@@ -61,46 +51,38 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
       );
     }
     
-    let totalMrp = 0;
-    let totalProductPrice = 0;
-    let totalFlavoursCost = 0;
-
     const itemsWithPrices = cartItems.map(item => {
         const product = productsByName[item.name];
         if (!product) return null;
-
-        const itemProductPrice = (product.discountedPrice || 0) * item.quantity;
-        totalProductPrice += itemProductPrice;
-        totalMrp += (product.mrp || product.discountedPrice || 0) * item.quantity;
-        
-        let itemFlavourCost = 0;
-        const selectedFlavoursCount = item.flavours?.length || 0;
-        if (selectedFlavoursCount > 0 && product.numberOfChocolates) {
-            const flavourPieces: { [key: string]: number } = {};
-            const baseCount = Math.floor(product.numberOfChocolates / selectedFlavoursCount);
-            const remainder = product.numberOfChocolates % selectedFlavoursCount;
-
-            (item.flavours || []).forEach((flavourName, index) => {
-                flavourPieces[flavourName] = baseCount + (index < remainder ? 1 : 0);
-            });
-
-            item.flavours?.forEach(flavourName => {
-                const flavour = product.availableFlavours?.find(f => f.name === flavourName);
-                if (flavour) {
-                    itemFlavourCost += (flavour.price || 0) * (flavourPieces[flavourName] || 0);
-                }
-            });
-            itemFlavourCost *= item.quantity;
-        }
-        totalFlavoursCost += itemFlavourCost;
-
-        return { ...item, totalPrice: itemProductPrice + itemFlavourCost };
+        return { ...item };
     }).filter(item => item !== null);
     
-    const totalDiscount = totalMrp > totalProductPrice ? totalMrp - totalProductPrice : 0;
+    let totalProductPrice = 0;
+    let totalFlavoursCost = 0;
+
+    Object.values(cart).forEach(item => {
+        const product = productsByName[item.name];
+        if (product) {
+            totalProductPrice += (product.discountedPrice || 0) * item.quantity;
+            
+            const selectedFlavoursCount = item.flavours?.length || 0;
+            if (selectedFlavoursCount > 0 && product.numberOfChocolates) {
+                const baseCount = Math.floor(product.numberOfChocolates / selectedFlavoursCount);
+                const remainder = product.numberOfChocolates % selectedFlavoursCount;
+                
+                let itemFlavourCost = 0;
+                (item.flavours || []).forEach((flavourName, index) => {
+                    const flavour = product.availableFlavours?.find(f => f.name === flavourName);
+                    const pieces = baseCount + (index < remainder ? 1 : 0);
+                    itemFlavourCost += (flavour?.price || 0) * pieces;
+                });
+                totalFlavoursCost += itemFlavourCost * item.quantity;
+            }
+        }
+    });
+
     const subtotal = totalProductPrice + totalFlavoursCost;
-    const gstRate = 0.05;
-    const gstAmount = subtotal * gstRate;
+    const gstAmount = subtotal * 0.05;
     const total = subtotal + gstAmount;
 
     const summaryClasses = isMobile 
@@ -136,18 +118,7 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
             </div>
               
             <div>
-                <div className="space-y-1.5">
-                  <SummaryRow label="Total MRP" value={totalMrp} isAnimated prefix="₹"/>
-                  <SummaryRow label="Total Discount" value={totalDiscount} valueClassName='text-green-600' isAnimated prefix="-₹" />
-                  <Separator className="bg-black/10 my-1.5" />
-                  <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated prefix="₹"/>
-                  <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated prefix="+₹"/>
-                  <Separator className="bg-black/10 my-1.5" />
-                  <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated prefix="₹" />
-                  <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated prefix="+₹" />
-                  <div className="border-t border-black/20 my-2 h-[1.5px]" ></div>
-                  <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated prefix="₹" />
-                </div>
+                <BillDetails cart={cart} allProducts={allProducts} showTotalPayable={true} />
 
                 {onFinalizeOrder && (
                   <Button onClick={onFinalizeOrder} className={finalizeButtonClasses} isLoading={isLoading}>
@@ -160,7 +131,7 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
     }
 
     return (
-      <div ref={ref} className={summaryClasses}>
+      <div ref={ref} className={cn(summaryClasses, "flex flex-col")}>
         <h3 className={headerClasses}>Order Summary</h3>
 
         <div className="flex-grow min-h-0 mb-2">
@@ -185,18 +156,7 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
         </div>
           
         <div className="flex-shrink-0">
-            <div className="space-y-1.5">
-              <SummaryRow label="Total MRP" value={totalMrp} isAnimated prefix="₹"/>
-              <SummaryRow label="Total Discount" value={totalDiscount} valueClassName='text-green-600' isAnimated prefix="-₹" />
-              <Separator className="bg-black/10 my-1.5" />
-              <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated prefix="₹"/>
-              <SummaryRow label="Flavours & Fillings" value={totalFlavoursCost} isAnimated prefix="+₹"/>
-              <Separator className="bg-black/10 my-1.5" />
-              <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated prefix="₹" />
-              <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated prefix="+₹" />
-              <div className="border-t border-black/20 my-2 h-[1.5px]" ></div>
-              <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated prefix="₹" />
-            </div>
+            <BillDetails cart={cart} allProducts={allProducts} showTotalPayable={false} />
 
             {onFinalizeOrder && (
               <>

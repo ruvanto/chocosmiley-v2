@@ -1,10 +1,8 @@
-
-
 // @/components/order-confirmed-summary.tsx
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { Order, OrderItem, SanityProduct } from '@/types';
+import type { Order, SanityProduct } from '@/types';
 import { Separator } from './ui/separator';
 import { OrderConfirmedItemCard } from './order-confirmed-item-card';
 
@@ -57,7 +55,7 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
 
             {/* Items List */}
             <div className="min-h-0 space-y-2">
-                {order.items.map((item: OrderItem) => {
+                {order.items.map((item) => {
                    const product = productsByName[item.name];
                    if (!product) return null;
                    return (
