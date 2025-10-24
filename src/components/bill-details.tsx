@@ -4,7 +4,7 @@
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
 import type { Cart } from '@/context/app-context';
-import type { SanityProduct, Order } from '@/types';
+import type { SanityProduct, Order, OrderItem } from '@/types';
 import { AnimatedNumber } from './ui/animated-number';
 
 interface BillDetailsProps {
@@ -16,11 +16,11 @@ interface BillDetailsProps {
 
 const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, isOrderContext }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, isOrderContext: boolean }) => (
     <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", !isOrderContext && "text-black")}>
-        <span className={cn(isTotalPayable && isOrderContext && "text-custom-gold")}>{label}</span>
+        <span className={cn(isTotalPayable && isOrderContext && "text-custom-gold", isTotalPayable && !isOrderContext && "text-black font-bold")}>{label}</span>
         {isAnimated ? (
-          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold")} />
+          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold", isTotalPayable && !isOrderContext && "text-black font-bold")} />
         ) : (
-          <span className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+          <span className={cn(valueClassName, isTotalPayable && isOrderContext && "text-custom-gold", isTotalPayable && !isOrderContext && "text-black font-bold")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
         )}
     </div>
 );
@@ -35,7 +35,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     let gstAmount = 0;
     let total = 0;
     let totalDiscount = 0;
-    let itemsToDisplay: { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] }[] = [];
+    let itemsToDisplay: (OrderItem | { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] })[] = [];
     
     if (cart && allProducts) {
         const productsByName = allProducts.reduce((acc, product) => {
@@ -92,7 +92,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     return (
         <div className={cn("space-y-1.5", isOrderContext ? "text-white" : "text-black")}>
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn("text-green-400")} isAnimated={!!cart} prefix="-₹" isOrderContext={isOrderContext} />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn(isOrderContext ? "text-green-400" : "text-green-600")} isAnimated={!!cart} prefix="-₹" isOrderContext={isOrderContext} />
             <Separator className={cn("my-1.5", isOrderContext ? "bg-white/20" : "bg-black/10")} />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
             <div className={cn("flex justify-between items-start text-sm", isOrderContext ? "text-white/80" : "text-black/80")}>
@@ -113,7 +113,9 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                         const remainder = item.numberOfChocolates % selectedFlavoursCount;
                         
-                        return item.flavours?.map((flavour, index) => {
+                        const sortedFlavours = [...(item.flavours || [])].sort((a, b) => a.name.localeCompare(b.name));
+
+                        return sortedFlavours.map((flavour, index) => {
                             const pieces = baseCount + (index < remainder ? 1 : 0);
                             if (flavour.price > 0 && pieces > 0) {
                                 const flavourTotal = flavour.price * pieces * item.quantity;
@@ -136,7 +138,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
 
             {showTotalPayable && (
                 <>
-                    <div className={cn("my-2 h-[1.5px] border-t", isOrderContext ? "border-white/20" : "border-black/20")} ></div>
+                    <div className={cn("my-2 h-[1.5px] border-t-0", isOrderContext ? "border-white/20" : "border-black/20")} ></div>
                     <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} isOrderContext={isOrderContext} />
                 </>
             )}
