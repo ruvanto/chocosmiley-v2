@@ -102,11 +102,11 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             <Separator className={cn("my-1.5", inOrderContext ? "bg-white/20" : "bg-black/10")} />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" inOrderContext={inOrderContext}/>
             <div className={cn("flex justify-between items-start text-sm", inOrderContext ? "text-white/80" : "text-black/80")}>
-                <span>Flavours &amp; Fillings:</span>
+                <span className={cn(inOrderContext && "text-white/80")}>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
                 ) : (
-                    <span className="font-medium">+₹{totalFlavoursCost.toFixed(2)}</span>
+                    <span className={cn("font-medium", inOrderContext && "text-white/80")}>+₹{totalFlavoursCost.toFixed(2)}</span>
                 )}
             </div>
 
@@ -122,9 +122,11 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const sortedFlavours = [...(item.flavours?.map(f => f.name) || [])].sort();
 
                          const distribution: Record<string, number> = {};
-                        sortedFlavours.forEach((name, index) => {
-                            distribution[name] = baseCount + (index < remainder ? 1 : 0);
-                        });
+                         // Consistent remainder distribution
+                         const flavourNames = item.flavours?.map(f => f.name).sort() || [];
+                         flavourNames.forEach((name, index) => {
+                             distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                         });
 
                          return item.flavours?.map((flavour) => {
                              const pieces = distribution[flavour.name] || 0;
