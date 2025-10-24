@@ -1,10 +1,11 @@
-// @/components/mobile-search-controls.tsx
+
+// @/components/mobile/mobile-search-controls.tsx
 'use client';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from "@/components/ui/sheet";
 import { SlidersHorizontal, ArrowUpDown } from 'lucide-react';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 
 interface MobileSearchControlsProps {
     query: string;

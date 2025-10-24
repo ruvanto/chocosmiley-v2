@@ -2,11 +2,11 @@
 'use client';
 
 import Image from "next/image";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "../section-title";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/app-context";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { ChevronRight } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";

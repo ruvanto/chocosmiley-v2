@@ -1,4 +1,5 @@
-// @/components/header/mobile-search-header.tsx
+
+// @/components/mobile/mobile-search-header.tsx
 'use client';
 
 import { Input } from "@/components/ui/input";

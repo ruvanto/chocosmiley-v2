@@ -12,7 +12,7 @@ import { BottomNavbar } from '@/components/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { FloatingCartButton } from '@/components/floating-cart-button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { MobileSearchHeader } from '@/components/header/mobile-search-header';
+import { MobileSearchHeader } from '@/components/mobile/mobile-search-header';
 import { MobileProductDetailView } from '@/components/views/MobileProductDetailView';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
@@ -27,8 +27,8 @@ import { ProfileCompletionBanner } from '../profile-completion-banner';
 import { MobileSearchView } from './MobileSearchView';
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../search-suggestions';
-import { MobileProductStickyBar } from '../mobile-product-sticky-bar';
-import { MobileExpandedImageView } from '../mobile-image-gallery';
+import { MobileProductStickyBar } from '../mobile/mobile-product-sticky-bar';
+import { MobileExpandedImageView } from '../mobile/mobile-image-gallery';
 import CustomScreenLoader from '../custom-screen-loader';
 
 interface ProductDetailClientPageProps {

@@ -1,5 +1,5 @@
 
-// @/components/mobile-product-sticky-bar.tsx
+// @/components/mobile/mobile-product-sticky-bar.tsx
 'use client';
 
 import { Button } from '@/components/ui/button';

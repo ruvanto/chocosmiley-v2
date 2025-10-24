@@ -5,7 +5,7 @@ import CustomScreenLoader from '@/components/custom-screen-loader';
 
 export default async function AdminPage() {
     return (
-        <Suspense fallback={<CustomScreenLoader text="Loading admin dashboard..." />}>
+        <Suspense fallback={<CustomScreenLoader text="Loading admin dashboar" />}>
             <AdminClientPage />
         </Suspense>
     );

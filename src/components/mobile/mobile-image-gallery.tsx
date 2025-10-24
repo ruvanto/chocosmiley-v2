@@ -1,6 +1,5 @@
 
-
-// @/components/mobile-image-gallery.tsx
+// @/components/mobile/mobile-image-gallery.tsx
 'use client';
 
 import Image from 'next/image';

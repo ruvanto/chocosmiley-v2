@@ -1,14 +1,14 @@
 
-// @/components/mobile-explore-categories.tsx
+// @/components/mobile/mobile-explore-categories.tsx
 'use client';
 
 import Image from "next/image";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "../section-title";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/app-context";
 import { ChevronRight } from "lucide-react";
 import React from "react";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 
 interface ExploreItem {
   _key: string;

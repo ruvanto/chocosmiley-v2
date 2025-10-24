@@ -109,7 +109,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     return (
         <div className="space-y-1.5">
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={textColor}/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" variant={variant} />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-400" isAnimated={!!cart} prefix="-₹" variant={variant} />
             <Separator className={cn("my-1.5", separatorClass)} />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={textColor}/>
             <div className={cn("flex justify-between items-start text-sm", subTextColor)}>

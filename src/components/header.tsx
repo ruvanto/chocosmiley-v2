@@ -10,7 +10,7 @@ import { UserActions } from "./header/user-actions";
 import type { ActiveView } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
-import { MobileHeader } from "./header/mobile-header";
+import { MobileHeader } from "./mobile/mobile-header";
 import { AnimatedSearchBar } from "./animated-search-bar";
 
 interface HeaderProps {

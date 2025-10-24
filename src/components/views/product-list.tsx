@@ -1,3 +1,4 @@
+
 // @/components/views/product-list.tsx
 'use client';
 
@@ -18,7 +19,7 @@ import {
 } from "@/components/ui/select"
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { MobileSearchControls } from '../mobile-search-controls';
+import { MobileSearchControls } from '../mobile/mobile-search-controls';
 import { FilterContainer } from '../filter-container';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';

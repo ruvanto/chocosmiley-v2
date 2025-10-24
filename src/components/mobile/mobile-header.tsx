@@ -1,10 +1,10 @@
 
-// @/components/header/mobile-header.tsx
+// @/components/mobile/mobile-header.tsx
 'use client';
 
 import { cn } from "@/lib/utils";
-import { Logo } from "./logo";
-import { UserActions } from "./user-actions";
+import { Logo } from "../header/logo";
+import { UserActions } from "../header/user-actions";
 import type { ActiveView } from '@/types';
 
 interface MobileHeaderProps {

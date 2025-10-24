@@ -21,7 +21,7 @@ import { MobileSearchView } from './MobileSearchView';
 import { ProfileCompletionBanner } from '../profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../search-suggestions';
-import { MobileSearchHeader } from '../header/mobile-search-header';
+import { MobileSearchHeader } from '../mobile/mobile-search-header';
 import CustomScreenLoader from '../custom-screen-loader';
 
 interface SearchClientPageProps {

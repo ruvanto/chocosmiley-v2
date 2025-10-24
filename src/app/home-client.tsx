@@ -10,7 +10,7 @@ import { SparkleBackground } from '@/components/sparkle-background';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { BottomNavbar } from '@/components/bottom-navbar';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ExploreCategories } from '@/components/explore-categories';
+import { ExploreCategories } from '@/components/desktop/explore-categories';
 import { SearchBar } from '@/components/header/search-bar';
 import { useToast } from "@/hooks/use-toast";
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
@@ -23,7 +23,7 @@ import { ProfileCompletionBanner } from '@/components/profile-completion-banner'
 import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
 import { FloatingCartButton } from '@/components/floating-cart-button';
-import { MobileExploreCategories } from '@/components/mobile-explore-categories';
+import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
 
 interface HomepageContent {
   exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string }[];

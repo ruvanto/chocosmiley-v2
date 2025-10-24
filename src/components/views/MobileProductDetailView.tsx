@@ -4,7 +4,7 @@
 
 import type { SanityProduct, WishlistItem } from '@/types';
 import { cn } from '@/lib/utils';
-import { MobileImageGallery } from '../mobile-image-gallery';
+import { MobileImageGallery } from '../mobile/mobile-image-gallery';
 import { ProductInfoCard } from '../product-info-card';
 import { FeaturedProducts } from '../featured-products';
 
