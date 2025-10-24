@@ -26,7 +26,7 @@ import { useAppContext } from '@/context/app-context';
 import { client } from '@/lib/sanity';
 import { Loader } from './loader';
 import { ScrollArea } from './ui/scroll-area';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface CartPopupProps {
   onClose: () => void;
@@ -44,6 +44,12 @@ async function getProductsForCart(productNames: string[]): Promise<SanityProduct
     const products = await client.fetch(query, { productNames });
     return products;
 }
+
+const itemVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
+};
 
 
 export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopupProps) {
@@ -171,6 +177,7 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
                         onRemove={() => handleRemove(item.name)}
                         onProductClick={onProductClick}
                         isMobile={false}
+                        variants={itemVariants}
                       />
                     )
                   })}
@@ -181,7 +188,13 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
 
           {/* Right Section (Summary & Footer) */}
           <div className="w-[40%] flex flex-col pr-0">
-              <OrderSummary cart={cart} allProducts={productsInCart} onFinalizeOrder={onFinalizeOrder} isLoading={isLoading} />
+              <OrderSummary
+                viewContext='cart'
+                cart={cart}
+                allProducts={productsInCart}
+                onFinalizeOrder={onFinalizeOrder}
+                isLoading={isLoading}
+              />
           </div>
         </div>
       )}
