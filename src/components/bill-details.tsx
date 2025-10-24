@@ -37,8 +37,8 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     let gstAmount = 0;
     let total = 0;
     let totalDiscount = 0;
-    let itemsToDisplay = order?.items || [];
-
+    let itemsToDisplay: { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] }[] = [];
+    
     if (cart && allProducts) {
         // Calculation logic for cart view
         const productsByName = allProducts.reduce((acc, product) => {
@@ -46,7 +46,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             return acc;
         }, {} as Record<string, SanityProduct>);
         
-        Object.values(cart).forEach(item => {
+        itemsToDisplay = Object.values(cart).map(item => {
             const product = productsByName[item.name];
             if (product) {
                 totalMrp += (product.mrp || product.discountedPrice || 0) * item.quantity;
@@ -65,8 +65,16 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                     });
                     totalFlavoursCost += itemFlavourCost * item.quantity;
                 }
+                 return {
+                    name: product.name,
+                    quantity: item.quantity,
+                    numberOfChocolates: product.numberOfChocolates,
+                    flavours: product.availableFlavours?.filter(f => item.flavours?.includes(f.name))
+                };
             }
-        });
+            return null;
+        }).filter(Boolean) as any;
+
         totalDiscount = totalMrp - totalProductPrice;
         subtotal = totalProductPrice + totalFlavoursCost;
         gstAmount = subtotal * 0.05;
@@ -74,6 +82,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
 
     } else if (order) {
         // Calculation logic for existing order view
+        itemsToDisplay = order.items;
         totalMrp = order.items.reduce((acc, item) => acc + (item.mrp || 0) * item.quantity, 0);
         totalProductPrice = order.items.reduce((acc, item) => acc + (item.finalProductPrice || 0), 0);
         totalFlavoursCost = order.items.reduce((acc, item) => acc + ((item.finalSubtotal || 0) - (item.finalProductPrice || 0)), 0);
@@ -83,17 +92,14 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
         gstAmount = total - subtotal;
     }
 
-    const parentHasTextWhite = (
-        cart ? false : true
-    );
 
     return (
-        <div className={cn("space-y-1.5", parentHasTextWhite ? "text-white" : "text-black")}>
+        <div className="space-y-1.5">
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹"/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={parentHasTextWhite ? 'text-green-400' : 'text-green-600'} isAnimated={!!cart} prefix="-₹" />
-            <Separator className={cn("my-1.5", parentHasTextWhite ? "bg-white/20" : "bg-black/10")} />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" />
+            <Separator className="my-1.5 bg-black/10" />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹"/>
-            <div className={cn("flex justify-between items-start text-sm", parentHasTextWhite ? 'text-white/80' : 'text-black/80')}>
+            <div className="flex justify-between items-start text-sm text-black/80">
                 <span>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
@@ -103,7 +109,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             </div>
 
             {totalFlavoursCost > 0 && (
-                <div className={cn("pl-4 text-xs space-y-1", parentHasTextWhite ? 'text-white/70' : 'text-black/60')}>
+                <div className="pl-4 text-xs space-y-1 text-black/60">
                     {itemsToDisplay.map(item => {
                         const selectedFlavoursCount = item.flavours?.length || 0;
                         if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
@@ -134,13 +140,13 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 </div>
             )}
             
-            <Separator className={cn("my-1.5", parentHasTextWhite ? "bg-white/20" : "bg-black/10")} />
+            <Separator className="my-1.5 bg-black/10" />
             <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" />
-            <SummaryRow label={<>GST <span className={cn("font-normal", parentHasTextWhite ? 'text-white/60' : 'text-black/60')}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
+            <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
 
             {showTotalPayable && (
                 <>
-                    <div className={cn("my-2 h-[1.5px]", parentHasTextWhite ? 'border-t border-white/20' : 'border-t border-black/20' )} ></div>
+                    <div className="my-2 h-[1.5px] border-t border-black/20" ></div>
                     <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} />
                 </>
             )}
