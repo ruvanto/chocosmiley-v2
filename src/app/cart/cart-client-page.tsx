@@ -6,7 +6,7 @@ import { useState, useEffect, type UIEvent, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Header } from '@/components/header';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
-import { SparkleBackground } from '@/components/sparkle-background';
+import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { cn } from '@/lib/utils';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { StaticSparkleBackground } from '@/components/static-sparkle-background';
+import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { FloatingCartFinalizeButton } from '@/components/mobile/floating-cart-finalize-button';
 import { EmptyState } from '@/components/empty-state';
 import { useAppContext } from '@/context/app-context';
@@ -32,7 +32,7 @@ import type { SanityProduct, ActiveView } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import CustomScreenLoader from '@/components/custom-screen-loader';
-import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
+import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { client } from '@/lib/sanity';
 
 

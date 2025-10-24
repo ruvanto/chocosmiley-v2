@@ -29,7 +29,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useAppContext } from "@/context/app-context";
-import { ProfileCompletionDropdown } from "../profile-completion-dropdown";
+import { ProfileCompletionDropdown } from "../desktop/profile-completion-dropdown";
 
 
 interface UserActionsProps {

@@ -5,14 +5,14 @@ import { useMemo, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/header';
-import { SparkleBackground } from '@/components/sparkle-background';
+import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { StaticSparkleBackground } from '@/components/static-sparkle-background';
+import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
 import { EmptyState } from '@/components/empty-state';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PopupsManager } from '@/components/popups/popups-manager';
-import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
+import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 
 const MetricCard = ({ title, value, icon, description }: { title: string, value: string | number, icon: React.ReactNode, description?: string }) => (

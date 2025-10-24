@@ -1,4 +1,4 @@
-// @/components/profile-sidebar.tsx
+// @/components/desktop/profile-sidebar.tsx
 'use client';
 
 import React from 'react';

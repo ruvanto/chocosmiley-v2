@@ -1,6 +1,4 @@
-
-
-// @/components/image-gallery.tsx
+// @/components/desktop/image-gallery.tsx
 'use client';
 
 import { useState, useEffect } from 'react';

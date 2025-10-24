@@ -1,7 +1,7 @@
-// @/components/static-sparkle.tsx
+// @/components/mobile/static-sparkle.tsx
 'use client';
 
-import { SparkleIcon } from './sparkle-icon';
+import { SparkleIcon } from '../sparkle-icon';
 import { cn } from '@/lib/utils';
 
 interface StaticSparkleProps {

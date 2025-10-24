@@ -1,6 +1,7 @@
+// @/components/desktop/sparkle.tsx
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { SparkleIcon } from './sparkle-icon';
+import { SparkleIcon } from '../sparkle-icon';
 import { cn } from '@/lib/utils';
 
 interface SparkleProps {

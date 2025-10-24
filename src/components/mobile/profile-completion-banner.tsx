@@ -1,10 +1,10 @@
-// @/components/profile-completion-banner.tsx
+// @/components/mobile/profile-completion-banner.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { X, AlertCircle } from 'lucide-react';
 
 interface ProfileCompletionBannerProps {

@@ -1,4 +1,4 @@
-// @/components/profile-completion-dropdown.tsx
+// @/components/desktop/profile-completion-dropdown.tsx
 'use client';
 
 import { X, AlertCircle } from 'lucide-react';

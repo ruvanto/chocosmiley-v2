@@ -1,13 +1,13 @@
-// @/components/profile-popup.tsx
+// @/components/desktop/profile-popup.tsx
 'use client';
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { ProfileSidebar } from './desktop/profile-sidebar';
-import { MyProfileTab } from './my-profile-tab';
+import { ProfileSidebar } from './profile-sidebar';
+import { MyProfileTab } from '../my-profile-tab';
 import type { ProfileInfo } from "@/context/app-context";
-import { WishlistView } from './wishlist-view';
-import { MyOrdersTab } from './my-orders-tab';
+import { WishlistView } from '../wishlist-view';
+import { MyOrdersTab } from '../my-orders-tab';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,8 +19,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { useAppContext } from '@/context/app-context';
-import { Loader } from './loader';
-import { EmptyState } from './empty-state';
+import { Loader } from '../loader';
+import { EmptyState } from '../empty-state';
 
 
 interface ProfilePopupProps {

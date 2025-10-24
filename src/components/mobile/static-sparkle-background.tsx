@@ -1,4 +1,4 @@
-// @/components/static-sparkle-background.tsx
+// @/components/mobile/static-sparkle-background.tsx
 'use client';
 
 import { useState, useEffect } from 'react';

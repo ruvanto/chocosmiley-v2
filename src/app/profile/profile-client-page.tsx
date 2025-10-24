@@ -7,10 +7,10 @@ import { useRouter, usePathname } from 'next/navigation';
 import type { ActiveView } from '@/types';
 import { Header } from '@/components/header';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
-import { SparkleBackground } from '@/components/sparkle-background';
+import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { StaticSparkleBackground } from '@/components/static-sparkle-background';
+import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
 import { EmptyState } from '@/components/empty-state';
 import type { ProfileInfo } from '@/context/app-context';
@@ -20,7 +20,7 @@ import { MyProfileTab } from '@/components/my-profile-tab';
 import { WishlistView } from '@/components/wishlist-view';
 import { MyOrdersTab } from '@/components/my-orders-tab';
 import CustomScreenLoader from '@/components/custom-screen-loader';
-import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
+import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 
 
 const tabs = ['My Profile', 'My Wishlist', 'My Orders'];

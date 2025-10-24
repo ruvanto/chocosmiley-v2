@@ -1,4 +1,3 @@
-
 // @/components/desktop/cart-popup.tsx
 'use client';
 
@@ -178,7 +177,6 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
                         onRemove={() => handleRemove(item.name)}
                         onProductClick={onProductClick}
                         isMobile={false}
-                        variants={itemVariants}
                       />
                     )
                   })}
