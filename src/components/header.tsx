@@ -58,7 +58,6 @@ export function Header({
     if (activeView === 'search') return null; // Let SearchClientPage handle the mobile header
     return (
       <MobileHeader
-        isVisible={true}
         onProfileOpenChange={onProfileOpenChange}
         onNavigate={onNavigate}
         activeView={activeView}

@@ -1,5 +1,4 @@
 
-
 // @/app/about/about-client.tsx
 'use client';
 
@@ -13,7 +12,7 @@ import { Footer } from '@/components/footer';
 import { SectionTitle } from "@/components/section-title";
 import { Heart, Leaf, Gift, Sparkles, Code } from "lucide-react";
 import { PopupsManager } from '@/components/popups/popups-manager';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
 import { cn } from '@/lib/utils';

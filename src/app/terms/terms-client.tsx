@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 
 export default function TermsClientPage() {
