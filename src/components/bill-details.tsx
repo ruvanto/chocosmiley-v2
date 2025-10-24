@@ -1,3 +1,4 @@
+
 // @/components/bill-details.tsx
 'use client';
 
@@ -26,7 +27,7 @@ const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated =
             {isAnimated ? (
               <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName)} />
             ) : (
-              <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+              <span className={cn(valueClassName)}>{prefix}{value.toFixed(2)}</span>
             )}
         </div>
     );
@@ -103,7 +104,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     const subTextColor = variant === 'dark' ? "text-white/80" : "text-black/80";
     const lightTextColor = variant === 'dark' ? "text-white/60" : "text-black/60";
     const textColor = variant === 'dark' ? "text-white" : "text-black";
-    const totalPayableColor = variant === 'dark' ? "text-custom-gold" : "text-black";
+    const totalPayableColor = variant === 'dark' ? 'text-custom-gold' : 'text-black';
 
     return (
         <div className="space-y-1.5">
@@ -120,7 +121,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 )}
             </div>
 
-            {totalFlavoursCost > 0 && (
+             {totalFlavoursCost > 0 && (
                 <div className={cn("pl-4 text-xs space-y-1", lightTextColor)}>
                     {itemsToDisplay.map((item, itemIndex) => {
                         if (!item.flavours || item.flavours.length === 0) return null;
@@ -137,13 +138,19 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                             originalFlavourOrder = orderItem?.flavours?.map(f => f.name) || [];
                         }
 
-                        return item.flavours.map((flavour) => {
-                            if (flavour.price > 0) {
-                                let pieces = 0;
-                                const originalFlavourIndex = originalFlavourOrder.indexOf(flavour.name);
-                                if (originalFlavourIndex !== -1) {
-                                    pieces = baseCount + (originalFlavourIndex < remainder ? 1 : 0);
-                                }
+                        // Order flavors to match the distribution logic
+                        const sortedItemFlavours = [...item.flavours].sort((a, b) => {
+                            const indexA = originalFlavourOrder.indexOf(a.name);
+                            const indexB = originalFlavourOrder.indexOf(b.name);
+                            if (indexA === -1 && indexB === -1) return a.name.localeCompare(b.name);
+                            if (indexA === -1) return 1;
+                            if (indexB === -1) return -1;
+                            return indexA - indexB;
+                        });
+
+                        return sortedItemFlavours.map((flavour, index) => {
+                             if (flavour.price > 0) {
+                                let pieces = baseCount + (index < remainder ? 1 : 0);
                                 
                                 const flavourTotal = flavour.price * pieces * item.quantity;
 
@@ -169,7 +176,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             {showTotalPayable && (
                 <>
                     <div className={cn("my-2 h-[1.5px]", separatorClass)} ></div>
-                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={totalPayableColor} />
+                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={totalPayableColor} isTotalPayable={true} />
                 </>
             )}
         </div>
