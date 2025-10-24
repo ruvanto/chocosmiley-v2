@@ -1,3 +1,4 @@
+
 // @/components/cart-item-card.tsx
 'use client';
 
@@ -22,6 +23,13 @@ interface CartItemCardProps {
     isMobile: boolean;
     isLastItem?: boolean;
 }
+
+const animationVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, x: -50 },
+  transition: { type: 'tween', duration: 0.2 },
+};
 
 export function CartItemCard({ item, product, onQuantityChange, onRemove, onProductClick, isMobile, isLastItem = false }: CartItemCardProps) {
     const [isFlavourSheetOpen, setIsFlavourSheetOpen] = useState(false);
@@ -113,11 +121,11 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
     const Wrapper = isMobile ? 'div' : motion.li;
     const wrapperProps = isMobile 
         ? {} 
-        : { layout: true, initial: "initial", animate: "animate", exit: "exit", variants: { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, x: -50, height: 0, padding: 0, margin: 0, transition: { duration: 0.3 } } } };
+        : { layout: true, initial: "initial", animate: "animate", exit: "exit", variants: animationVariants, transition: animationVariants.transition };
 
     return (
         <Wrapper {...wrapperProps} className={cn(
-            "w-full p-3 text-black relative transition-all duration-300 overflow-hidden",
+            "w-full p-3 text-black relative transition-colors duration-300 overflow-hidden",
             isMobile ? "bg-transparent" : "bg-white/80 rounded-2xl",
             !isLastItem && isMobile && "border-b border-black/10"
         )}>
