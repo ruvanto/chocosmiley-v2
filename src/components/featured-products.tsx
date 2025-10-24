@@ -38,7 +38,7 @@ export function FeaturedProducts({
 
   return (
     <div className={cn(
-      "bg-white/20 rounded-[20px] lg:rounded-[40px] px-4 py-6 sm:px-6 sm:py-4 lg:px-8",
+      "bg-white/20 rounded-[20px] lg:rounded-[40px] px-4 py-4 lg:px-8",
     )}>
       <SectionTitle className={cn(
         "text-white",

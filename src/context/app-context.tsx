@@ -31,7 +31,7 @@ import {
 import { client } from '@/lib/sanity';
 import type { User } from 'firebase/auth';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
-import { ProgressBarComponent } from '@/components/loaders/progress-bar';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loaders/loading-fallback';
 
 
@@ -107,7 +107,7 @@ interface AppContextType {
   setFlavourSelectionsForProduct: (productName: string, flavours: string[]) => void;
   
   isGlobalLoading: boolean;
-  setIsGlobalLoading: (isLoading: boolean) => void;
+  setIsGlobalLoading: (isLoading: boolean, text?: string) => void;
   isProcessingOrder: boolean;
   setIsProcessingOrder: (isProcessing: boolean) => void;
   isAuthenticating: boolean;
@@ -174,10 +174,18 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   const [authPopup, setAuthPopup] = useState<AuthPopupType>(null);
   const [flavourSelection, setFlavourSelection] = useState<{ product: SanityProduct | null; isOpen: boolean; preselectedFlavours?: string[] }>({ product: null, isOpen: false, preselectedFlavours: [] });
-  const [isGlobalLoading, setIsGlobalLoading] = useState(false);
+  
+  const [isGlobalLoading, setIsGlobalLoadingState] = useState(false);
+  const [globalLoaderText, setGlobalLoaderText] = useState<string | undefined>(undefined);
+
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
   const [isAuthenticating, _setIsAuthenticating] = useState(false);
   const [authMessage, setAuthMessage] = useState("Signing you in...");
+
+  const setIsGlobalLoading = (isLoading: boolean, text?: string) => {
+    setIsGlobalLoadingState(isLoading);
+    setGlobalLoaderText(text);
+  };
 
   const setIsAuthenticating = (authenticating: boolean, message?: string) => {
     _setIsAuthenticating(authenticating);
@@ -802,10 +810,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <AppContext.Provider value={value}>
-        {isGlobalLoading && <ProgressBarComponent />}
-        {isProcessingOrder && <ProcessingOrderFallback />}
-        {isAuthenticating && <AuthLoadingFallback message={authMessage} />}
-        {children}
+      {isGlobalLoading && <CustomScreenLoader text={globalLoaderText} />}
+      {isProcessingOrder && <ProcessingOrderFallback />}
+      {isAuthenticating && <AuthLoadingFallback message={authMessage} />}
+      {children}
     </AppContext.Provider>
   );
 }
@@ -823,5 +831,6 @@ export const AppContextConsumer = AppContext.Consumer;
     
 
     
+
 
 

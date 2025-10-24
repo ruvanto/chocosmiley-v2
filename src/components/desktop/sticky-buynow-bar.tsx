@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import type { SanityProduct } from '@/types';
 import { Plus, Minus } from 'lucide-react';
 
-interface StickyBuyNowBarProps {
+interface DesktopStickyBuyNowBarProps {
     product: SanityProduct;
     onAddToCart: () => void;
     onRemoveFromCart: () => void;
@@ -13,7 +13,7 @@ interface StickyBuyNowBarProps {
     onToggleCartPopup: () => void;
 }
 
-export function StickyBuyNowBar({ product, onAddToCart, onRemoveFromCart, quantity, onToggleCartPopup }: StickyBuyNowBarProps) {
+export function DesktopStickyBuyNowBar({ product, onAddToCart, onRemoveFromCart, quantity, onToggleCartPopup }: DesktopStickyBuyNowBarProps) {
 
     const handleBuyNow = () => {
         if (quantity === 0) {

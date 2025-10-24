@@ -8,7 +8,7 @@ import type { SanityProduct } from '@/types';
 import { Plus, Minus } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-interface StickyBuyNowBarProps {
+interface MobileStickyBuyNowBarProps {
   product: SanityProduct;
   quantity: number;
   onAddToCart: () => void;
@@ -16,13 +16,13 @@ interface StickyBuyNowBarProps {
   onBuyNow: () => void;
 }
 
-export function StickyBuyNowBar({
+export function MobileStickyBuyNowBar({
   product,
   quantity,
   onAddToCart,
   onRemoveFromCart,
   onBuyNow,
-}: StickyBuyNowBarProps) {
+}: MobileStickyBuyNowBarProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

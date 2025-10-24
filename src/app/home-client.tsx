@@ -129,11 +129,6 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
     router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
-  const handleResetToHome = () => {
-    if (pathname === '/') return;
-    setIsGlobalLoading(true);
-    router.push('/');
-  };
 
   const handleNavigation = (view: ActiveView) => {
     const newPath = view === 'home' ? '/' : `/${view}`;

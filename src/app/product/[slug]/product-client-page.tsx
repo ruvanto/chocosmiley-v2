@@ -18,11 +18,11 @@ import { useAppContext } from '@/context/app-context';
 import { FeaturedProducts } from '@/components/featured-products';
 import { Separator } from '@/components/ui/separator';
 import { ProductDetails } from '@/components/desktop/product-details';
-import { StickyBuyNowBar } from '@/components/mobile/sticky-buynow-bar';
+import { MobileStickyBuyNowBar } from '@/components/mobile/sticky-buynow-bar';
 import { ImageGallery, ExpandedImageView } from '@/components/desktop/image-gallery';
 import { FlavoursSection } from '@/components/flavours-section';
 import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-popup';
-import { ProductPopupFooter } from '@/components/desktop/product-popup-footer';
+import { DesktopStickyBuyNowBar } from '@/components/desktop/sticky-buynow-bar';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { MobileSearchView } from '@/components/views/MobileSearchView';
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from '@/app/actions';
@@ -297,7 +297,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                 onClose={() => setIsImageExpanded(false)}
             />
         )}
-         <StickyBuyNowBar 
+         <MobileStickyBuyNowBar 
             product={product}
             quantity={cart[product.name]?.quantity || 0}
             onAddToCart={handleAddToCart}
@@ -388,7 +388,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                             />
                         </div>
                         <div className="flex-shrink-0">
-                        <ProductPopupFooter
+                        <DesktopStickyBuyNowBar
                               product={product}
                               quantity={cart[product.name]?.quantity || 0}
                               onAddToCart={handleAddToCart}
