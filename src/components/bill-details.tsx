@@ -17,16 +17,21 @@ interface BillDetailsProps {
 
 const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, variant = 'light' }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, variant?: 'light' | 'dark' }) => {
     const textColor = variant === 'dark' ? 'text-white' : 'text-black';
+    const subTextColor = variant === 'dark' ? 'text-white/80' : 'text-black/80';
     const totalPayableColor = variant === 'dark' ? 'text-custom-gold' : 'text-black';
-    const finalColor = isTotalPayable ? totalPayableColor : textColor;
+
+    const finalValueClassName = cn(
+        isTotalPayable ? totalPayableColor : textColor,
+        valueClassName
+    );
 
     return (
-        <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", finalColor)}>
+        <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", isTotalPayable ? totalPayableColor : subTextColor)}>
             <span>{label}</span>
             {isAnimated ? (
-              <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, finalColor)} />
+              <AnimatedNumber value={value} prefix={prefix} className={cn(finalValueClassName)} />
             ) : (
-              <span className={cn(valueClassName, finalColor)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+              <span className={cn("font-semibold", finalValueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
             )}
         </div>
     );
@@ -114,7 +119,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
                 ) : (
-                    <span className={cn("font-medium", subTextColor)}>+₹{totalFlavoursCost.toFixed(2)}</span>
+                    <span className={cn("font-semibold")}>+₹{totalFlavoursCost.toFixed(2)}</span>
                 )}
             </div>
 
@@ -127,14 +132,8 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                         const remainder = item.numberOfChocolates % selectedFlavoursCount;
                         
-                        const flavourNames = item.flavours?.map(f => f.name) || [];
-                        const distribution: Record<string, number> = {};
-                         flavourNames.forEach((name, index) => {
-                             distribution[name] = baseCount + (index < remainder ? 1 : 0);
-                         });
-
-                         return item.flavours?.map((flavour) => {
-                             const pieces = distribution[flavour.name] || 0;
+                        return item.flavours?.map((flavour, index) => {
+                             const pieces = baseCount + (index < remainder ? 1 : 0);
                              if (flavour.price > 0 && pieces > 0) {
                                  const flavourTotal = flavour.price * pieces * item.quantity;
                                  return (
