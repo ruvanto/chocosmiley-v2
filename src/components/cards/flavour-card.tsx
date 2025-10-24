@@ -28,7 +28,7 @@ export function FlavourCard({ flavour, onToggle, isSelected }: FlavourCardProps)
   return (
     <div 
       className={cn(
-        "flex flex-col justify-center bg-white/30 p-2 rounded-[10px] w-28 md:py-4 md:px-2 lg:p-2 xl:p-3 md:rounded-[15px] lg:rounded-[20px] w-[calc(38%-0.75rem)] md:w-[calc(33%-0.75rem)] lg:w-[calc(33%-0.75rem)] xl:w-[calc(28%-0.75rem)] flex-shrink-0 transition-transform duration-200 self-center"
+        "flex flex-col justify-center bg-white/30 p-2 rounded-[10px] w-28 md:py-4 md:px-2 lg:p-2 md:rounded-[15px] lg:rounded-[20px] w-[calc(38%-0.75rem)] md:w-[calc(33%-0.75rem)] lg:w-[calc(33%-0.75rem)] xl:w-[calc(28%-0.75rem)] flex-shrink-0 transition-transform duration-200 self-center"
       )}
     >
       <div className="relative w-full aspect-square">
