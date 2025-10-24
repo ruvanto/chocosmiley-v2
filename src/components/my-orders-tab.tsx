@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { OrderItemCard } from './my-orders-card';
+import { MyOrdersCard } from './my-orders-card';
 import { EmptyState } from './empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
@@ -108,7 +108,7 @@ export function MyOrdersTab({ isMobile = false }: MyOrdersTabProps) {
                         <div className="bg-transparent flex flex-col overflow-y-auto no-scrollbar pt-4">
                             <div className="space-y-4">
                                 {orders.map((order) => (
-                                    <OrderItemCard 
+                                    <MyOrdersCard 
                                         key={order.id} 
                                         order={order} 
                                         isMobile={true} 
@@ -168,7 +168,7 @@ export function MyOrdersTab({ isMobile = false }: MyOrdersTabProps) {
                     <div className="flex-grow overflow-y-auto pr-2 no-scrollbar space-y-4 pb-4">
                         <div className="space-y-4">
                             {orders.map(order => (
-                                <OrderItemCard 
+                                <MyOrdersCard 
                                     key={order.id} 
                                     order={order} 
                                     onClick={() => setSelectedOrder(order)} 

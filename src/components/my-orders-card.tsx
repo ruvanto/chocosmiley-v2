@@ -23,7 +23,7 @@ import { RotateCcw, Star } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { useRouter } from 'next/navigation';
 
-interface OrderItemCardProps {
+interface MyOrdersCardProps {
     order: Order;
     isMobile?: boolean;
     onClick: () => void;
@@ -32,7 +32,7 @@ interface OrderItemCardProps {
     onReorder: () => void;
 }
 
-export function OrderItemCard({ order: initialOrder, isMobile = false, onClick, onRate, onCancel, onReorder }: OrderItemCardProps) {
+export function MyOrdersCard({ order: initialOrder, isMobile = false, onClick, onRate, onCancel, onReorder }: MyOrdersCardProps) {
     const { orders } = useAppContext();
     const router = useRouter();
 
