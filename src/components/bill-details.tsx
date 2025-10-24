@@ -1,3 +1,4 @@
+
 // @/components/bill-details.tsx
 'use client';
 
@@ -17,21 +18,16 @@ interface BillDetailsProps {
 
 const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, variant = 'light' }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, variant?: 'light' | 'dark' }) => {
     const textColor = variant === 'dark' ? 'text-white' : 'text-black';
-    const subTextColor = variant === 'dark' ? 'text-white/80' : 'text-black/80';
     const totalPayableColor = variant === 'dark' ? 'text-custom-gold' : 'text-black';
-
-    const finalValueClassName = cn(
-        isTotalPayable ? totalPayableColor : textColor,
-        valueClassName
-    );
+    const finalColor = isTotalPayable ? totalPayableColor : textColor;
 
     return (
-        <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", isTotalPayable ? totalPayableColor : subTextColor)}>
+        <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", finalColor)}>
             <span>{label}</span>
             {isAnimated ? (
-              <AnimatedNumber value={value} prefix={prefix} className={cn(finalValueClassName)} />
+              <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, finalColor)} />
             ) : (
-              <span className={cn("font-semibold", finalValueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+              <span className={cn(valueClassName, finalColor)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
             )}
         </div>
     );
@@ -111,50 +107,55 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     return (
         <div className="space-y-1.5">
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" variant={variant}/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" variant={variant} />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={variant === 'dark' ? 'text-green-400' : 'text-green-600'} isAnimated={!!cart} prefix="-₹" variant={variant} />
             <Separator className={cn("my-1.5", separatorClass)} />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" variant={variant}/>
             <div className={cn("flex justify-between items-start text-sm", subTextColor)}>
                 <span>Flavours &amp; Fillings:</span>
                 {cart ? (
-                     <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
+                     <AnimatedNumber value={totalFlavoursCost} prefix="+₹" className={subTextColor} />
                 ) : (
-                    <span className={cn("font-semibold")}>+₹{totalFlavoursCost.toFixed(2)}</span>
+                    <span className={cn("font-medium", subTextColor)}>+₹{totalFlavoursCost.toFixed(2)}</span>
                 )}
             </div>
 
             {totalFlavoursCost > 0 && (
                 <div className={cn("pl-4 text-xs space-y-1", lightTextColor)}>
                     {itemsToDisplay.map(item => {
-                        const selectedFlavoursCount = item.flavours?.length || 0;
-                        if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
+                        if (!item.flavours || item.flavours.length === 0) return null;
 
-                        const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
-                        const remainder = item.numberOfChocolates % selectedFlavoursCount;
+                        const selectedFlavoursCount = item.flavours.length;
+                        const baseCount = item.numberOfChocolates ? Math.floor(item.numberOfChocolates / selectedFlavoursCount) : 0;
+                        const remainder = item.numberOfChocolates ? item.numberOfChocolates % selectedFlavoursCount : 0;
                         
-                        return item.flavours?.map((flavour, index) => {
-                             const pieces = baseCount + (index < remainder ? 1 : 0);
-                             if (flavour.price > 0 && pieces > 0) {
-                                 const flavourTotal = flavour.price * pieces * item.quantity;
-                                 return (
-                                     <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
-                                         <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
-                                         <span>+₹{flavourTotal.toFixed(2)}</span>
-                                     </div>
-                                 );
-                             }
-                             return null;
-                         });
+                        const sortedFlavours = [...item.flavours].sort((a,b) => a.name.localeCompare(b.name));
+
+                        return sortedFlavours.map((flavour, index) => {
+                            if (flavour.price > 0) {
+                                const pieces = baseCount + (index < remainder ? 1 : 0);
+                                const flavourTotal = flavour.price * pieces * item.quantity;
+                                if (pieces > 0) {
+                                    return (
+                                        <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
+                                            <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
+                                            <span>+₹{flavourTotal.toFixed(2)}</span>
+                                        </div>
+                                    );
+                                }
+                            }
+                            return null;
+                        });
                     })}
                 </div>
             )}
             
             <Separator className={cn("my-1.5", separatorClass)} />
-            <SummaryRow label={<>GST <span className={cn("font-normal", subTextColor)}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} />
+            <SummaryRow label={<>Subtotal</>} value={subtotal} isBold isAnimated={!!cart} prefix="₹" variant={variant} />
+            <SummaryRow label={<span className={cn(subTextColor)}>GST (5%)</span>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} />
 
             {showTotalPayable && (
                 <>
-                    <div className={cn("my-2 h-[1.5px] border-t", separatorClass)} ></div>
+                    <div className={cn("my-2 h-[1.5px]", separatorClass)} ></div>
                     <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} variant={variant} />
                 </>
             )}
