@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { DesktopCartItemCard } from './desktop-cart-item-card';
+import { CartItemCard } from './cart-item-card';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { OrderSummary } from './order-summary';
@@ -163,13 +163,14 @@ export function CartPopup({ onClose, onFinalizeOrder, onProductClick }: CartPopu
                     const product = productsByName[item.name];
                     if (!product) return null; // Don't render if product details haven't loaded yet
                     return (
-                      <DesktopCartItemCard
+                      <CartItemCard
                         key={item.name}
                         item={item}
                         product={product}
                         onQuantityChange={(productName, quantity, flavours) => updateCart(productName, quantity, flavours)}
                         onRemove={() => handleRemove(item.name)}
                         onProductClick={onProductClick}
+                        isMobile={false}
                       />
                     )
                   })}

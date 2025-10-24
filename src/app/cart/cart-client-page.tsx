@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { MobileCartItemCard } from '@/components/mobile-cart-item-card';
+import { CartItemCard } from '@/components/cart-item-card';
 import { MobileCartSummary } from '@/components/mobile-cart-summary';
 import {
   AlertDialog,
@@ -298,7 +298,7 @@ export default function CartClientPage() {
                           const product = productsByName[item.name];
                           if (!product) return null; 
                           return (
-                           <MobileCartItemCard
+                           <CartItemCard
                               key={item.name}
                               item={item}
                               product={product}
@@ -306,6 +306,7 @@ export default function CartClientPage() {
                               onRemove={handleRemove}
                               isLastItem={index === cartItems.length - 1}
                               onProductClick={() => handleProductClick(product)}
+                              isMobile={true}
                             />
                           )
                         })}
