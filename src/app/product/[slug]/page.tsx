@@ -3,7 +3,7 @@
 import { client } from '@/lib/sanity';
 import type { SanityProduct } from '@/types';
 import { notFound } from 'next/navigation';
-import ProductClientPage from '@/components/views/product-client-page';
+import ProductClientPage from '@/app/product/[slug]/product-client-page';
 
 export const revalidate = 300; // Revalidate this page at most every 300 seconds
 

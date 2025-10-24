@@ -3,7 +3,7 @@
 
 import type { Order, SanityProduct } from '@/types';
 import { Separator } from './ui/separator';
-import { OrderConfirmedItemCard } from './cards/order-confirmed-item-card';
+import { OrderDetailsItemCard } from './cards/order-details-item-card';
 import { BillDetails } from './bill-details';
 
 interface OrderConfirmedSummaryProps {
@@ -31,7 +31,7 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
                    const product = productsByName[item.name];
                    if (!product) return null;
                    return (
-                    <OrderConfirmedItemCard
+                    <OrderDetailsItemCard
                         key={item.name}
                         item={item}
                         isMobile={isMobile}

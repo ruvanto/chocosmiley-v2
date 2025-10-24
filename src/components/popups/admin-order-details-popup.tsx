@@ -35,7 +35,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
-import { OrderConfirmedItemCard } from "../cards/order-confirmed-item-card";
+import { OrderDetailsItemCard } from "../cards/order-details-item-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { BillDetails } from "../bill-details";
@@ -119,7 +119,7 @@ const OrderDetailsContent = ({ order: initialOrder }: { order: Order, onOpenChan
                                 <div 
                                     key={`${item.name}-${index}`}
                                 >
-                                    <OrderConfirmedItemCard
+                                    <OrderDetailsItemCard
                                         item={item}
                                         isMobile={isMobile ?? false}
                                     />
@@ -296,7 +296,7 @@ const OrderDetailsContent = ({ order: initialOrder }: { order: Order, onOpenChan
                                 key={`${item.name}-${index}`}
                                 className="cursor-pointer"
                             >
-                                <OrderConfirmedItemCard
+                                <OrderDetailsItemCard
                                     item={item}
                                     isMobile={isMobile ?? false}
                                 />
