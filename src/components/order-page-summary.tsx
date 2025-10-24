@@ -1,4 +1,4 @@
-// @/components/order-confirmed-summary.tsx
+// @/components/order-page-summary.tsx
 'use client';
 
 import type { Order, SanityProduct } from '@/types';
@@ -6,13 +6,13 @@ import { Separator } from './ui/separator';
 import { OrderDetailsItemCard } from './cards/order-details-item-card';
 import { BillDetails } from './bill-details';
 
-interface OrderConfirmedSummaryProps {
+interface OrderPageSummaryProps {
     order: Order;
     products: SanityProduct[];
     isMobile: boolean;
 }
 
-export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfirmedSummaryProps) {
+export function OrderPageSummary({ order, products, isMobile }: OrderPageSummaryProps) {
     const productsByName = products.reduce((acc, product) => {
         acc[product.name] = product;
         return acc;

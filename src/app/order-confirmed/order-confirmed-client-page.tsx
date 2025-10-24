@@ -1,4 +1,3 @@
-
 // @/app/order-confirmed/order-confirmed-client-page.tsx
 'use client';
 
@@ -23,7 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { OrderConfirmedSummary } from '@/components/order-confirmed-summary';
+import { OrderPageSummary } from '@/components/order-page-summary';
 import CheckmarkAnimation from '../../../public/animations/Checkmark.json';
 import { Header } from '@/components/desktop/header';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
@@ -294,7 +293,7 @@ function OrderConfirmedPageComponent() {
                     View Your Order Summary
                   </AccordionTrigger>
                   <AccordionContent className="mt-2">
-                    <OrderConfirmedSummary 
+                    <OrderPageSummary 
                       order={confirmedOrder}
                       products={orderedProducts}
                       isMobile={isMobile ?? false}

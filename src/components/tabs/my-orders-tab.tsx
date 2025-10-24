@@ -3,16 +3,16 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { MyOrdersCard } from './cards/my-orders-card';
-import { EmptyState } from './empty-state';
+import { MyOrdersCard } from '../cards/my-orders-card';
+import { EmptyState } from '../empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { Loader } from './loader';
-import { OrderDetailsPopup } from './popups/order-details-popup';
-import { RatingPopup } from './popups/rating-popup';
+import { Loader } from '../loader';
+import { OrderDetailsPopup } from '../popups/order-details-popup';
+import { RatingPopup } from '../popups/rating-popup';
 import type { Order } from '@/types';
-import { CancellationFeedbackPopup } from './popups/cancellation-feedback-popup';
-import { OrderItemCardSkeleton } from './skeletons/order-item-card-skeleton';
+import { CancellationFeedbackPopup } from '../popups/cancellation-feedback-popup';
+import { OrderItemCardSkeleton } from '../skeletons/order-item-card-skeleton';
 import { cn } from '@/lib/utils';
 
 interface MyOrdersTabProps {

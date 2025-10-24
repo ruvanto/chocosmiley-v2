@@ -4,10 +4,10 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { ProfileSidebar } from './account-sidebar';
-import { MyProfileTab } from '../my-profile-tab';
+import { MyProfileTab } from '../tabs/my-profile-tab';
 import type { ProfileInfo } from "@/context/app-context";
-import { WishlistView } from '../my-wishlist-tab';
-import { MyOrdersTab } from '../my-orders-tab';
+import { WishlistView } from '../tabs/my-wishlist-tab';
+import { MyOrdersTab } from '../tabs/my-orders-tab';
 import {
   AlertDialog,
   AlertDialogAction,

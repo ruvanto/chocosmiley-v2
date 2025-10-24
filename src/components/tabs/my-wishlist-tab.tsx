@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import type { SanityProduct, WishlistItem } from "@/types";
-import { WishlistItemCard } from "./cards/wishlist-item-card";
-import { Button } from "./ui/button";
+import { WishlistItemCard } from "../cards/wishlist-item-card";
+import { Button } from "../ui/button";
 import { FaTrash } from "react-icons/fa";
 import {
   AlertDialog,
@@ -17,10 +17,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { EmptyState } from './empty-state';
+import { EmptyState } from '../empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { Loader } from './loader';
+import { Loader } from '../loader';
 import { client } from '@/lib/sanity';
 
 interface WishlistViewProps {

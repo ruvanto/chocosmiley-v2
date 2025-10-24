@@ -16,9 +16,9 @@ import { EmptyState } from '@/components/empty-state';
 import type { ProfileInfo } from '@/context/app-context';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-popup';
-import { MyProfileTab } from '@/components/my-profile-tab';
-import { WishlistView } from '@/components/my-wishlist-tab';
-import { MyOrdersTab } from '@/components/my-orders-tab';
+import { MyProfileTab } from '@/components/tabs/my-profile-tab';
+import { WishlistView } from '@/components/tabs/my-wishlist-tab';
+import { MyOrdersTab } from '@/components/tabs/my-orders-tab';
 import CustomScreenLoader from '@/components/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 

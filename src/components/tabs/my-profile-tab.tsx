@@ -5,20 +5,20 @@ import { useState, useMemo, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { User, Home, Lock } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useAppContext, type ProfileInfo } from '@/context/app-context';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Loader } from './loader';
-import { Textarea } from './ui/textarea';
+import { Loader } from '../loader';
+import { Textarea } from '../ui/textarea';
 import { states } from '@/lib/states';
-import { SecurityUpdatePopup } from './popups/security-update-popup';
-import { DeleteAccountPopup } from './popups/delete-account-popup';
-import { Separator } from './ui/separator';
-import { StateSelectionPopup } from './popups/state-selection-popup';
+import { SecurityUpdatePopup } from '../popups/security-update-popup';
+import { DeleteAccountPopup } from '../popups/delete-account-popup';
+import { Separator } from '../ui/separator';
+import { StateSelectionPopup } from '../popups/state-selection-popup';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 
 const parseAddress = (fullAddress: string | undefined) => {
     if (!fullAddress) return { address: '', pincode: '', city: '', state: '' };

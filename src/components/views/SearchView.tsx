@@ -5,7 +5,7 @@
 import { FilterContainer } from '@/components/filter-container';
 import { cn } from '@/lib/utils';
 import type { StructuredFilter } from '@/types';
-import { ProductList } from './product-list';
+import { ProductList } from './ProductListView';
 
 interface SearchViewProps {
   filters: StructuredFilter[];
