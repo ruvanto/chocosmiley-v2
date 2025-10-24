@@ -224,7 +224,7 @@ export function MobileCartItemCard({ item, product, onQuantityChange, onRemove, 
                     {/* Bottom part: Price and Discount */}
                     <div className="flex items-end justify-between mt-auto">
                         <div className="flex items-baseline gap-2">
-                        {product.mrp && <p className="text-xs line-through text-black/70 font-semibold">₹{product.mrp.toFixed(2)}</p>}
+                        {product.mrp && <p className="text-xs line-through text-black/70 font-semibold">₹{(product.mrp * item.quantity).toFixed(2)}</p>}
                         {discountPercentage && (
                         <div className="flex items-center gap-1 text-black bg-green-400 px-1.5 py-0.5 rounded-md">
                             <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
