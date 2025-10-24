@@ -260,8 +260,10 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
   const handleToggleCartPopup = () => setIsCartOpen(p => !p);
   
   const handleNavigation = (view: ActiveView) => {
+    const newPath = view === 'home' ? '/' : `/${view}`;
+    if (newPath === pathname) return;
     setIsGlobalLoading(true);
-    router.push(view === 'home' ? '/' : `/${view}`);
+    router.push(newPath);
   };
 
   const cartItemCount = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);

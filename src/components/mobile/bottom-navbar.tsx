@@ -16,7 +16,7 @@ interface BottomNavbarProps {
 const navItems = [
   { view: 'home', icon: House, label: 'Home' },
   { view: 'cart', icon: ShoppingCart, label: 'Cart' },
-  { view: 'profile', icon: User, label: 'Account' },
+  { view: 'account', icon: User, label: 'Account' },
 ] as const;
 
 export function BottomNavbar({ activeView, onNavigate, cartItemCount = 0 }: BottomNavbarProps) {

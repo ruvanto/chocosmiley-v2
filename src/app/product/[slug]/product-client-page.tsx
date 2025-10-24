@@ -220,10 +220,10 @@ export default function ProductClientPage({ product, featuredProducts }: Product
   };
 
   const handleNavigation = (view: ActiveView) => {
+    const newPath = view === 'home' ? '/' : `/${view}`;
+    if (newPath === router.pathname) return;
     setIsGlobalLoading(true);
-    if (view === 'cart') router.push('/cart');
-    else if (view === 'profile') router.push('/account');
-    else router.push('/');
+    router.push(newPath);
   };
 
   const handleProductClick = (product: SanityProduct) => {
@@ -392,6 +392,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                               onAddToCart={handleAddToCart}
                               onRemoveFromCart={() => handleRemoveFromCart(product)}
                               onToggleCartPopup={handleToggleCartPopup}
+                              onBuyNow={handleBuyNow}
                           />
                         </div>
                     </div>
