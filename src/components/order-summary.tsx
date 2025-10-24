@@ -3,14 +3,15 @@
 
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
-import type { CartItem, SanityProduct } from '@/types';
+import type { Cart, CartItem } from '@/context/app-context';
+import type { SanityProduct } from '@/types';
 import { Button } from './ui/button';
 import React from 'react';
 import { AnimatedNumber } from './ui/animated-number';
 import { ScrollArea } from './ui/scroll-area';
 
 interface OrderSummaryProps {
-  cart: Record<string, CartItem>;
+  cart: Cart;
   allProducts: SanityProduct[];
   isMobile?: boolean;
   onFinalizeOrder?: () => void;
