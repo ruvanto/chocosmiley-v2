@@ -705,34 +705,38 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   };
   
   const toggleFlavourSelection = useCallback((productName: string, flavourName: string) => {
-    let updatedFlavours: string[] = [];
     setFlavourSelections(prev => {
-      const newSelections = { ...prev };
-      const currentProductFlavours = newSelections[productName] || [];
-      const flavourIndex = currentProductFlavours.indexOf(flavourName);
+        const newSelections = { ...prev };
+        const currentProductFlavours = newSelections[productName] || [];
+        const flavourIndex = currentProductFlavours.indexOf(flavourName);
+        let updatedFlavours: string[];
 
-      if (flavourIndex > -1) {
-        // Flavor is being removed
-        updatedFlavours = currentProductFlavours.filter(f => f !== flavourName);
-      } else {
-        // Flavor is being added
-        updatedFlavours = [...currentProductFlavours, flavourName];
-      }
-      
-      if (updatedFlavours.length === 0) {
-        delete newSelections[productName];
-      } else {
-        newSelections[productName] = updatedFlavours;
-      }
+        if (flavourIndex > -1) {
+            // Flavor is being removed
+            updatedFlavours = currentProductFlavours.filter(f => f !== flavourName);
+        } else {
+            // Flavor is being added
+            updatedFlavours = [...currentProductFlavours, flavourName];
+        }
+        
+        if (updatedFlavours.length === 0) {
+            delete newSelections[productName];
+            // If product is in cart and now has no flavours, remove it from cart
+            if (cart[productName]) {
+                updateCart(productName, 0);
+            }
+        } else {
+            newSelections[productName] = updatedFlavours;
+            // If product is already in cart, update its flavours
+            if (cart[productName]) {
+                updateCart(productName, cart[productName].quantity, updatedFlavours);
+            }
+        }
 
-      // If product is already in cart, update its flavours
-      if (cart[productName]) {
-        updateCart(productName, cart[productName].quantity, updatedFlavours);
-      }
-
-      return newSelections;
+        return newSelections;
     });
-  }, [setFlavourSelections, cart, updateCart]);
+}, [setFlavourSelections, cart, updateCart]);
+
   
   const setFlavourSelectionsForProduct = useCallback((productName: string, flavours: string[]) => {
       setFlavourSelections(prev => {
@@ -819,4 +823,5 @@ export const AppContextConsumer = AppContext.Consumer;
     
 
     
+
 
