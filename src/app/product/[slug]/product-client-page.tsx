@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, type UIEvent, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import type { SanityProduct, ActiveView } from '@/types';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/desktop/header';
@@ -18,10 +18,11 @@ import { useAppContext } from '@/context/app-context';
 import { FeaturedProducts } from '@/components/featured-products';
 import { Separator } from '@/components/ui/separator';
 import { ProductDetails } from '@/components/desktop/product-details';
-import { StickyBuyNowBar } from '@/components/desktop/sticky-buynow-bar';
+import { StickyBuyNowBar } from '@/components/mobile/sticky-buynow-bar';
 import { ImageGallery, ExpandedImageView } from '@/components/desktop/image-gallery';
 import { FlavoursSection } from '@/components/flavours-section';
 import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-popup';
+import { ProductPopupFooter } from '@/components/desktop/product-popup-footer';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { MobileSearchView } from '@/components/views/MobileSearchView';
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from '@/app/actions';
@@ -40,6 +41,7 @@ const LoadingFallback = () => (
 
 export default function ProductClientPage({ product, featuredProducts }: ProductClientPageProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { 
     cart, 
     updateCart, 
@@ -221,7 +223,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
 
   const handleNavigation = (view: ActiveView) => {
     const newPath = view === 'home' ? '/' : `/${view}`;
-    if (newPath === router.pathname) return;
+    if (newPath === pathname) return;
     setIsGlobalLoading(true);
     router.push(newPath);
   };
@@ -295,7 +297,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                 onClose={() => setIsImageExpanded(false)}
             />
         )}
-        <StickyBuyNowBar 
+         <StickyBuyNowBar 
             product={product}
             quantity={cart[product.name]?.quantity || 0}
             onAddToCart={handleAddToCart}
@@ -386,13 +388,12 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                             />
                         </div>
                         <div className="flex-shrink-0">
-                          <StickyBuyNowBar
+                        <ProductPopupFooter
                               product={product}
                               quantity={cart[product.name]?.quantity || 0}
                               onAddToCart={handleAddToCart}
                               onRemoveFromCart={() => handleRemoveFromCart(product)}
                               onToggleCartPopup={handleToggleCartPopup}
-                              onBuyNow={handleBuyNow}
                           />
                         </div>
                     </div>
