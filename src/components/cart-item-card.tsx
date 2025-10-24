@@ -46,17 +46,9 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
     }
     
     const handleWrapperClick = (e: React.MouseEvent) => {
-        if (isMobile) return;
-        if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-            e.preventDefault();
-            onProductClick(product);
-        }
-    }
-
-    const handleImageClick = (e: React.MouseEvent) => {
-        if (!isMobile) return;
-        if (isFlavourSheetOpen) return;
-        if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+        // For desktop, let the Link component handle navigation
+        // but call onProductClick to show loader etc.
+        if (!isMobile) {
             e.preventDefault();
             onProductClick(product);
         }
@@ -152,16 +144,16 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
                 <div className="flex gap-3">
                     {/* Left Column: Image and Quantity Stepper */}
                     <div className={cn("flex-shrink-0 flex flex-col items-center gap-2", isMobile ? 'w-1/4' : 'w-1/4')}>
-                        <Link href={`/product/${product.slug.current}`} onClick={handleImageClick} className="cursor-pointer w-full">
+                        <div className="cursor-pointer w-full aspect-square relative">
                           <Image
                               src={product.images?.[0] || "/placeholder.png"}
                               alt={item.name}
-                              width={100}
-                              height={100}
-                              className="rounded-lg object-cover w-full aspect-square"
+                              fill
+                              sizes="(max-width: 768px) 25vw, 10vw"
+                              className="rounded-lg object-cover w-full"
                               onDragStart={(e) => e.preventDefault()}
                           />
-                        </Link>
+                        </div>
                         <div className={cn(
                             "flex items-center justify-between w-full rounded-full text-black h-8 overflow-hidden",
                             isMobile ? "bg-gray-200 max-w-[100px]" : "bg-gray-200"
@@ -263,7 +255,7 @@ export function CartItemCard({ item, product, onQuantityChange, onRemove, onProd
                         
                         <div className="flex items-end justify-between mt-auto">
                             <div className="flex items-baseline gap-2">
-                                {product.mrp && <p className={cn("line-through text-black/70 font-semibold", isMobile ? "text-xs" : "md:text-xs lg:text-sm")}>₹{(product.mrp * item.quantity).toFixed(2)}</p>}
+                                {product.mrp && <p className={cn("line-through text-black/70 font-semibold", isMobile ? "text-xs" : "md:text-xs lg:text-sm")}>₹{product.mrp.toFixed(2)}</p>}
                                 {discountPercentage && (
                                     <div className={cn("flex items-center gap-1 px-1.5 py-0.5 rounded-md", isMobile ? "text-black bg-green-400" : "text-white bg-green-600/80")}>
                                         <svg className={cn("h-3 w-3", isMobile ? "md:h-3 md:w-3" : "lg:h-4 lg:w-4")} viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h12z"/></svg>
