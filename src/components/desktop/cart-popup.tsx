@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { CartItemCard } from '../cart-item-card';
+import { CartItemCard } from '../cards/cart-item-card';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { OrderSummary } from '../order-summary';

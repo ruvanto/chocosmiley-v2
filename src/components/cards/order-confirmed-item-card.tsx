@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { OrderItem } from '@/types';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import Link from 'next/link';
 import { useAppContext } from '@/context/app-context';
 

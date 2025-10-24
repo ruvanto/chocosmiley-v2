@@ -4,9 +4,9 @@
 
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Badge } from './ui/badge';
+import { Badge } from '../ui/badge';
 import type { Order } from '@/types';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { useAppContext } from '@/context/app-context';
 import {
   AlertDialog,
@@ -20,7 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { RotateCcw, Star } from 'lucide-react';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import { useRouter } from 'next/navigation';
 
 interface MyOrdersCardProps {

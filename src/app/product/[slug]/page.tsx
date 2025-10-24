@@ -3,7 +3,7 @@
 import { client } from '@/lib/sanity';
 import type { SanityProduct } from '@/types';
 import { notFound } from 'next/navigation';
-import ProductDetailClientPage from '@/components/views/ProductDetailClientPage';
+import ProductClientPage from '@/components/views/product-client-page';
 
 export const revalidate = 300; // Revalidate this page at most every 300 seconds
 
@@ -83,7 +83,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     const featuredProducts = await getFeaturedProducts(product);
 
     return (
-        <ProductDetailClientPage 
+        <ProductClientPage 
             product={product} 
             featuredProducts={featuredProducts || []} 
         />

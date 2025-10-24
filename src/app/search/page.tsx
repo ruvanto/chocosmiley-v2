@@ -1,6 +1,6 @@
 // src/app/search/page.tsx
 import { client } from '@/lib/sanity';
-import SearchClientPage from '@/components/views/SearchClientPage';
+import SearchClientPage from '@/app/search/search-client-page';
 import type { StructuredFilter } from '@/types';
 import { getTrendingSuggestions } from '../actions';
 import { Suspense } from 'react';

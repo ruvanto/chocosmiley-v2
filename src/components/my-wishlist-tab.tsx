@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import type { SanityProduct, WishlistItem } from "@/types";
-import { WishlistItemCard } from "./wishlist-item-card";
+import { WishlistItemCard } from "./cards/wishlist-item-card";
 import { Button } from "./ui/button";
 import { FaTrash } from "react-icons/fa";
 import {

@@ -16,13 +16,13 @@ import type { SanityProduct, StructuredFilter } from '@/types';
 import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
-import { FlavourSelectionPopup } from '../popups/flavour-selection-popup';
-import { MobileSearchView } from './MobileSearchView';
-import { ProfileCompletionBanner } from '../mobile/profile-completion-banner';
+import { FlavourSelectionPopup } from '../../components/popups/flavour-selection-popup';
+import { MobileSearchView } from '../../components/views/MobileSearchView';
+import { ProfileCompletionBanner } from '../../components/mobile/profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
-import { SearchSuggestions } from '../search-suggestions';
-import { MobileSearchHeader } from '../mobile/mobile-search-header';
-import CustomScreenLoader from '../custom-screen-loader';
+import { SearchSuggestions } from '../../components/search-suggestions';
+import { MobileSearchHeader } from '../../components/mobile/mobile-search-header';
+import CustomScreenLoader from '../../components/custom-screen-loader';
 
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];

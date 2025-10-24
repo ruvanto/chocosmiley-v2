@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { CartItemCard } from '@/components/cart-item-card';
+import { CartItemCard } from '@/components/cards/cart-item-card';
 import { OrderSummary } from '@/components/order-summary';
 import {
   AlertDialog,

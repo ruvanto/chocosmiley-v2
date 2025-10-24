@@ -2,7 +2,7 @@
 // @/components/featured-products.tsx
 'use client';
 
-import { FeaturedProductCard } from './featured-product-card';
+import { FeaturedProductCard } from './cards/featured-product-card';
 import { SectionTitle } from './section-title';
 import type { SanityProduct } from '@/types';
 import { useRouter } from 'next/navigation';

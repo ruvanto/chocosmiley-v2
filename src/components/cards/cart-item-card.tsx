@@ -4,15 +4,15 @@
 
 import Image from 'next/image';
 import { Plus, Minus, ChevronDown, Trash, ArrowUpRight } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import type { SanityProduct, SanityFlavour } from '@/types';
 import { useState, useMemo } from 'react';
-import { AnimatedNumber } from './ui/animated-number';
+import { AnimatedNumber } from '../ui/animated-number';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 
 interface CartItemCardProps {
     item: { name: string; quantity: number; flavours?: string[] };

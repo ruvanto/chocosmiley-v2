@@ -12,7 +12,7 @@ import { useAppContext } from '@/context/app-context';
 import type { Order } from '@/types';
 import { EmptyState } from '@/components/empty-state';
 import { Search, Filter } from 'lucide-react';
-import { AdminOrderItemCard } from '@/components/admin-order-item-card';
+import { AdminOrderItemCard } from '@/components/cards/admin-order-item-card';
 import { AdminOrderDetails } from '@/components/popups/admin-order-details-popup';
 import { Separator } from '@/components/ui/separator';
 import { Checkbox } from "@/components/ui/checkbox";

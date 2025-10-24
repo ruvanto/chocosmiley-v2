@@ -2,7 +2,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { FlavourCard } from './flavour-card';
+import { FlavourCard } from './cards/flavour-card';
 import { SectionTitle } from './section-title';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';

@@ -35,7 +35,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
-import { OrderConfirmedItemCard } from "../order-confirmed-item-card";
+import { OrderConfirmedItemCard } from "../cards/order-confirmed-item-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { BillDetails } from "../bill-details";

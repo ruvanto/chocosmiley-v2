@@ -5,7 +5,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { client } from '@/lib/sanity';
 import type { SanityProduct, StructuredFilter } from '@/types';
-import { ProductCard } from '../product-card';
+import { ProductCard } from '../cards/product-card';
 import { ProductCardSkeleton } from '../skeletons/product-card-skeleton';
 import { useAppContext } from '@/context/app-context';
 import { EmptyState } from '../empty-state';

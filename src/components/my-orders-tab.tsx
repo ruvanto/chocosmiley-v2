@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { MyOrdersCard } from './my-orders-card';
+import { MyOrdersCard } from './cards/my-orders-card';
 import { EmptyState } from './empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';

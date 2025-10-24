@@ -22,7 +22,7 @@ import { Separator } from "../ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { OrderConfirmedItemCard } from "../order-confirmed-item-card";
+import { OrderConfirmedItemCard } from "../cards/order-confirmed-item-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { BillDetails } from "../bill-details";
 
