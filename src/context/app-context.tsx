@@ -31,7 +31,7 @@ import {
 import { client } from '@/lib/sanity';
 import type { User } from 'firebase/auth';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
-import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
+import {ProgressBarComponent} from '@/components/loaders/nav-loader';
 import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loaders/loading-fallback';
 
 
@@ -175,17 +175,12 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [authPopup, setAuthPopup] = useState<AuthPopupType>(null);
   const [flavourSelection, setFlavourSelection] = useState<{ product: SanityProduct | null; isOpen: boolean; preselectedFlavours?: string[] }>({ product: null, isOpen: false, preselectedFlavours: [] });
   
-  const [isGlobalLoading, setIsGlobalLoadingState] = useState(false);
-  const [globalLoaderText, setGlobalLoaderText] = useState<string | undefined>(undefined);
+  const [isGlobalLoading, setIsGlobalLoading] = useState(false);
 
   const [isProcessingOrder, setIsProcessingOrder] = useState(false);
   const [isAuthenticating, _setIsAuthenticating] = useState(false);
   const [authMessage, setAuthMessage] = useState("Signing you in...");
 
-  const setIsGlobalLoading = (isLoading: boolean, text?: string) => {
-    setIsGlobalLoadingState(isLoading);
-    setGlobalLoaderText(text);
-  };
 
   const setIsAuthenticating = (authenticating: boolean, message?: string) => {
     _setIsAuthenticating(authenticating);
@@ -810,7 +805,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
 
   return (
     <AppContext.Provider value={value}>
-      {isGlobalLoading && <CustomScreenLoader text={globalLoaderText} />}
+      {isGlobalLoading && <ProgressBarComponent />}
       {isProcessingOrder && <ProcessingOrderFallback />}
       {isAuthenticating && <AuthLoadingFallback message={authMessage} />}
       {children}

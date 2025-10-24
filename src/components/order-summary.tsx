@@ -1,3 +1,4 @@
+
 // @/components/order-summary.tsx
 'use client';
 
@@ -99,22 +100,25 @@ export const OrderSummary = React.forwardRef<HTMLDivElement, OrderSummaryProps>(
         return (
           <div ref={ref} className={summaryClasses}>
             <h3 className={headerClasses}>Order Summary</h3>
-
-            <div className="space-y-2 mb-4 p-2 rounded-lg max-h-32 overflow-y-auto bg-white/30 custom-scrollbar pr-2">
-                {itemsWithPrices.map((item, index) => {
-                    const product = productsByName[item!.name];
-                    if (!product) return null;
-                    return (
-                        <React.Fragment key={item!.name}>
-                            <SummaryItem
-                                product={product}
-                                quantity={item!.quantity}
-                                isMobile={!!isMobile}
-                            />
-                            {index < itemsWithPrices.length - 1 && <Separator className="bg-black/10 my-1" />}
-                        </React.Fragment>
-                    );
-                })}
+            <div className="max-h-32 mb-4">
+              <ScrollArea className="h-full custom-scrollbar pr-2">
+                <div className="space-y-2 p-2 rounded-lg bg-white/30">
+                    {itemsWithPrices.map((item, index) => {
+                        const product = productsByName[item!.name];
+                        if (!product) return null;
+                        return (
+                            <React.Fragment key={item!.name}>
+                                <SummaryItem
+                                    product={product}
+                                    quantity={item!.quantity}
+                                    isMobile={!!isMobile}
+                                />
+                                {index < itemsWithPrices.length - 1 && <Separator className="bg-black/10 my-1" />}
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
+              </ScrollArea>
             </div>
               
             <div>
