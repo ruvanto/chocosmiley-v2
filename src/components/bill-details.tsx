@@ -1,4 +1,3 @@
-
 // @/components/bill-details.tsx
 'use client';
 
@@ -9,7 +8,7 @@ import type { SanityProduct, Order } from '@/types';
 import { AnimatedNumber } from './ui/animated-number';
 
 interface BillDetailsProps {
-  order: Order | null;
+  order?: Order | null;
   cart?: Cart;
   allProducts?: SanityProduct[];
   showTotalPayable?: boolean;
@@ -27,9 +26,7 @@ const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated =
 );
 
 export function BillDetails({ order, cart, allProducts, showTotalPayable = false }: BillDetailsProps) {
-    if (!order && (!cart || !allProducts)) {
-        return null; // Cannot compute without either an order or a cart
-    }
+    const isOrderContext = !!order;
 
     let totalMrp = 0;
     let totalProductPrice = 0;
@@ -40,10 +37,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     let totalDiscount = 0;
     let itemsToDisplay: { name: string; quantity: number; numberOfChocolates?: number; flavours?: { name: string; price: number; }[] }[] = [];
     
-    const isOrderContext = !!order;
-
     if (cart && allProducts) {
-        // Calculation logic for cart view
         const productsByName = allProducts.reduce((acc, product) => {
             acc[product.name] = product;
             return acc;
@@ -84,7 +78,6 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
         total = subtotal + gstAmount;
 
     } else if (order) {
-        // Calculation logic for existing order view
         itemsToDisplay = order.items;
         totalMrp = order.items.reduce((acc, item) => acc + (item.mrp || 0) * item.quantity, 0);
         totalProductPrice = order.items.reduce((acc, item) => acc + (item.finalProductPrice || 0), 0);
@@ -97,7 +90,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
 
 
     return (
-        <div className="space-y-1.5">
+        <div className={cn("space-y-1.5", isOrderContext ? "text-white" : "text-black")}>
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" isOrderContext={isOrderContext} />
             <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn("text-green-400")} isAnimated={!!cart} prefix="-₹" isOrderContext={isOrderContext} />
             <Separator className={cn("my-1.5", isOrderContext ? "bg-white/20" : "bg-black/10")} />
@@ -120,25 +113,19 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                         const remainder = item.numberOfChocolates % selectedFlavoursCount;
                         
-                        const sortedFlavours = item.flavours?.map(f => f.name).sort() || [];
-                         const distribution: Record<string, number> = {};
-                        sortedFlavours.forEach((name, index) => {
-                            distribution[name] = baseCount + (index < remainder ? 1 : 0);
+                        return item.flavours?.map((flavour, index) => {
+                            const pieces = baseCount + (index < remainder ? 1 : 0);
+                            if (flavour.price > 0 && pieces > 0) {
+                                const flavourTotal = flavour.price * pieces * item.quantity;
+                                return (
+                                    <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
+                                        <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
+                                        <span>+₹{flavourTotal.toFixed(2)}</span>
+                                    </div>
+                                );
+                            }
+                            return null;
                         });
-
-                         return item.flavours?.map((flavour) => {
-                             const pieces = distribution[flavour.name] || 0;
-                             if (flavour.price > 0 && pieces > 0) {
-                                 const flavourTotal = flavour.price * pieces * item.quantity;
-                                 return (
-                                     <div key={`${item.name}-${flavour.name}`} className="flex justify-between items-center">
-                                         <span>{item.quantity}x {flavour.name} ({pieces} pcs)</span>
-                                         <span>+₹{flavourTotal.toFixed(2)}</span>
-                                     </div>
-                                 );
-                             }
-                             return null;
-                         });
                     })}
                 </div>
             )}
