@@ -1,4 +1,3 @@
-
 // @/components/order-confirmed-summary.tsx
 'use client';
 
@@ -44,7 +43,7 @@ export function OrderConfirmedSummary({ order, products, isMobile }: OrderConfir
             <Separator className="bg-black/10 my-2 md:my-3" />
             
             <div className="flex-shrink-0">
-              <BillDetails order={order} showTotalPayable={true} />
+              <BillDetails order={order} showTotalPayable={true} variant="light" />
             </div>
         </div>
     );

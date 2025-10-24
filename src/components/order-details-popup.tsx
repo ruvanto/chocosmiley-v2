@@ -1,4 +1,3 @@
-
 // @/components/order-details-popup.tsx
 import * as React from "react";
 import {
@@ -158,7 +157,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
             <div className="text-white">
               <h4 className="font-bold text-lg mb-2">Bill Details</h4>
               <div className="bg-white/5 p-3 rounded-lg text-sm">
-                <BillDetails order={order} showTotalPayable />
+                <BillDetails order={order} showTotalPayable variant="dark" />
               </div>
             </div>
 
@@ -210,7 +209,7 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
                         <div className="text-white">
                             <h4 className="font-bold text-lg mb-2">Bill Details</h4>
                             <div className="bg-white/5 p-3 rounded-lg text-sm">
-                              <BillDetails order={order} showTotalPayable />
+                              <BillDetails order={order} showTotalPayable variant="dark" />
                             </div>
                          </div>
                     </div>

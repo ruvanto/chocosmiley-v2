@@ -1,4 +1,3 @@
-
 // @/components/bill-details.tsx
 'use client';
 
@@ -13,25 +12,31 @@ interface BillDetailsProps {
   cart?: Cart;
   allProducts?: SanityProduct[];
   showTotalPayable?: boolean;
+  variant?: 'light' | 'dark';
 }
 
-const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, inOrderContext = false }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, inOrderContext?: boolean }) => (
-    <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", inOrderContext && "text-white")}>
-        <span className={cn(isTotalPayable && inOrderContext ? "text-custom-gold" : isTotalPayable ? "text-black" : "")}>{label}</span>
-        {isAnimated ? (
-          <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, isTotalPayable && inOrderContext ? "text-custom-gold" : isTotalPayable ? "text-black" : "")} />
-        ) : (
-          <span className={cn(valueClassName, isTotalPayable && inOrderContext ? "text-custom-gold" : isTotalPayable ? "text-black" : "")}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
-        )}
-    </div>
-);
+const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated = false, prefix, isTotalPayable = false, variant = 'light' }: { label: React.ReactNode, value: number, isBold?: boolean, valueClassName?: string, isAnimated?: boolean, prefix?: string, isTotalPayable?: boolean, variant?: 'light' | 'dark' }) => {
+    const textColor = variant === 'dark' ? 'text-white' : 'text-black';
+    const totalPayableColor = variant === 'dark' ? 'text-custom-gold' : 'text-black';
+    const finalColor = isTotalPayable ? totalPayableColor : textColor;
 
-export function BillDetails({ order, cart, allProducts, showTotalPayable = false }: BillDetailsProps) {
+    return (
+        <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", finalColor)}>
+            <span>{label}</span>
+            {isAnimated ? (
+              <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, finalColor)} />
+            ) : (
+              <span className={cn(valueClassName, finalColor)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+            )}
+        </div>
+    );
+};
+
+export function BillDetails({ order, cart, allProducts, showTotalPayable = false, variant = 'light' }: BillDetailsProps) {
     if (!order && (!cart || !allProducts)) {
         return null; // Cannot compute without either an order or a cart
     }
-    const inOrderContext = !!order;
-
+    
     let totalMrp = 0;
     let totalProductPrice = 0;
     let totalFlavoursCost = 0;
@@ -94,24 +99,27 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
         gstAmount = total - subtotal;
     }
 
+    const separatorClass = variant === 'dark' ? "bg-white/20" : "bg-black/10";
+    const subTextColor = variant === 'dark' ? "text-white/80" : "text-black/80";
+    const lightTextColor = variant === 'dark' ? "text-white/60" : "text-black/60";
 
     return (
         <div className="space-y-1.5">
-            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" inOrderContext={inOrderContext}/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={inOrderContext ? "text-green-400" : "text-green-600"} isAnimated={!!cart} prefix="-₹" inOrderContext={inOrderContext} />
-            <Separator className={cn("my-1.5", inOrderContext ? "bg-white/20" : "bg-black/10")} />
-            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" inOrderContext={inOrderContext}/>
-            <div className={cn("flex justify-between items-start text-sm", inOrderContext ? "text-white/80" : "text-black/80")}>
-                <span className={cn(inOrderContext && "text-white/80")}>Flavours &amp; Fillings:</span>
+            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" variant={variant}/>
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" variant={variant} />
+            <Separator className={cn("my-1.5", separatorClass)} />
+            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" variant={variant}/>
+            <div className={cn("flex justify-between items-start text-sm", subTextColor)}>
+                <span>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
                 ) : (
-                    <span className={cn("font-medium", inOrderContext && "text-white/80")}>+₹{totalFlavoursCost.toFixed(2)}</span>
+                    <span className={cn("font-medium", subTextColor)}>+₹{totalFlavoursCost.toFixed(2)}</span>
                 )}
             </div>
 
             {totalFlavoursCost > 0 && (
-                <div className={cn("pl-4 text-xs space-y-1", inOrderContext ? "text-white/60" : "text-black/60")}>
+                <div className={cn("pl-4 text-xs space-y-1", lightTextColor)}>
                     {itemsToDisplay.map(item => {
                         const selectedFlavoursCount = item.flavours?.length || 0;
                         if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
@@ -119,11 +127,8 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = Math.floor(item.numberOfChocolates / selectedFlavoursCount);
                         const remainder = item.numberOfChocolates % selectedFlavoursCount;
                         
-                        const sortedFlavours = [...(item.flavours?.map(f => f.name) || [])].sort();
-
-                         const distribution: Record<string, number> = {};
-                         // Consistent remainder distribution
-                         const flavourNames = item.flavours?.map(f => f.name).sort() || [];
+                        const flavourNames = item.flavours?.map(f => f.name).sort() || [];
+                        const distribution: Record<string, number> = {};
                          flavourNames.forEach((name, index) => {
                              distribution[name] = baseCount + (index < remainder ? 1 : 0);
                          });
@@ -145,14 +150,14 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                 </div>
             )}
             
-            <Separator className={cn("my-1.5", inOrderContext ? "bg-white/20" : "bg-black/10")} />
-            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" inOrderContext={inOrderContext} />
-            <SummaryRow label={<>GST <span className={cn("font-normal", inOrderContext ? "text-white/70" : "text-black/60")}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" inOrderContext={inOrderContext} />
+            <Separator className={cn("my-1.5", separatorClass)} />
+            <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" variant={variant} />
+            <SummaryRow label={<>GST <span className={cn("font-normal", subTextColor)}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} />
 
             {showTotalPayable && (
                 <>
-                    <div className={cn("my-2 h-[1.5px] border-t", inOrderContext ? "border-white/20" : "border-black/20")} ></div>
-                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} inOrderContext={inOrderContext} />
+                    <div className={cn("my-2 h-[1.5px] border-t", separatorClass)} ></div>
+                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} variant={variant} />
                 </>
             )}
         </div>

@@ -1,4 +1,3 @@
-
 // @/components/admin-order-details.tsx
 'use client';
 
@@ -163,7 +162,7 @@ const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Ord
                          <div className="text-white">
                             <h4 className="font-bold text-lg mb-2">Bill Details</h4>
                             <div className="bg-white/5 p-3 rounded-lg text-sm">
-                            <BillDetails order={order} showTotalPayable />
+                            <BillDetails order={order} showTotalPayable variant="dark" />
                             </div>
                         </div>
                         
@@ -311,7 +310,7 @@ const OrderDetailsContent = ({ order: initialOrder, onOpenChange }: { order: Ord
                 <div className="text-white">
                     <h4 className="font-bold text-lg mb-2">Bill Details</h4>
                     <div className="bg-white/5 p-3 rounded-lg text-sm">
-                    <BillDetails order={order} showTotalPayable />
+                    <BillDetails order={order} showTotalPayable variant="dark" />
                     </div>
                 </div>
                 
