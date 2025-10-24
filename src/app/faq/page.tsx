@@ -2,7 +2,7 @@
 // @/app/faq/page.tsx
 import { Suspense } from 'react';
 import { client } from '@/lib/sanity';
-import { LoadingFallback } from '@/components/loading-fallback';
+import { LoadingFallback } from '@/components/loaders/loading-fallback';
 import FaqPageClient from './faq-client-page';
 import type { FaqItem } from '@/app/faq/faq-content';
 

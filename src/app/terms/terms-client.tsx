@@ -6,7 +6,7 @@ import { Suspense, useState, type UIEvent, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import type { ActiveView } from '@/types';
 import { TermsContent } from './terms-content';
-import { LoadingFallback } from '@/components/loading-fallback';
+import { LoadingFallback } from '@/components/loaders/loading-fallback';
 import { Header } from "@/components/desktop/header";
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
 import { Footer } from '@/components/footer';
@@ -16,7 +16,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 
 export default function TermsClientPage() {
     const isMobile = useIsMobile();

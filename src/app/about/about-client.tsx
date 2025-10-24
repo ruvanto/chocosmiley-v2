@@ -18,7 +18,7 @@ import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-back
 import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
 import type { ActiveView } from '@/types';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 
 
 const containerVariants = {

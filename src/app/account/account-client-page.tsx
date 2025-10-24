@@ -19,7 +19,7 @@ import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-pop
 import { MyProfileTab } from '@/components/tabs/my-profile-tab';
 import { WishlistView } from '@/components/tabs/my-wishlist-tab';
 import { MyOrdersTab } from '@/components/tabs/my-orders-tab';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 
 

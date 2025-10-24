@@ -31,7 +31,7 @@ import { useAppContext } from '@/context/app-context';
 import type { SanityProduct, ActiveView } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { client } from '@/lib/sanity';
 

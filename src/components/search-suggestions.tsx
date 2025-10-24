@@ -5,7 +5,7 @@
 import type { SanityProduct } from '@/types';
 import type { TrendingSuggestion } from '@/app/actions';
 import Image from 'next/image';
-import { Loader } from './loader';
+import { Loader } from './loaders/loader';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { cn } from '@/lib/utils';

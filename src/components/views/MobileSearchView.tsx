@@ -14,7 +14,7 @@ import type { SanityProduct } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
 import { TrendingSuggestions } from '../trending-suggestions';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 
 interface MobileSearchViewProps {
     isOpen: boolean;

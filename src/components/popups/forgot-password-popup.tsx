@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { sendPasswordReset } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 
 interface ForgotPasswordPopupProps {
     open: boolean;

@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAppContext, type ProfileInfo } from '@/context/app-context';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { Textarea } from '../ui/textarea';
 import { states } from '@/lib/states';
 import { SecurityUpdatePopup } from '../popups/security-update-popup';

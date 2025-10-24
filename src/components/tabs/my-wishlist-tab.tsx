@@ -20,7 +20,7 @@ import {
 import { EmptyState } from '../empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { client } from '@/lib/sanity';
 
 interface WishlistViewProps {

@@ -26,9 +26,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { PopupsManager } from '@/components/popups/popups-manager';
-import { Loader } from '@/components/loader';
+import { Loader } from '@/components/loaders/loader';
 import { AdminOrderItemCardSkeleton } from '@/components/skeletons/admin-order-item-card-skeleton';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 
 
 type StatusFilter = Order['status'] | 'All';

@@ -15,20 +15,19 @@ import { MobileSearchHeader } from '@/components/mobile/mobile-search-header';
 import { MobileProductDetailView } from '@/components/views/MobileProductDetailView';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { useAppContext } from '@/context/app-context';
-import { FeaturedProducts } from '../../../components/featured-products';
-import { Separator } from '../../../components/ui/separator';
-import { ProductDetails } from '../../../components/desktop/product-details';
-import { ProductPopupFooter } from '../../../components/desktop/product-popup-footer';
-import { ImageGallery, ExpandedImageView } from '../../../components/desktop/image-gallery';
-import { FlavoursSection } from '../../../components/flavours-section';
-import { FlavourSelectionPopup } from '../../../components/popups/flavour-selection-popup';
-import { ProfileCompletionBanner } from '../../../components/mobile/profile-completion-banner';
-import { MobileSearchView } from '../../../components/views/MobileSearchView';
+import { FeaturedProducts } from '../../components/featured-products';
+import { Separator } from '../../components/ui/separator';
+import { ProductDetails } from '../../components/desktop/product-details';
+import { StickyBuyNowBar } from '../../components/desktop/sticky-buynow-bar';
+import { ImageGallery, ExpandedImageView } from '../../components/desktop/image-gallery';
+import { FlavoursSection } from '../../components/flavours-section';
+import { FlavourSelectionPopup } from '../../components/popups/flavour-selection-popup';
+import { ProfileCompletionBanner } from '../../components/mobile/profile-completion-banner';
+import { MobileSearchView } from '../../components/views/MobileSearchView';
 import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion } from '@/app/actions';
-import { SearchSuggestions } from '../../../components/search-suggestions';
-import { MobileProductStickyBar } from '../../../components/mobile/mobile-product-sticky-bar';
-import { MobileExpandedImageView } from '../../../components/mobile/mobile-image-gallery';
-import CustomScreenLoader from '../../../components/custom-screen-loader';
+import { SearchSuggestions } from '../../components/search-suggestions';
+import { MobileExpandedImageView } from '../../components/mobile/mobile-image-gallery';
+import CustomScreenLoader from '../../components/loaders/custom-screen-loader';
 
 interface ProductClientPageProps {
   product: SanityProduct;
@@ -296,7 +295,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                 onClose={() => setIsImageExpanded(false)}
             />
         )}
-        <MobileProductStickyBar 
+        <StickyBuyNowBar 
             product={product}
             quantity={cart[product.name]?.quantity || 0}
             onAddToCart={handleAddToCart}
@@ -387,7 +386,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                             />
                         </div>
                         <div className="flex-shrink-0">
-                          <ProductPopupFooter
+                          <StickyBuyNowBar
                               product={product}
                               quantity={cart[product.name]?.quantity || 0}
                               onAddToCart={handleAddToCart}

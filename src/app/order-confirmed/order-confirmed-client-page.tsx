@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { Footer } from '@/components/footer';
 import { StaticSparkleBackground } from '@/components/mobile/static-sparkle-background';
 import { SparkleBackground } from '@/components/desktop/sparkle-background';
-import { Loader } from '@/components/loader';
+import { Loader } from '@/components/loaders/loader';
 import { useAppContext } from '@/context/app-context';
 import type { SanityProduct, Order, ActiveView } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';

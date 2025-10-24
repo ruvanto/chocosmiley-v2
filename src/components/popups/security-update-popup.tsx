@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { reauthenticateAndChangePassword } from '@/lib/firebase';
 import { cn } from '@/lib/utils';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { X, Eye, EyeOff, Lock } from 'lucide-react';
 import { Separator } from '../ui/separator';
 

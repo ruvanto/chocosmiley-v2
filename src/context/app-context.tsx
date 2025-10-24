@@ -31,8 +31,8 @@ import {
 import { client } from '@/lib/sanity';
 import type { User } from 'firebase/auth';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
-import { ProgressBarComponent } from '@/components/progress-bar';
-import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loading-fallback';
+import { ProgressBarComponent } from '@/components/loaders/progress-bar';
+import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loaders/loading-fallback';
 
 
 export type CartItem = {

@@ -7,7 +7,7 @@ import { MyOrdersCard } from '../cards/my-orders-card';
 import { EmptyState } from '../empty-state';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '@/context/app-context';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { OrderDetailsPopup } from '../popups/order-details-popup';
 import { RatingPopup } from '../popups/rating-popup';
 import type { Order } from '@/types';

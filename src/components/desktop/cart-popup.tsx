@@ -23,7 +23,7 @@ import type { SanityProduct } from '@/types';
 import { EmptyState } from '../empty-state';
 import { useAppContext } from '@/context/app-context';
 import { client } from '@/lib/sanity';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { ScrollArea } from '../ui/scroll-area';
 import { AnimatePresence } from 'framer-motion';
 

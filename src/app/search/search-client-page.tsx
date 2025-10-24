@@ -22,7 +22,7 @@ import { ProfileCompletionBanner } from '../../components/mobile/profile-complet
 import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../../components/search-suggestions';
 import { MobileSearchHeader } from '../../components/mobile/mobile-search-header';
-import CustomScreenLoader from '../../components/custom-screen-loader';
+import CustomScreenLoader from '../../components/loaders/custom-screen-loader';
 
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];

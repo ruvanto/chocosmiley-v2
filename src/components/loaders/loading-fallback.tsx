@@ -1,6 +1,6 @@
 
 // @/components/loading-fallback.tsx
-import { Loader } from '@/components/loader';
+import { Loader } from '@/components/loaders/loader';
 
 interface LoadingFallbackProps {
   text?: string;

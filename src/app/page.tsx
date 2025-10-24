@@ -3,7 +3,7 @@
 import { client } from '@/lib/sanity';
 import { Suspense } from 'react';
 import HomeClient from './home-client';
-import CustomScreenLoader from '@/components/custom-screen-loader';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { getTrendingSuggestions } from './actions';
 
 export const revalidate = 300; // Revalidate this page at most every 300 seconds

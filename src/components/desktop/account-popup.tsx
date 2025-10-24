@@ -19,7 +19,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { useAppContext } from '@/context/app-context';
-import { Loader } from '../loader';
+import { Loader } from '../loaders/loader';
 import { EmptyState } from '../empty-state';
 
 
