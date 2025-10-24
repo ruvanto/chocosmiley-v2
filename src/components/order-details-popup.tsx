@@ -1,3 +1,4 @@
+
 // @/components/order-details-popup.tsx
 import * as React from "react";
 import {
@@ -154,10 +155,12 @@ const OrderDetailsContent = ({ order }: { order: Order }) => {
             
             <Separator className="bg-white/20" />
 
-            <div className="bg-white/5 p-3 rounded-lg text-white">
-                <h4 className="font-bold mb-2 text-lg">Bill Details</h4>
-                <BillDetails order={order} showTotalPayable />
-            </div>
+            <div className="text-white">
+                            <h4 className="font-bold text-lg mb-2">Bill Details</h4>
+                            <div className="bg-white/5 p-3 rounded-lg text-sm">
+                              <BillDetails order={order} showTotalPayable />
+                            </div>
+                         </div>
 
         </div>
       );

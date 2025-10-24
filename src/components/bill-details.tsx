@@ -1,3 +1,4 @@
+
 // @/components/bill-details.tsx
 'use client';
 
@@ -96,10 +97,10 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     return (
         <div className="space-y-1.5">
             <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹"/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" />
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={cn(order ? "text-green-400" : "text-green-600")} isAnimated={!!cart} prefix="-₹" />
             <Separator className="my-1.5 bg-black/10" />
             <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹"/>
-            <div className="flex justify-between items-start text-sm text-black/80">
+            <div className={cn("flex justify-between items-start text-sm", order ? "text-white/80" : "text-black/80")}>
                 <span>Flavours &amp; Fillings:</span>
                 {cart ? (
                      <AnimatedNumber value={totalFlavoursCost} prefix="+₹" />
@@ -109,7 +110,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             </div>
 
             {totalFlavoursCost > 0 && (
-                <div className="pl-4 text-xs space-y-1 text-black/60">
+                <div className={cn("pl-4 text-xs space-y-1", order ? "text-white/70" : "text-black/60")}>
                     {itemsToDisplay.map(item => {
                         const selectedFlavoursCount = item.flavours?.length || 0;
                         if (!item.numberOfChocolates || selectedFlavoursCount === 0) return null;
@@ -142,7 +143,7 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             
             <Separator className="my-1.5 bg-black/10" />
             <SummaryRow label="Subtotal" value={subtotal} isBold isAnimated={!!cart} prefix="₹" />
-            <SummaryRow label={<>GST <span className="font-normal text-black/60">(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
+            <SummaryRow label={<>GST <span className={cn("font-normal", order ? "text-white/60" : "text-black/60")}>(5%)</span></>} value={gstAmount} isAnimated={!!cart} prefix="+₹" />
 
             {showTotalPayable && (
                 <>
@@ -153,3 +154,4 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
         </div>
     );
 }
+
