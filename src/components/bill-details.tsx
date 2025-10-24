@@ -24,9 +24,9 @@ const SummaryRow = ({ label, value, isBold = false, valueClassName, isAnimated =
         <div className={cn("flex justify-between items-center", isBold ? "font-bold text-base" : "text-sm", finalColor)}>
             <span>{label}</span>
             {isAnimated ? (
-              <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName, finalColor)} />
+              <AnimatedNumber value={value} prefix={prefix} className={cn(valueClassName)} />
             ) : (
-              <span className={cn(valueClassName, finalColor)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
+              <span className={cn(valueClassName)}>{value < 0 ? `-₹${Math.abs(value).toFixed(2)}` : `+₹${value.toFixed(2)}`}</span>
             )}
         </div>
     );
@@ -102,13 +102,15 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
     const separatorClass = variant === 'dark' ? "bg-white/20" : "bg-black/10";
     const subTextColor = variant === 'dark' ? "text-white/80" : "text-black/80";
     const lightTextColor = variant === 'dark' ? "text-white/60" : "text-black/60";
+    const textColor = variant === 'dark' ? "text-white" : "text-black";
+    const totalPayableColor = variant === 'dark' ? "text-custom-gold" : "text-black";
 
     return (
         <div className="space-y-1.5">
-            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" variant={variant}/>
-            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName={variant === 'dark' ? 'text-green-400' : 'text-green-600'} isAnimated={!!cart} prefix="-₹" variant={variant} />
+            <SummaryRow label="Total MRP" value={totalMrp} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={textColor}/>
+            <SummaryRow label="Total Discount" value={totalDiscount} valueClassName="text-green-600" isAnimated={!!cart} prefix="-₹" variant={variant} />
             <Separator className={cn("my-1.5", separatorClass)} />
-            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" variant={variant}/>
+            <SummaryRow label="Total Product Price" value={totalProductPrice} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={textColor}/>
             <div className={cn("flex justify-between items-start text-sm", subTextColor)}>
                 <span>Flavours &amp; Fillings:</span>
                 {cart ? (
@@ -127,21 +129,20 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
                         const baseCount = item.numberOfChocolates ? Math.floor(item.numberOfChocolates / selectedFlavoursCount) : 0;
                         const remainder = item.numberOfChocolates ? item.numberOfChocolates % selectedFlavoursCount : 0;
                         
-                        const sortedFlavours = [...item.flavours].sort((a,b) => a.name.localeCompare(b.name));
+                        let originalFlavourOrder: string[] = [];
+                        if (cart) {
+                            originalFlavourOrder = Object.values(cart).find(ci => ci.name === item.name)?.flavours || [];
+                        } else if (order) {
+                            const orderItem = order.items.find(oi => oi.name === item.name);
+                            originalFlavourOrder = orderItem?.flavours?.map(f => f.name) || [];
+                        }
 
-                        return sortedFlavours.map((flavour, flavourIndex) => {
+                        return item.flavours.map((flavour) => {
                             if (flavour.price > 0) {
-                                // Correctly determine piece count based on the item's original flavour list order if it's a cart item
                                 let pieces = 0;
-                                if (cart) {
-                                     const cartItem = Object.values(cart).find(ci => ci.name === item.name);
-                                     const originalFlavourIndex = cartItem?.flavours?.indexOf(flavour.name) ?? -1;
-                                     if (originalFlavourIndex !== -1) {
-                                        pieces = baseCount + (originalFlavourIndex < remainder ? 1 : 0);
-                                     }
-                                } else {
-                                    // For order items, the distribution is not stored, so we have to estimate
-                                    pieces = baseCount + (flavourIndex < remainder ? 1 : 0);
+                                const originalFlavourIndex = originalFlavourOrder.indexOf(flavour.name);
+                                if (originalFlavourIndex !== -1) {
+                                    pieces = baseCount + (originalFlavourIndex < remainder ? 1 : 0);
                                 }
                                 
                                 const flavourTotal = flavour.price * pieces * item.quantity;
@@ -162,13 +163,13 @@ export function BillDetails({ order, cart, allProducts, showTotalPayable = false
             )}
             
             <Separator className={cn("my-1.5", separatorClass)} />
-            <SummaryRow label={<>Subtotal</>} value={subtotal} isBold isAnimated={!!cart} prefix="₹" variant={variant} />
-            <SummaryRow label={<span className={cn(subTextColor)}>GST (5%)</span>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} />
+            <SummaryRow label={<>Subtotal</>} value={subtotal} isBold isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={textColor} />
+            <SummaryRow label={<span className={cn(subTextColor)}>GST (5%)</span>} value={gstAmount} isAnimated={!!cart} prefix="+₹" variant={variant} valueClassName={textColor} />
 
             {showTotalPayable && (
                 <>
                     <div className={cn("my-2 h-[1.5px]", separatorClass)} ></div>
-                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" isTotalPayable={true} variant={variant} />
+                    <SummaryRow label="Total Payable" value={total} isBold={true} isAnimated={!!cart} prefix="₹" variant={variant} valueClassName={totalPayableColor} />
                 </>
             )}
         </div>
