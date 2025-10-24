@@ -6,7 +6,7 @@ import { useState, useEffect, type UIEvent } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import type { ActiveView } from '@/types';
 import { Header } from '@/components/header';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { SparkleBackground } from '@/components/sparkle-background';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';

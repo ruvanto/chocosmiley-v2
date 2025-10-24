@@ -2,11 +2,11 @@
 // @/components/floating-cart-finalize-button.tsx
 'use client';
 
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import type { Cart } from '@/context/app-context';
 import type { SanityProduct } from '@/types';
-import { AnimatedNumber } from './ui/animated-number';
+import { AnimatedNumber } from '../ui/animated-number';
 
 interface FloatingCartFinalizeButtonProps {
     cart: Cart;

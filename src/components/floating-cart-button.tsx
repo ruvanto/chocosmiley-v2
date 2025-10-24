@@ -1,4 +1,3 @@
-
 // @/components/floating-cart-button.tsx
 'use client';
 

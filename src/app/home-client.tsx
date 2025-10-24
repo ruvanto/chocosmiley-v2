@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { Header } from "@/components/header";
 import { SparkleBackground } from '@/components/sparkle-background';
 import { PopupsManager } from '@/components/popups/popups-manager';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ExploreCategories } from '@/components/desktop/explore-categories';
 import { SearchBar } from '@/components/header/search-bar';
@@ -22,7 +22,7 @@ import CustomScreenLoader from '@/components/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
-import { FloatingCartButton } from '@/components/floating-cart-button';
+import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
 
 interface HomepageContent {

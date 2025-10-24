@@ -2,8 +2,8 @@
 // @/components/popups/popups-manager.tsx
 'use client';
 
-import { CartPopup } from '@/components/cart-popup';
-import { ProfilePopup } from '@/components/profile-popup';
+import { CartPopup } from '@/components/desktop/cart-popup';
+import { ProfilePopup } from '@/components/desktop/profile-popup';
 import type { SanityProduct } from '@/types';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';

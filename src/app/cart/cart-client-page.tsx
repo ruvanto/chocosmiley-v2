@@ -5,7 +5,7 @@
 import { useState, useEffect, type UIEvent, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Header } from '@/components/header';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { SparkleBackground } from '@/components/sparkle-background';
 import { cn } from '@/lib/utils';
 import { PopupsManager } from '@/components/popups/popups-manager';
@@ -25,7 +25,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { StaticSparkleBackground } from '@/components/static-sparkle-background';
-import { FloatingCartFinalizeButton } from '@/components/floating-cart-finalize-button';
+import { FloatingCartFinalizeButton } from '@/components/mobile/floating-cart-finalize-button';
 import { EmptyState } from '@/components/empty-state';
 import { useAppContext } from '@/context/app-context';
 import type { SanityProduct, ActiveView } from '@/types';

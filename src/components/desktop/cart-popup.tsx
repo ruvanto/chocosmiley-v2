@@ -1,4 +1,5 @@
-// @/components/cart-popup.tsx
+
+// @/components/desktop/cart-popup.tsx
 'use client';
 
 import { useState, useEffect } from 'react';

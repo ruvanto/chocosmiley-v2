@@ -26,7 +26,7 @@ import {
 import { OrderConfirmedSummary } from '@/components/order-confirmed-summary';
 import CheckmarkAnimation from '../../../public/animations/Checkmark.json';
 import { Header } from '@/components/header';
-import { BottomNavbar } from '@/components/bottom-navbar';
+import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import { PopupsManager } from '@/components/popups/popups-manager';
 import { OrderBackDialog } from '@/components/order-back-dialog';
 import { useToast } from '@/hooks/use-toast';

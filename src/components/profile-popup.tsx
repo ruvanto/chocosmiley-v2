@@ -1,10 +1,9 @@
-
 // @/components/profile-popup.tsx
 'use client';
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { ProfileSidebar } from './profile-sidebar';
+import { ProfileSidebar } from './desktop/profile-sidebar';
 import { MyProfileTab } from './my-profile-tab';
 import type { ProfileInfo } from "@/context/app-context";
 import { WishlistView } from './wishlist-view';
