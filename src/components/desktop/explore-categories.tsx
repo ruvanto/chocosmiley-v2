@@ -99,7 +99,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             ></motion.div>
             
             <div
-                className="absolute inset-x-0 bottom-5 flex flex-col items-center px-4 overflow-hidden"
+                className="absolute inset-x-0 bottom-5 flex flex-col items-center px-4"
             >
                 <motion.div
                     variants={textContainerVariants}
