@@ -46,18 +46,13 @@ interface ExploreCategoriesProps {
 }
 
 const textContainerVariants = {
-    initial: { alignItems: "center" },
-    hover: { alignItems: "flex-start" },
-};
-
-const titleVariants = {
-    initial: { y: 18 },
-    hover: { y: -8 },
+    initial: { y: 0 },
+    hover: { y: -10 },
 };
 
 const subtitleVariants = {
-    initial: { opacity: 0, y: 10 },
-    hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
+    initial: { opacity: 0, height: "0px" },
+    hover: { opacity: 1, height: "auto", transition: { delay: 0.1 } },
 };
 
 const chevronVariants = {
@@ -75,7 +70,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const { setIsGlobalLoading } = useAppContext();
 
     const handleCategoryClick = (categoryName: string) => {
-        setIsGlobalLoading(true, 'Loading...');
+        setIsGlobalLoading(true);
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
 
@@ -103,31 +98,32 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
                 className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-[20px] md:rounded-[30px] lg:rounded-[40px]"
             ></motion.div>
             
-            <motion.div
-                variants={textContainerVariants}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="absolute inset-x-0 bottom-2 md:bottom-5 flex flex-col px-4"
+            <div
+                className="absolute inset-x-0 bottom-5 flex flex-col items-center px-4 overflow-hidden"
             >
                 <motion.div
-                    variants={titleVariants}
+                    variants={textContainerVariants}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="flex items-center justify-center gap-1"
                 >
-                    <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
-                        {category.name}
-                    </h3>
-                    <motion.div variants={chevronVariants} style={{ overflow: 'hidden' }}>
-                        <ChevronRight className="h-6 w-6 text-white hidden md:block" />
+                    <div className="flex items-center justify-center gap-1">
+                        <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
+                            {category.name}
+                        </h3>
+                        <motion.div variants={chevronVariants} style={{ overflow: 'hidden' }}>
+                            <ChevronRight className="h-6 w-6 text-white hidden md:block" />
+                        </motion.div>
+                    </div>
+                    
+                    <motion.div
+                        variants={subtitleVariants}
+                        className="overflow-hidden"
+                    >
+                        <p className="text-white/80 font-light text-xs lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)] text-center">
+                            {category.subtitle}
+                        </p>
                     </motion.div>
                 </motion.div>
-                
-                <motion.p
-                    variants={subtitleVariants}
-                    className="text-white/80 font-light text-xs lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)] -mt-2"
-                >
-                    {category.subtitle}
-                </motion.p>
-            </motion.div>
+            </div>
         </motion.div>
     );
 };
@@ -138,7 +134,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
   const { setIsGlobalLoading } = useAppContext();
 
   const handleFlavourClick = (flavourName: string) => {
-    setIsGlobalLoading(true, 'Loading...');
+    setIsGlobalLoading(true);
     router.push(`/search?q=${encodeURIComponent(flavourName)}`);
   }
   
