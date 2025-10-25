@@ -75,7 +75,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const { setIsGlobalLoading } = useAppContext();
 
     const handleCategoryClick = (categoryName: string) => {
-        setIsGlobalLoading(true);
+        setIsGlobalLoading(true, 'Loading...');
         router.push(`/search?q=${encodeURIComponent(categoryName)}`);
     };
 
@@ -138,7 +138,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
   const { setIsGlobalLoading } = useAppContext();
 
   const handleFlavourClick = (flavourName: string) => {
-    setIsGlobalLoading(true);
+    setIsGlobalLoading(true, 'Loading...');
     router.push(`/search?q=${encodeURIComponent(flavourName)}`);
   }
   
@@ -146,13 +146,13 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
     <div 
       className="bg-[#5D2B79] h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] mx-4 md:mx-20 lg:mx-32"
     >
-        <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 lg:px-12 flex flex-col">
+        <div className="bg-white/20 h-full rounded-t-[25px] md:rounded-t-[30px] lg:rounded-t-[40px] px-4 md:px-8 xl:px-12 flex flex-col">
             <div className="flex-col overflow-y-auto no-scrollbar h-full">
                 <SectionTitle className="flex justify-center md:justify-start text-lg md:text-xl lg:text-2xl pt-4 md:pt-6 md:pl-8 mb-2 md:mb-4">
                     Explore Categories
                 </SectionTitle>
                 <motion.div 
-                    className="grid grid-cols-2 md:flex md:flex-row flex-1 justify-around items-center gap-4 md:gap-6 lg:gap-8 pt-1 pb-6 md:pb-10 px-2"
+                    className="grid grid-cols-2 md:flex md:flex-row flex-1 justify-around items-center gap-4 md:gap-6 xl:gap-8 pt-1 pb-6 md:pb-10 px-0"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
