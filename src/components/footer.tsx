@@ -31,16 +31,27 @@ export function Footer() {
     return (
         <footer className="bg-footer-gray text-white font-poppins py-4 px-8 md:rounded-t-[20px] lg:rounded-t-[40px] mx-0 lg:mx-12 md:pt-8 border-t border-white/20 md:border-t-0">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 pb-4">
-                {/* Logo */}
-                <div className="flex items-start">
+                {/* Logo and Driven By */}
+                <div className="flex flex-col items-start gap-4">
                     <Image
-                        src="/Choco Smiley Footer Logo.png"
+                        src="/Choco Smiley Logo.png"
                         alt="Choco Smiley Logo"
                         width={200}
                         height={80}
                         className="w-36 md:w-48 h-auto"
                         onDragStart={(e) => e.preventDefault()}
                     />
+                    <div className="flex flex-col items-start gap-2">
+                        <p className="text-xs text-white/70">Driven By</p>
+                        <Image
+                            src="/ruvanto_logo.png"
+                            alt="Ruvanto Logo"
+                            width={100}
+                            height={40}
+                            className="w-24 h-auto"
+                            onDragStart={(e) => e.preventDefault()}
+                        />
+                    </div>
                 </div>
 
                 {/* Contact */}

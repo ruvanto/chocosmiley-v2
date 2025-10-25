@@ -86,11 +86,11 @@ export function MobileExploreCategories({ exploreCategories, exploreFlavours }: 
     >
         <div className="bg-white/20 h-full rounded-t-[25px] px-4 flex flex-col">
             <div className="flex-col overflow-y-auto no-scrollbar h-full">
-                <SectionTitle className="flex justify-center text-lg pt-4 mb-2">
+                <SectionTitle className="flex justify-center text-lg pt-3 mb-2">
                     Explore Categories
                 </SectionTitle>
                 <div 
-                    className="grid grid-cols-2 flex-1 justify-around items-center gap-4 pt-1 pb-6 px-2"
+                    className="grid grid-cols-2 flex-1 justify-around items-center gap-4 pt-1 pb-6"
                 >
                     {(exploreCategories || []).map((category) => (
                         <CategoryCard key={category._key} category={category} />
@@ -101,7 +101,7 @@ export function MobileExploreCategories({ exploreCategories, exploreFlavours }: 
                     Explore Flavours
                 </SectionTitle>
                 <div 
-                    className="flex flex-row overflow-x-auto no-scrollbar flex-1 items-center gap-4 px-2 pb-6 pt-1"
+                    className="flex flex-row overflow-x-auto no-scrollbar flex-1 items-center gap-4 pb-6 pt-1"
                 >
                     {(exploreFlavours || []).map((flavour, index) => (
                     <div 
