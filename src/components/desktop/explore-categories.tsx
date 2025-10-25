@@ -116,9 +116,9 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
                     
                     <motion.div
                         variants={subtitleVariants}
-                        className="overflow-hidden"
+                        className=""
                     >
-                        <p className="text-white/80 font-light text-xs lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)] text-center">
+                        <p className="text-white/80 font-light text-xs lg:text-base [text-shadow:0_1px_1px_rgba(0,0,0,1)]">
                             {category.subtitle}
                         </p>
                     </motion.div>
