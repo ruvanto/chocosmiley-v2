@@ -162,7 +162,7 @@ export function ExploreCategories({ exploreCategories, exploreFlavours }: Explor
                     Explore Flavours
                 </SectionTitle>
                 <motion.div 
-                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-1 md:justify-around items-center gap-4 md:gap-6 xl:gap-8 px-0 pb-6 md:pb-10 pt-1"
+                    className="flex flex-row md:flex-wrap overflow-x-auto no-scrollbar md:overflow-visible flex-1 md:justify-around items-center gap-4 md:gap-6 xl:gap-8 px-1 pb-6 md:pb-10 pt-1"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"

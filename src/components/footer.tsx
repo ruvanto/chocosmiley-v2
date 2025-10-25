@@ -14,7 +14,7 @@ import { useAppContext } from '@/context/app-context';
 
 const FooterSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="flex flex-col gap-3">
-        <h3 className="font-bold text-white text-sm md:text-base lg:text-lg">{title}</h3>
+        <h3 className="font-poppins font-medium text-white text-sm md:text-base lg:text-lg">{title}</h3>
         {children}
     </div>
 );
@@ -29,10 +29,10 @@ export function Footer() {
     };
     
     return (
-        <footer className="bg-footer-gray text-white font-poppins py-4 px-8 md:rounded-t-[20px] lg:rounded-t-[40px] mx-0 lg:mx-12 md:pt-8 border-t border-white/20 md:border-t-0">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 pb-4">
+        <footer className="bg-[#161616] text-white font-poppins py-4 px-8 md:rounded-t-[20px] lg:rounded-t-[30px] mx-0 lg:mx-8 xl:mx-12 md:pt-10 border-t border-white/20 md:border-t-0">
+            <div className="container mx-auto flex flex-col lg:flex-row justify-between items-start gap-6 lg:gap-8 pb-6 lg:px-6">
                 {/* Logo and Driven By */}
-                <div className="flex flex-col items-start gap-4">
+                <div className="flex flex-col items-start">
                     <Image
                         src="/Choco Smiley Logo.png"
                         alt="Choco Smiley Logo"
@@ -41,16 +41,17 @@ export function Footer() {
                         className="w-36 md:w-48 h-auto"
                         onDragStart={(e) => e.preventDefault()}
                     />
-                    <div className="flex flex-col items-start gap-2">
-                        <p className="text-xs text-white/70">Driven By</p>
+                    <div className="flex flex-col items-start ml-2 gap-1">
+                        <p className="text-xs font-poppins text-white/80">Driven By</p>
+                        <a href='https://ruvanto.com'>
                         <Image
                             src="/ruvanto_logo.png"
                             alt="Ruvanto Logo"
                             width={100}
                             height={40}
-                            className="w-24 h-auto"
+                            className="w-20 md:w-24 h-auto"
                             onDragStart={(e) => e.preventDefault()}
-                        />
+                        /></a>
                     </div>
                 </div>
 
