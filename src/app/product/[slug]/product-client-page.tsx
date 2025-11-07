@@ -447,7 +447,8 @@ function ProductJsonLd({ product }: { product: SanityProduct }) {
                               quantity={cart[product.name]?.quantity || 0}
                               onAddToCart={handleAddToCart}
                               onRemoveFromCart={() => handleRemoveFromCart(product)}
-                              onBuyNow={handleBuyNow}
+                              onToggleCartPopup={handleToggleCartPopup}
+
                           />
                         </div>
                     </div>
