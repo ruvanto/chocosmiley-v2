@@ -3,6 +3,7 @@
 
 import { useState, type UIEvent, useEffect, useCallback, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import type { SanityProduct, ActiveView } from '@/types';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/desktop/header';
@@ -29,6 +30,8 @@ import { getProductSuggestions, getTrendingSuggestions, type TrendingSuggestion 
 import { SearchSuggestions } from '@/components/search-suggestions';
 import { MobileExpandedImageView } from '@/components/mobile/mobile-image-gallery';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
+import type { PortableTextBlock } from '@portabletext/react';
+
 
 interface ProductClientPageProps {
   product: SanityProduct;
@@ -242,17 +245,66 @@ export default function ProductClientPage({ product, featuredProducts }: Product
 
   const cartItemCount = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
 
+  // --- ADD THIS HELPER COMPONENT ---
+function ProductJsonLd({ product }: { product: SanityProduct }) {
+  // Helper to convert PortableText description to plain text
+  const getDescriptionAsText = (blocks: PortableTextBlock[] | undefined) => {
+    if (!blocks || !Array.isArray(blocks)) return 'Discover handcrafted chocolates from ChocoSmiley.';
+    return blocks
+      .filter(block => block._type === 'block' && block.children)
+      .map(block => block.children.map((child: any) => child.text).join(''))
+      .join(' ')
+      .substring(0, 155) + '...';
+  };
+  
+  const descriptionText = getDescriptionAsText(product.description);
+  
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.images ? product.images[0] : 'https://www.chocosmiley.com/splash-screen-logo.png',
+    "description": descriptionText,
+    "sku": product._id,
+    "brand": {
+      "@type": "Brand",
+      "name": "ChocoSmiley"
+    },
+    // This is the part you wanted to show:
+    "offers": {
+      "@type": "Offer",
+      "url": `https://www.chocosmiley.com/product/${product.slug.current}`,
+      "priceCurrency": "INR", // Assuming Indian Rupees
+      "price": product.discountedPrice,
+      "priceValidUntil": new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(), // Valid for 1 year
+      "availability": product.isOutOfStock ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      // You can add the original price (MRP) like this
+      ...(product.mrp && product.mrp > (product.discountedPrice || 0) && {
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": product.mrp,
+          "priceCurrency": "INR",
+          "valueAddedTaxIncluded": false, // Adjust if
+        }
+      })
+    }
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+    />
+  );
+}
+
   if (!isClient) {
     return <LoadingFallback />;
   }
 
   if (!product) {
-    return (
-      <div className="flex h-screen items-center justify-center bg-background">
-        {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
-        <p className="text-white">Product not found. Data could not be fetched.</p>
-      </div>
-    );
+    // This will show the not-found page if the product isn't valid
+    notFound();
   }
 
   const isCurrentProductLiked = likedProducts.some(p => p._id === product._id);
@@ -260,6 +312,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
   if (isMobile) {
     return (
       <>
+      <ProductJsonLd product={product} />
         <StaticSparkleBackground />
         <div className={cn("flex flex-col min-h-screen")}>
           <div onClick={() => setIsSearchViewOpen(true)}>
@@ -326,6 +379,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
 
   return (
     <>
+    <ProductJsonLd product={product} />
       <SparkleBackground />
       <div className={cn("flex flex-col h-screen", (isProfileOpen || isCartOpen || isEnquireOpen) && 'opacity-50' )}>
         <Header 
@@ -393,7 +447,7 @@ export default function ProductClientPage({ product, featuredProducts }: Product
                               quantity={cart[product.name]?.quantity || 0}
                               onAddToCart={handleAddToCart}
                               onRemoveFromCart={() => handleRemoveFromCart(product)}
-                              onToggleCartPopup={handleToggleCartPopup}
+                              onBuyNow={handleBuyNow}
                           />
                         </div>
                     </div>

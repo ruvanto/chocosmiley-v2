@@ -54,7 +54,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   
     const description = portableTextToString(product.description) || `Order ${product.name} from ChocoSmiley. Handcrafted, delicious chocolates.`;
-    const price = product.discountedPrice || product.mrp || 0;
   
     return {
       title: `${product.name} | ChocoSmiley`,
