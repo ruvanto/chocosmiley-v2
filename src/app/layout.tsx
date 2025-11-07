@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { AppContextProvider } from '@/context/app-context';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://chocosmiley.com'),
   title: 'Choco Smiley',
   description: 'Welcome to Choco Smiley, Handcrafted chocolates for every occasion.',
   manifest: '/manifest.json',
