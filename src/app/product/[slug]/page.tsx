@@ -4,8 +4,23 @@ import { client } from '@/lib/sanity';
 import type { SanityProduct } from '@/types';
 import { notFound } from 'next/navigation';
 import ProductClientPage from '@/app/product/[slug]/product-client-page';
+import { Metadata } from 'next';
+import type { PortableTextBlock } from '@portabletext/react';
+
 
 export const revalidate = 300; // Revalidate this page at most every 300 seconds
+
+// Helper to convert Sanity's Portable Text to plain text for meta descriptions
+function portableTextToString(blocks: PortableTextBlock[] | undefined) {
+    if (!blocks) {
+      return ""
+    }
+    return blocks
+      .filter(block => block._type === 'block' && block.children)
+      .map(block => block.children.map((child: any) => child.text).join(''))
+      .join(' ')
+      .substring(0, 155) // Truncate to a good length for descriptions
+  }
 
 async function getProduct(slug: string): Promise<SanityProduct | null> {
     const query = `*[_type == "product" && slug.current == $slug][0]{
@@ -20,11 +35,52 @@ async function getProduct(slug: string): Promise<SanityProduct | null> {
         },
         numberOfChocolates,
         bestFor,
+        description,
         "tags": tags[].value
     }`;
     const product = await client.fetch(query, { slug });
     return product;
 }
+
+// --- ADD THIS FUNCTION ---
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const product = await getProduct(params.slug);
+  
+    if (!product) {
+      return {
+        title: 'Product Not Found | ChocoSmiley',
+        description: 'The product you are looking for is not available.',
+      }
+    }
+  
+    const description = portableTextToString(product.description) || `Order ${product.name} from ChocoSmiley. Handcrafted, delicious chocolates.`;
+    const price = product.discountedPrice || product.mrp || 0;
+  
+    return {
+      title: `${product.name} | ChocoSmiley`,
+      description: description,
+      openGraph: { // For social media sharing
+        title: `${product.name} | ChocoSmiley`,
+        description: description,
+        images: [
+          {
+            url: product.images?.[0] || '/splash-screen-logo.png',
+            width: 800,
+            height: 600,
+            alt: product.name,
+          },
+        ],
+        type: 'website',
+      },
+      twitter: { // For Twitter sharing
+        card: 'summary_large_image',
+        title: `${product.name} | ChocoSmiley`,
+        description: description,
+        images: [product.images?.[0] || '/splash-screen-logo.png'],
+      },
+    };
+  }
+  // --- END OF NEW FUNCTION ---
 
 async function getFeaturedProducts(currentProduct: SanityProduct): Promise<SanityProduct[]> {
     const currentProductId = currentProduct._id;
