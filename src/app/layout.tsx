@@ -6,7 +6,7 @@ import { AppContextProvider } from '@/context/app-context';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chocosmiley.com'),
-  title: "Choco Smiley — Premium Handmade Chocolates & Personalized Gifts",
+  title: "Choco Smiley — Online Chocolate Store",
   description:
     "Choco Smiley brings you premium handmade chocolates, custom gift boxes, and personalised chocolate art for every occasion.",
   keywords: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "festivals"
   ],
   openGraph: {
-    title: "Choco Smiley — Online Chocolate Store",
+    title: "Choco Smiley — Handmade Chocolates & Personalized Gifting",
     description:
       "Explore delicious handmade chocolates, custom hampers & personalised gifts crafted with love.",
     url: "https://chocosmiley.com",
