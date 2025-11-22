@@ -173,7 +173,7 @@ export default function CartClientPage() {
             title: "Profile Incomplete",
             description: "Please complete your profile before placing an order.",
             action: (
-                <ToastAction altText="Complete Profile" onClick={() => router.push('/profile')}>
+                <ToastAction altText="Complete Profile" onClick={() => router.push('/account')}>
                     Complete Profile
                 </ToastAction>
             ),

@@ -18,7 +18,6 @@ import { useAppContext } from '@/context/app-context';
 import type { SanityProduct } from '@/types';
 import type { ActiveView } from '@/types';
 import { FlavourSelectionPopup } from '@/components/popups/flavour-selection-popup';
-import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
@@ -165,11 +164,9 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
     handleProductClick(product);
   }
 
-  if (!isClient) {
-    return (
-      <CustomScreenLoader />
-    );
-  }
+  useEffect(() => {
+    setIsGlobalLoading(false);
+  }, [setIsGlobalLoading]);
 
   return (
     <>

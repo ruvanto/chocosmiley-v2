@@ -30,12 +30,12 @@ export function ProfileCompletionBanner({ isMobile = false }: ProfileCompletionB
     };
 
     const handleCompleteProfile = () => {
-        if (pathname === '/profile') {
+        if (pathname === '/account') {
             setIsVisible(false);
             return;
         }
         setIsGlobalLoading(true);
-        router.push('/profile');
+        router.push('/account');
     };
 
     if (!shouldRender || !isVisible) {
