@@ -77,6 +77,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         description: description,
         images: [product.images?.[0] || '/splash-screen-logo.png'],
       },
+      alternates: {
+        canonical: `https://www.chocosmiley.com/product/${params.slug}`,
+      },
     };
   }
   // --- END OF NEW FUNCTION ---

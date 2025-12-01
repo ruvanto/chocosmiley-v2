@@ -5,4 +5,4 @@ Disallow: /account/
 Disallow: /cart/
 Disallow: /order-confirmed/
 
-Sitemap: https://www.chocosmiley.com/sitemap.xml
+Sitemap: https://chocosmiley.com/sitemap.xml
