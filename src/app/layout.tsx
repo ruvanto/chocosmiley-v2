@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: '/choco-smiley-logo.png'},
+      { url: '/favicon.png'},
       // 2. The HIGH-RES icon for Google Search
       { 
         url: '/choco-smiley-logo.png', 
