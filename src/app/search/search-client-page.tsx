@@ -86,20 +86,19 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
   }, [setIsGlobalLoading]);
   
   useEffect(() => {
-    const currentQueryInUrl = searchParams.get('q') ?? '';
-    const queryToUse = initialQuery || currentQueryInUrl;
+    const queryFromUrl = searchParams.get('q') ?? '';
+    const queryToUse = initialQuery || queryFromUrl;
     setQuery(queryToUse);
     setSearchInput(queryToUse);
-    
-    // If we land on a category page, the URL might not have the `q` param initially.
-    // This effect ensures the URL is updated to reflect the category search.
-    if (initialQuery && queryFromUrl !== initialQuery) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('q', initialQuery);
-        // Use replace to avoid polluting browser history
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+    // Only update the URL if we are on the main search page and the query param is missing.
+    // This prevents the URL from being changed on category pages.
+    if (initialQuery && queryFromUrl !== initialQuery && pathname === '/search') {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('q', initialQuery);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
-  }, [initialQuery, queryFromUrl, searchParams, pathname, router]);
+  }, [initialQuery, searchParams, pathname, router]);
 
   const handleFilterAction = (newParams: URLSearchParams) => {
     router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
