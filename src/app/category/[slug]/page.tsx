@@ -143,7 +143,11 @@ export default async function CategoryPage({ params }: { params: { slug: string 
             This is efficient and maintains a consistent user experience.
         */}
         <Suspense>
-            <SearchClientPage initialFilters={filters} trendingSuggestions={trendingSuggestions} />
+            <SearchClientPage 
+              initialFilters={filters} 
+              trendingSuggestions={trendingSuggestions} 
+              initialQuery={category.name}
+            />
         </Suspense>
     </>
   );

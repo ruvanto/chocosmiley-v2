@@ -1,3 +1,4 @@
+
 // src/app/search/page.tsx
 import { client } from '@/lib/sanity';
 import SearchClientPage from '@/app/search/search-client-page';
@@ -37,13 +38,18 @@ async function getFilters(): Promise<StructuredFilter[]> {
   }
 }
 
-export default async function SearchPage() {
+export default async function SearchPage({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
   const filters = await getFilters();
   const trendingSuggestions = await getTrendingSuggestions();
+  const initialQuery = searchParams?.q as string || '';
 
   return (
     <Suspense>
-        <SearchClientPage initialFilters={filters} trendingSuggestions={trendingSuggestions} />
+        <SearchClientPage 
+          initialFilters={filters} 
+          trendingSuggestions={trendingSuggestions}
+          initialQuery={initialQuery}
+        />
     </Suspense>
   );
 }

@@ -101,13 +101,13 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
             ></motion.div>
             
             <div
-                className="absolute inset-x-0 bottom-5 flex flex-col px-4 items-start"
+                className="absolute inset-x-0 bottom-5 flex flex-col items-center px-4"
             >
                 <motion.div
                     variants={textContainerVariants}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center justify-center gap-1">
                         <h3 className="text-white text-base lg:text-xl xl:text-2xl font-plex-sans font-semibold [text-shadow:0_2px_1px_rgba(0,0,0,1)] leading-tight">
                             {category.name}
                         </h3>

@@ -27,6 +27,7 @@ import CustomScreenLoader from '../../components/loaders/custom-screen-loader';
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];
   trendingSuggestions: TrendingSuggestion[];
+  initialQuery?: string;
 }
 
 const LoadingFallback = () => (
@@ -38,11 +39,11 @@ function formatCategoryTitleToKey(title: string) {
 }
 
 
-export default function SearchClientPage({ initialFilters, trendingSuggestions }: SearchClientPageProps) {
+export default function SearchClientPage({ initialFilters, trendingSuggestions, initialQuery = '' }: SearchClientPageProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
+  const queryFromUrl = searchParams.get('q') || '';
   const sortQuery = searchParams.get('sort') || 'featured';
   
   const { 
@@ -61,7 +62,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
   const isMobile = useIsMobile();
   const [isSearchViewOpen, setIsSearchViewOpen] = useState(false);
   
-  const [searchInput, setSearchInput] = useState(query);
+  const [searchInput, setSearchInput] = useState(initialQuery || queryFromUrl);
   const [isContentScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -81,8 +82,18 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions }
   }, [setIsGlobalLoading]);
   
   useEffect(() => {
-    setSearchInput(query);
-  }, [query]);
+    const newQuery = initialQuery || queryFromUrl;
+    if (newQuery !== searchInput) {
+      setSearchInput(newQuery);
+      // Update the URL if we came from a category page to sync the query param
+      if (initialQuery && !queryFromUrl) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('q', initialQuery);
+        // Use replace to avoid adding a new entry to the history stack
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      }
+    }
+  }, [initialQuery, queryFromUrl]);
 
   const handleFilterAction = (newParams: URLSearchParams) => {
     router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
