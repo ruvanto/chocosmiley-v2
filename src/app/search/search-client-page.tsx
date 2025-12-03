@@ -43,7 +43,11 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const queryFromUrl = searchParams.get('q') || '';
+  
+  // Prioritize URL query, fallback to initialQuery, then empty
+  const queryFromUrl = searchParams.get('q');
+  const [query, setQuery] = useState(queryFromUrl ?? initialQuery);
+
   const sortQuery = searchParams.get('sort') || 'featured';
   
   const { 
@@ -62,7 +66,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
   const isMobile = useIsMobile();
   const [isSearchViewOpen, setIsSearchViewOpen] = useState(false);
   
-  const [searchInput, setSearchInput] = useState(initialQuery || queryFromUrl);
+  const [searchInput, setSearchInput] = useState(query);
   const [isContentScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -82,18 +86,20 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
   }, [setIsGlobalLoading]);
   
   useEffect(() => {
-    const newQuery = initialQuery || queryFromUrl;
-    if (newQuery !== searchInput) {
-      setSearchInput(newQuery);
-      // Update the URL if we came from a category page to sync the query param
-      if (initialQuery && !queryFromUrl) {
+    const currentQueryInUrl = searchParams.get('q') ?? '';
+    const queryToUse = initialQuery || currentQueryInUrl;
+    setQuery(queryToUse);
+    setSearchInput(queryToUse);
+    
+    // If we land on a category page, the URL might not have the `q` param initially.
+    // This effect ensures the URL is updated to reflect the category search.
+    if (initialQuery && queryFromUrl !== initialQuery) {
         const params = new URLSearchParams(searchParams.toString());
         params.set('q', initialQuery);
-        // Use replace to avoid adding a new entry to the history stack
+        // Use replace to avoid polluting browser history
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-      }
     }
-  }, [initialQuery, queryFromUrl]);
+  }, [initialQuery, queryFromUrl, searchParams, pathname, router]);
 
   const handleFilterAction = (newParams: URLSearchParams) => {
     router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
@@ -343,6 +349,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
         )}>
           
            <SearchView
+             query={query}
              filters={initialFilters}
              isMobile={isMobile}
              onFilterChange={handleFilterChange}

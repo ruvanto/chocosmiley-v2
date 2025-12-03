@@ -8,6 +8,7 @@ import type { StructuredFilter } from '@/types';
 import { ProductList } from './ProductListView';
 
 interface SearchViewProps {
+  query: string;
   filters: StructuredFilter[];
   isMobile: boolean | undefined;
   onFilterChange: (categoryKey: string, optionTitle: string, checked: boolean) => void;
@@ -20,6 +21,7 @@ interface SearchViewProps {
 }
 
 export function SearchView({
+  query,
   filters,
   isMobile,
   onFilterChange,
@@ -43,6 +45,7 @@ export function SearchView({
       </div>
       <div className={cn("h-full flex-grow md:ml-6 lg:ml-8 md:mr-6 lg:mr-8 relative flex flex-col min-h-0 w-full md:w-auto", isMobile ? "px-0" : "px-4 md:px-0")}>
         <ProductList
+          query={query}
           isMobile={isMobile}
           filters={filters}
           activeFilters={activeFilters}

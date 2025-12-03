@@ -34,6 +34,7 @@ const sortOptions = [
 ];
 
 interface ProductListProps {
+  query: string;
   isMobile: boolean | undefined;
   filters: StructuredFilter[];
   activeFilters: { type: string; value: string; label: string }[];
@@ -46,6 +47,7 @@ interface ProductListProps {
 }
 
 export function ProductList({
+  query,
   isMobile,
   filters,
   activeFilters,
@@ -66,8 +68,6 @@ export function ProductList({
   const searchParams = useSearchParams();
 
   const { cart, updateCart, setFlavourSelection, setIsGlobalLoading } = useAppContext();
-  
-  const query = searchParams.get('q') || '';
   
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
   const [isSortSheetOpen, setIsSortSheetOpen] = useState(false);
