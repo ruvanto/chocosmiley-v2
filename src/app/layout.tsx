@@ -5,10 +5,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { AppContextProvider } from '@/context/app-context';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://chocosmiley.com'),
-  title: "Choco Smiley — Online Chocolate Store",
+  metadataBase: new URL('https://www.chocosmiley.com'),
+  title: "Choco Smiley - Premium Handmade Chocolates & Custom Gifts Online",
   description:
-    "Choco Smiley brings you premium handmade chocolates, custom gift boxes, and personalised chocolate art for every occasion.",
+    "Indulge in Choco Smiley's finest handmade, personalized chocolates & gift boxes. Perfect for birthdays, weddings, and corporate events. Shop Now!",
   keywords: [
     "Choco Smiley",
     "homemade chocolates",
@@ -28,10 +28,10 @@ export const metadata: Metadata = {
     "festivals"
   ],
   openGraph: {
-    title: "Choco Smiley — Handmade Chocolates & Personalized Gifting",
+    title: "Choco Smiley - Premium Handmade Chocolates & Custom Gifts Online",
     description:
       "Explore delicious handmade chocolates, custom hampers & personalised gifts crafted with love.",
-    url: "https://chocosmiley.com",
+    url: "https://www.chocosmiley.com",
     siteName: "Choco Smiley",
     images: [
       {
@@ -44,13 +44,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Choco Smiley — Handmade Chocolates & Personalized Gifting",
+    title: "Choco Smiley - Premium Handmade Chocolates & Custom Gifts Online",
     description:
       "Discover premium chocolates & custom gift hampers handcrafted with love.",
     images: ["/CS preview.png"],
   },
   alternates: {
-    canonical: "https://chocosmiley.com",
+    canonical: "https://www.chocosmiley.com",
   },
 
   icons: {
@@ -66,14 +66,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <head>
-        <meta charSet="UTF-8" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;700&family=IBM+Plex+Sans:wght@400;700&family=Inter:wght@400;700&family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-        <meta name="theme-color" content="#5D2B79" />
-      </head> */}
       <body className="font-body antialiased overflow-y-auto no-scrollbar">
           <AppContextProvider>
             {children}

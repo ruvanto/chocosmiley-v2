@@ -11,7 +11,7 @@ type SanitySlug = {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://chocosmiley.com';
+  const baseUrl = 'https://www.chocosmiley.com';
 
   // Get all product slugs from Sanity
   const productSlugs: SanitySlug[] = await client.fetch(`*[_type == "product" && defined(slug.current)]{
