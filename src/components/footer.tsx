@@ -34,14 +34,14 @@ export function Footer() {
                 {/* Logo and Driven By */}
                 <div className="flex flex-col items-start">
                     <Image
-                        src="/Choco Smiley Logo.png"
+                        src="/homepage-logo.png"
                         alt="Choco Smiley Logo"
                         width={200}
                         height={80}
                         className="w-36 md:w-48 h-auto"
                         onDragStart={(e) => e.preventDefault()}
                     />
-                    <div className="flex flex-col items-start ml-2 gap-1">
+                    {/* <div className="flex flex-col items-start ml-2 gap-1">
                         <p className="text-xs font-poppins text-white/80">Driven By</p>
                         <a href='https://ruvanto.com'>
                         <Image
@@ -52,7 +52,7 @@ export function Footer() {
                             className="w-20 md:w-24 h-auto"
                             onDragStart={(e) => e.preventDefault()}
                         /></a>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Contact */}

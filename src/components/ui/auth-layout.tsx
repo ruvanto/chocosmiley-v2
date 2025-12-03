@@ -7,7 +7,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         <div className="bg-custom-purple-dark text-white text-center relative">
             <div className="pt-4 pb-0 md:pt-8 md:pb-4">
                 <Image 
-                    src="/Choco Smiley Logo.png" 
+                    src="/homepage-logo.png" 
                     alt="Choco Smiley Logo" 
                     width={180} 
                     height={70}

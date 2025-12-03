@@ -16,7 +16,7 @@ export function Logo({ onLogoClick, isEnquireOpen }: LogoProps) {
         <div className={cn("flex items-center gap-2 md:gap-4 lg:gap-8 transition-opacity duration-100")}>
             <Link href="/" className="flex items-center gap-2" onClick={onLogoClick}>
                 <Image 
-                    src="/Choco Smiley Logo.png" 
+                    src="/homepage-logo.png" 
                     alt="Choco Smiley Logo" 
                     width={250} 
                     height={100}

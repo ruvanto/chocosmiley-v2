@@ -54,7 +54,19 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: '/choco-smiley-logo.png'},
+      // 2. The HIGH-RES icon for Google Search
+      { 
+        url: '/choco-smiley-logo.png', 
+        type: 'image/png', 
+        sizes: '512x512'
+      },
+    ],
+    // 3. For iPhone/iPad Home Screen
+    apple: [
+      { url: '/choco-smiley-logo.png', sizes: '180x180', type: 'image/png' },
+    ]
   },
   manifest: '/manifest.json',
 };
@@ -64,12 +76,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // This tells Google: "We are a real company, and THIS is our official logo."
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    'name': 'Choco Smiley',
+    'url': 'https://www.chocosmiley.com',
+    'logo': 'https://www.chocosmiley.com/choco-smiley-logo.png',
+    'sameAs': [
+      'https://www.instagram.com/chocosmileygifts/',
+      'https://www.facebook.com/chocosmileychocolates'
+    ],
+    'contactPoint': {
+      '@type': 'ContactPoint',
+      'telephone': '+91-7411414007',
+      'contactType': 'customer service'
+    }
+  };
+
   return (
     <html lang="en">
       <body className="font-body antialiased overflow-y-auto no-scrollbar">
-          <AppContextProvider>
-            {children}
-          </AppContextProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        
+        <AppContextProvider>
+          {children}
+        </AppContextProvider>
         <Toaster />
       </body>
     </html>

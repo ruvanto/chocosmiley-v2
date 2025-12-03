@@ -199,7 +199,7 @@ export function UserActions({
                            <SheetDescription className="sr-only">Main site navigation and options.</SheetDescription>
                             <Link href="/">
                                 <Image
-                                  src="/Choco Smiley Logo.png"
+                                  src="/homepage-logo.png"
                                   alt="Choco Smiley Logo"
                                   width={250}
                                   height={100}
