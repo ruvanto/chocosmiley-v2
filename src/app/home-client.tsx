@@ -25,8 +25,8 @@ import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
 
 interface HomepageContent {
-  exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string }[];
-  exploreFlavours: { _key: string; name: string; subtitle: string; imageUrl: string }[];
+  exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
+  exploreFlavours: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
 }
 
 interface HomeClientProps extends HomepageContent {

@@ -14,6 +14,7 @@ interface ExploreItem {
   name: string;
   subtitle: string;
   imageUrl: string;
+  slug: { current: string };
 }
 
 interface ExploreCategoriesProps {
@@ -25,16 +26,17 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     const router = useRouter();
     const { setIsGlobalLoading } = useAppContext();
 
-    const handleCategoryClick = (categoryName: string) => {
+    const handleCategoryClick = (slug: string) => {
+        if (!slug) return;
         setIsGlobalLoading(true);
-        router.push(`/search?q=${encodeURIComponent(categoryName)}`);
+        router.push(`/category/${slug}`);
     };
 
     return (
         <div
             key={category._key}
             className="w-full aspect-[5/6] relative cursor-pointer"
-            onClick={() => handleCategoryClick(category.name)}
+            onClick={() => handleCategoryClick(category.slug.current)}
         >
             <Image
                 src={category.imageUrl}

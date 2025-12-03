@@ -9,8 +9,8 @@ import { getTrendingSuggestions } from './actions';
 export const revalidate = 300; // Revalidate this page at most every 300 seconds
 
 interface HomepageContent {
-  exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string }[];
-  exploreFlavours: { _key: string; name: string; subtitle: string; imageUrl: string }[];
+  exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
+  exploreFlavours: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
 }
 
 async function getHomepageContent(): Promise<HomepageContent> {
@@ -19,13 +19,15 @@ async function getHomepageContent(): Promise<HomepageContent> {
             _key,
             name,
             subtitle,
-            "imageUrl": image.asset->url
+            "imageUrl": image.asset->url,
+            slug
         },
         exploreFlavours[]{
             _key,
             name,
             subtitle,
-            "imageUrl": image.asset->url
+            "imageUrl": image.asset->url,
+            slug
         }
     }`;
     const content = await client.fetch(query);
