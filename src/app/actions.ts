@@ -3,12 +3,21 @@
 
 import { client } from '@/lib/sanity';
 import type { SanityProduct } from '@/types';
+import nodemailer from 'nodemailer';
+import { OrderItem } from '@/types';
+import { ProfileInfo } from '@/context/app-context';
 
 export interface TrendingSuggestion {
   _id: string;
   title: string;
   searchQuery: string;
 }
+
+type EmailOrderDetails = {
+  orderId: string;
+  total: number;
+  items: OrderItem[];
+};
 
 export async function getTrendingSuggestions(): Promise<TrendingSuggestion[]> {
   try {
@@ -94,5 +103,74 @@ export async function getProductSuggestions(query: string): Promise<SanityProduc
   } catch (err) {
     console.error('Failed to fetch suggestions:', err);
     return [];
+  }
+}
+
+export async function sendAdminOrderNotification(
+  orderDetails: EmailOrderDetails,
+  customerDetails: ProfileInfo
+) {
+  // 1. Setup the transporter with your Gmail credentials
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
+
+  // 2. Format the list of items for the email
+  const itemsListHtml = orderDetails.items
+    .map(
+      (item) =>
+        `<li>
+          <strong>${item.name}</strong> x ${item.quantity} 
+          ${item.flavours && item.flavours.length > 0 ? `(${item.flavours.map(f => f.name).join(', ')})` : ''}
+          - ₹${item.finalSubtotal}
+        </li>`
+    )
+    .join('');
+
+  // 3. Configure the email options
+  const mailOptions = {
+    from: `"ChocoSmiley App" <${process.env.GMAIL_USER}>`,
+    to: 'venkattiwari42@gmail.com', // Sending to ADMIN
+    subject: `🔔 New Order! ₹${orderDetails.total} from ${customerDetails.name}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h1 style="color: #d2691e;">New Order Received!</h1>
+        <p>You have received a new order with ID: <strong>${orderDetails.orderId}</strong></p>
+        
+        <hr />
+        
+        <h3>👤 Customer Details</h3>
+        <p>
+          <strong>Name:</strong> ${customerDetails.name}<br/>
+          <strong>Phone:</strong> ${customerDetails.phone}<br/>
+          <strong>Address:</strong> ${customerDetails.address}<br/>
+          <strong>Email:</strong> ${customerDetails.email}
+        </p>
+
+        <hr />
+
+        <h3>🍫 Order Summary</h3>
+        <ul>${itemsListHtml}</ul>
+        
+        <h2 style="text-align: right;">Total: ₹${orderDetails.total}</h2>
+        
+        <hr />
+        <p style="font-size: 12px; color: #888;">This is an automated notification from your ChocoSmiley App.</p>
+      </div>
+    `,
+  };
+
+  // 4. Send the email
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Admin notification email sent successfully');
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to send admin notification email:', error);
+    return { success: false, error };
   }
 }
