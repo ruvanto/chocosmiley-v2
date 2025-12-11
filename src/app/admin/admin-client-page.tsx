@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { AdminNotificationSubscriber } from '@/components/notification-subscriber';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/desktop/header';
@@ -273,6 +274,7 @@ export default function AdminClientPage() {
                       </SheetContent>
                     </Sheet>
               </div>
+              <AdminNotificationSubscriber />
           </div>
 
           <main className={cn(

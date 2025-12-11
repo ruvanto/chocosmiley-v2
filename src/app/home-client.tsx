@@ -2,8 +2,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, type UIEvent, useRef } from 'react';
-import { getMessaging, getToken, onMessage, type Messaging } from "firebase/messaging";
-import { getClientApp } from "@/lib/firebase";
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Header } from "@/components/desktop/header";
@@ -56,15 +54,6 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const [cartMessage] = useState('');
   const [isCartButtonExpanded] = useState(false);
   const handleToggleCartPopup = () => setIsCartOpen(p => !p);
-
-  // ----- Service Worker registration -----
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/firebase-messaging-sw.js")
-        .then(() => console.log("SW registered"))
-        .catch(err => console.error("SW registration failed", err));
-    }
-  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -141,74 +130,6 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const handleSuggestionClick = (product: SanityProduct) => { setShowSuggestions(false); handleProductClick(product); }
 
   useEffect(() => setIsGlobalLoading(false), [setIsGlobalLoading]);
-
-  async function requestPermission() {
-    console.log("Requesting notification permission...");
-  
-    const permission = await Notification.requestPermission();
-    if (permission !== "granted") {
-      console.warn("Notification permission not granted");
-      return;
-    }
-  
-    // Wait for the service worker to be active
-    const registration = await navigator.serviceWorker.ready;
-  
-    // Get the Firebase app
-    const app = getClientApp();
-    if (!app) {
-      console.warn("Firebase app not initialized");
-      return;
-    }
-  
-    // Get the Messaging instance (NOT a Promise)
-    const messaging: Messaging = getMessaging(app);
-  
-    try {
-      const token = await getToken(messaging, {
-        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        serviceWorkerRegistration: registration,
-      });
-  
-      console.log("FCM Token:", token);
-  
-      await fetch("/api/saveToken", {
-        method: "POST",
-        body: JSON.stringify({ email: "venkattiwari42@gmail.com", token }),
-      });
-  
-      localStorage.setItem("fcmTokenSaved", "1");
-    } catch (err) {
-      console.error("Error getting FCM token:", err);
-    }
-  }
-  
-
-  useEffect(() => {
-    const app = getClientApp();
-    if (!app) return;
-  
-    const messaging = getMessaging(app);
-  
-    const unsubscribe = onMessage(messaging, (payload) => {
-      console.log("Foreground message received:", payload);
-  
-      toast({
-        title: payload.notification?.title,
-        description: payload.notification?.body,
-      });
-    });
-  
-    return () => unsubscribe();
-  }, []);
-  
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!localStorage.getItem("fcmTokenSaved")) {
-      requestPermission();
-    }
-  }, []);
 
   return (
     <>

@@ -6,6 +6,7 @@ import type { SanityProduct } from '@/types';
 import nodemailer from 'nodemailer';
 import { OrderItem } from '@/types';
 import { ProfileInfo } from '@/context/app-context';
+import { adminFirestore, adminMessaging } from '@/lib/firebase-admin';
 
 export interface TrendingSuggestion {
   _id: string;
@@ -135,10 +136,10 @@ export async function sendAdminOrderNotification(
   const mailOptions = {
     from: `"ChocoSmiley App" <${process.env.GMAIL_USER}>`,
     to: 'venkattiwari42@gmail.com', // Sending to ADMIN
-    subject: `🔔 New Order! ₹${orderDetails.total} from ${customerDetails.name}`,
+    subject: `🔔 New Order! ₹${orderDetails.total.toFixed(2)} from ${customerDetails.name}`,
     html: `
       <div style="font-family: Arial, sans-serif; color: #333;">
-        <h1 style="color: #d2691e;">New Order Received!</h1>
+        <h1 style="color: #5C2881;">New Order Received!</h1>
         <p>You have received a new order with ID: <strong>${orderDetails.orderId}</strong></p>
         
         <hr />
@@ -155,11 +156,12 @@ export async function sendAdminOrderNotification(
 
         <h3>🍫 Order Summary</h3>
         <ul>${itemsListHtml}</ul>
+        <a href="https://www.chocosmiley.com/admin">Visit Choco Smiley for more details</a>
         
-        <h2 style="text-align: right;">Total: ₹${orderDetails.total}</h2>
+        <h2 style="text-align: left;">Total: ₹${orderDetails.total.toFixed(2)}</h2>
         
         <hr />
-        <p style="font-size: 12px; color: #888;">This is an automated notification from your ChocoSmiley App.</p>
+        <p style="font-size: 12px; color: #888;">This is an automated notification from your Choco Smiley Site.</p>
       </div>
     `,
   };
@@ -172,5 +174,39 @@ export async function sendAdminOrderNotification(
   } catch (error) {
     console.error('Failed to send admin notification email:', error);
     return { success: false, error };
+  }
+}
+
+export async function sendAdminPushNotification(orderId: string, amount: number, customerName: string) {
+  try {
+    // 1. Fetch the stored Admin Token
+    const adminDoc = await adminFirestore.collection('notifications').doc('admin').get();
+    
+    if (!adminDoc.exists || !adminDoc.data()?.token) {
+      console.log('No admin token found for push notification');
+      return { success: false };
+    }
+
+    const token = adminDoc.data()?.token;
+    const formattedAmount = amount.toFixed(2);
+
+    // 2. Send the message
+    await adminMessaging.send({
+      token: token,
+      notification: {
+        title: '💰 New Order Received!',
+        body: `Order ${orderId} by ${customerName} for ₹${formattedAmount}`,
+      },
+      webpush: {
+        fcmOptions: {
+          link: `https://chocosmiley.com/admin?orderId=${orderId}` // Deep link to admin panel
+        }
+      }
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error('Push notification failed:', error);
+    return { success: false, error }; // Don't crash the app if notification fails
   }
 }

@@ -33,6 +33,7 @@ import type { User } from 'firebase/auth';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import {ProgressBarComponent} from '@/components/loaders/nav-loader';
 import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loaders/loading-fallback';
+import { sendAdminOrderNotification, sendAdminPushNotification } from '@/app/actions';
 
 
 export type CartItem = {
@@ -480,7 +481,27 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         };
 
         const newOrderId = await addUserOrder(user.uid, newOrderData);
-        return newOrderId;
+        // --- NEW CODE START: Send Notification ---
+        if (newOrderId) {
+          // We don't await this so the user UI isn't blocked by email sending
+          sendAdminOrderNotification(
+              { 
+                  orderId: newOrderId, // You might want to fetch the readable "customOrderId" if preferred, but ID is fine for link
+                  total: total > 0 ? total : 0, 
+                  items: orderItems 
+              },
+              profileInfo
+          );
+
+          sendAdminPushNotification(
+            newOrderId,
+            total > 0 ? total : 0, 
+            profileInfo.name || 'Guest'
+        );
+      }
+      // --- NEW CODE END ---
+
+      return newOrderId;
         
     } catch (error) {
         console.error("Error creating order:", error);
@@ -491,7 +512,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         });
         return null;
     }
-  }, [user, toast]);
+  }, [user, toast, profileInfo]);
 
 
   const clearOrders = useCallback(() => {
