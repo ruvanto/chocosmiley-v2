@@ -1,8 +1,9 @@
-
 // @/app/home-client.tsx
 'use client';
 
 import { useState, useEffect, useCallback, type UIEvent, useRef } from 'react';
+import { getMessaging, getToken, onMessage, type Messaging } from "firebase/messaging";
+import { getClientApp } from "@/lib/firebase";
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Header } from "@/components/desktop/header";
@@ -30,10 +31,8 @@ interface HomepageContent {
 }
 
 interface HomeClientProps extends HomepageContent {
- 
   trendingSuggestions: TrendingSuggestion[];
 }
-
 
 export default function HomeClient({ exploreCategories, exploreFlavours, trendingSuggestions }: HomeClientProps) {
   const { cart, updateCart, flavourSelection, setFlavourSelection, setIsGlobalLoading } = useAppContext();
@@ -45,7 +44,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const [searchInput, setSearchInput] = useState("");
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
-  
+
   const [productSuggestions, setProductSuggestions] = useState<SanityProduct[]>([]);
   const [isSuggestionsLoading, setIsSuggestionsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -58,27 +57,28 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const [isCartButtonExpanded] = useState(false);
   const handleToggleCartPopup = () => setIsCartOpen(p => !p);
 
+  // ----- Service Worker registration -----
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/firebase-messaging-sw.js")
+        .then(() => console.log("SW registered"))
+        .catch(err => console.error("SW registration failed", err));
+    }
+  }, []);
+
   useEffect(() => {
     setIsClient(true);
     setIsGlobalLoading(false);
   }, [setIsGlobalLoading]);
 
   useEffect(() => {
-    if (isProfileOpen) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    }
-    return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
+    if (isProfileOpen) document.body.classList.add('overflow-hidden');
+    else document.body.classList.remove('overflow-hidden');
+    return () => document.body.classList.remove('overflow-hidden');
   }, [isProfileOpen]);
 
   const fetchProductSuggestions = useCallback(async (query: string) => {
-    if (query.length < 2) {
-      setProductSuggestions([]);
-      return;
-    }
+    if (query.length < 2) { setProductSuggestions([]); return; }
     setIsSuggestionsLoading(true);
     const result = await getProductSuggestions(query);
     setProductSuggestions(result);
@@ -87,36 +87,20 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      if (showSuggestions) {
-        fetchProductSuggestions(searchInput);
-      }
+      if (showSuggestions) fetchProductSuggestions(searchInput);
     }, 300);
-
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [searchInput, showSuggestions, fetchProductSuggestions]);
 
-  const handleSearchInputChange = (value: string) => {
-    setSearchInput(value);
-  };
-  
-  const handleSearchFocus = () => {
-    setShowSuggestions(true);
-  };
+  const handleSearchInputChange = (value: string) => setSearchInput(value);
+  const handleSearchFocus = () => setShowSuggestions(true);
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>, currentSearchInput: string) => {
     e.preventDefault();
-    
     if (!currentSearchInput.trim()) {
-      toast({
-        title: "Empty Field",
-        description: "Search field cannot be empty.",
-        variant: "destructive",
-      });
+      toast({ title: "Empty Field", description: "Search field cannot be empty.", variant: "destructive" });
       return;
     }
-    
     setIsGlobalLoading(true);
     router.push(`/search?q=${encodeURIComponent(currentSearchInput.trim())}`);
   };
@@ -128,21 +112,20 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
     router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
   };
 
-
   const handleNavigation = (view: ActiveView) => {
     const newPath = view === 'home' ? '/' : `/${view}`;
     if (pathname === newPath) return;
     setIsGlobalLoading(true);
     router.push(newPath);
   };
-  
+
   const handleHeaderNavigate = (view: 'about' | 'faq' | 'admin' | 'admin-analytics') => {
     const newPath = `/${view}`;
     if (pathname === newPath) return;
     setIsGlobalLoading(true);
     router.push(newPath);
   };
-  
+
   const handleProductClick = (product: SanityProduct) => {
     setIsGlobalLoading(true);
     router.push(`/product/${product.slug.current}`);
@@ -154,35 +137,87 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   };
 
   const cartItemCount = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
+  const handleScroll = (event: UIEvent<HTMLDivElement>) => setIsContentScrolled(event.currentTarget.scrollTop > 0);
+  const handleSuggestionClick = (product: SanityProduct) => { setShowSuggestions(false); handleProductClick(product); }
+
+  useEffect(() => setIsGlobalLoading(false), [setIsGlobalLoading]);
+
+  async function requestPermission() {
+    console.log("Requesting notification permission...");
   
-  const handleScroll = (event: UIEvent<HTMLDivElement>) => {
-    setIsContentScrolled(event.currentTarget.scrollTop > 0);
-  };
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      console.warn("Notification permission not granted");
+      return;
+    }
   
-  const handleSuggestionClick = (product: SanityProduct) => {
-    setShowSuggestions(false);
-    handleProductClick(product);
+    // Wait for the service worker to be active
+    const registration = await navigator.serviceWorker.ready;
+  
+    // Get the Firebase app
+    const app = getClientApp();
+    if (!app) {
+      console.warn("Firebase app not initialized");
+      return;
+    }
+  
+    // Get the Messaging instance (NOT a Promise)
+    const messaging: Messaging = getMessaging(app);
+  
+    try {
+      const token = await getToken(messaging, {
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+        serviceWorkerRegistration: registration,
+      });
+  
+      console.log("FCM Token:", token);
+  
+      await fetch("/api/saveToken", {
+        method: "POST",
+        body: JSON.stringify({ email: "venkattiwari42@gmail.com", token }),
+      });
+  
+      localStorage.setItem("fcmTokenSaved", "1");
+    } catch (err) {
+      console.error("Error getting FCM token:", err);
+    }
   }
+  
 
   useEffect(() => {
-    setIsGlobalLoading(false);
-  }, [setIsGlobalLoading]);
+    const app = getClientApp();
+    if (!app) return;
+  
+    const messaging = getMessaging(app);
+  
+    const unsubscribe = onMessage(messaging, (payload) => {
+      console.log("Foreground message received:", payload);
+  
+      toast({
+        title: payload.notification?.title,
+        description: payload.notification?.body,
+      });
+    });
+  
+    return () => unsubscribe();
+  }, []);
+  
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!localStorage.getItem("fcmTokenSaved")) {
+      requestPermission();
+    }
+  }, []);
 
   return (
     <>
       {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
-      <div className={cn(
-        "flex flex-col h-screen",
-        (isProfileOpen || flavourSelection.isOpen || isEnquireOpen) ? 'opacity-50' : ''
-      )}>
+      <div className={cn("flex flex-col h-screen", (isProfileOpen || flavourSelection.isOpen || isEnquireOpen) ? 'opacity-50' : '')}>
         <Header
           onProfileOpenChange={setIsProfileOpen}
           isContentScrolled={!!isMobile}
-          onReset={() => {
-            if (pathname === '/') return;
-            setIsGlobalLoading(true);
-            router.push('/');
-          }}
+          onReset={() => { if (pathname !== '/') { setIsGlobalLoading(true); router.push('/'); } }}
           onNavigate={handleHeaderNavigate}
           activeView={'home'}
           isEnquireOpen={isEnquireOpen}
@@ -224,7 +259,6 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
               <ExploreCategories exploreCategories={exploreCategories} exploreFlavours={exploreFlavours} />
             )}
           </div>
-          
         </main>
         <BottomNavbar activeView={'home'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
       </div>
@@ -236,7 +270,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
         onToggleCartPopup={handleToggleCartPopup}
         isEnquireOpen={isEnquireOpen}
       />
-      {isMobile === false && (
+      {!isMobile && (
         <FloatingCartButton
           activeView={'home'}
           isCartOpen={isCartOpen}
@@ -247,7 +281,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
           cart={cart}
         />
       )}
-       <FlavourSelectionPopup
+      <FlavourSelectionPopup
         open={flavourSelection.isOpen}
         onOpenChange={(isOpen) => setFlavourSelection({ product: null, isOpen })}
         onConfirm={handleFlavourConfirm}
