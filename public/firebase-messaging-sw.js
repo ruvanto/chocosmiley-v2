@@ -19,7 +19,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/icons/icon.png', // Or any icon path you have in public/
+    icon: '/choco-smiley-logo.png', // Or any icon path you have in public/
     data: payload.data
   };
 
