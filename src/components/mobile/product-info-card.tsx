@@ -114,7 +114,10 @@ export function ProductInfoCard({ product, isLiked, onLikeToggle }: ProductInfoC
                 <div className={cn("flex flex-col gap-3 text-white")}>
 
                     <DetailSection title="Best For" isMobile={true}>
-                        {product.bestFor}
+                    {product.bestFor && (
+  <PortableText value={product.bestFor} components={customComponents} />
+)}
+
                     </DetailSection>
 
                     <Separator className="bg-white/20" />
@@ -126,7 +129,7 @@ export function ProductInfoCard({ product, isLiked, onLikeToggle }: ProductInfoC
                     <Separator className="bg-white/20" />
         
                     <DetailSection title="Ingredients" isMobile={true}>
-                        {product.ingredients && <p>{product.ingredients}</p>}
+                        {product.ingredients && <PortableText value={product.ingredients} components={customComponents} />}
                     </DetailSection>
         
                     <Separator className="bg-white/20" />

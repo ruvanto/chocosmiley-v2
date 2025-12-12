@@ -101,12 +101,12 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
 
             {/* Ingredients */}
             {product.ingredients && (
-                <div>
-                     <p className={cn("font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
-                        <span className="font-medium">Ingredients:</span> {product.ingredients}
-                    </p>
-                </div>
-            )}
+  <div className={cn("font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
+    <span className="font-medium">Ingredients:</span>
+    <PortableText value={product.ingredients} components={customComponents} />
+  </div>
+)}
+
             
             {/* Allergen Alert */}
             {product.allergenAlert && (
