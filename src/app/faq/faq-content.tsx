@@ -1,4 +1,3 @@
-
 // @/components/faq-content.tsx
 'use client';
 import { PortableText } from '@portabletext/react';
