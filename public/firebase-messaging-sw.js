@@ -20,7 +20,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.notification.body,
     icon: '/choco-smiley-logo.png', // Or any icon path you have in public/
-    data: payload.data
+    data: payload.notification
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
