@@ -33,7 +33,7 @@ import type { User } from 'firebase/auth';
 import type { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import {ProgressBarComponent} from '@/components/loaders/nav-loader';
 import { ProcessingOrderFallback, AuthLoadingFallback } from '@/components/loaders/loading-fallback';
-import { sendAdminOrderNotification, sendAdminPushNotification } from '@/app/actions';
+import { sendAdminPushNotification } from '@/app/actions';
 
 
 export type CartItem = {
@@ -484,14 +484,14 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         // --- NEW CODE START: Send Notification ---
         if (newOrderId) {
           // We don't await this so the user UI isn't blocked by email sending
-          sendAdminOrderNotification(
-              { 
-                  orderId: customOrderId,
-                  total: total > 0 ? total : 0, 
-                  items: orderItems 
-              },
-              profileInfo
-          );
+          // sendAdminOrderNotification(
+          //     { 
+          //         orderId: customOrderId,
+          //         total: total > 0 ? total : 0, 
+          //         items: orderItems 
+          //     },
+          //     profileInfo
+          // );
 
           sendAdminPushNotification(
             customOrderId,

@@ -107,75 +107,75 @@ export async function getProductSuggestions(query: string): Promise<SanityProduc
   }
 }
 
-export async function sendAdminOrderNotification(
-  orderDetails: EmailOrderDetails,
-  customerDetails: ProfileInfo
-) {
-  // 1. Setup the transporter with your Gmail credentials
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD,
-    },
-  });
+// export async function sendAdminOrderNotification(
+//   orderDetails: EmailOrderDetails,
+//   customerDetails: ProfileInfo
+// ) {
+//   // 1. Setup the transporter with your Gmail credentials
+//   const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.GMAIL_USER,
+//       pass: process.env.GMAIL_APP_PASSWORD,
+//     },
+//   });
 
-  // 2. Format the list of items for the email
-  const itemsListHtml = orderDetails.items
-    .map(
-      (item) =>
-        `<li>
-          <strong>${item.name}</strong> x ${item.quantity} 
-          ${item.flavours && item.flavours.length > 0 ? `(${item.flavours.map(f => f.name).join(', ')})` : ''}
-          - ₹${item.finalSubtotal}
-        </li>`
-    )
-    .join('');
+//   // 2. Format the list of items for the email
+//   const itemsListHtml = orderDetails.items
+//     .map(
+//       (item) =>
+//         `<li>
+//           <strong>${item.name}</strong> x ${item.quantity} 
+//           ${item.flavours && item.flavours.length > 0 ? `(${item.flavours.map(f => f.name).join(', ')})` : ''}
+//           - ₹${item.finalSubtotal}
+//         </li>`
+//     )
+//     .join('');
 
-  // 3. Configure the email options
-  const mailOptions = {
-    from: `"ChocoSmiley App" <${process.env.GMAIL_USER}>`,
-    to: 'venkattiwari42@gmail.com', // Sending to ADMIN
-    subject: `🔔 New Order! ₹${orderDetails.total.toFixed(2)} from ${customerDetails.name}`,
-    html: `
-      <div style="font-family: Arial, sans-serif; color: #333;">
-        <h1 style="color: #5C2881;">New Order Received!</h1>
-        <p>You have received a new order with ID: <strong>${orderDetails.orderId}</strong></p>
+//   // 3. Configure the email options
+//   const mailOptions = {
+//     from: `"ChocoSmiley App" <${process.env.GMAIL_USER}>`,
+//     to: 'venkattiwari42@gmail.com', // Sending to ADMIN
+//     subject: `🔔 New Order! ₹${orderDetails.total.toFixed(2)} from ${customerDetails.name}`,
+//     html: `
+//       <div style="font-family: Arial, sans-serif; color: #333;">
+//         <h1 style="color: #5C2881;">New Order Received!</h1>
+//         <p>You have received a new order with ID: <strong>${orderDetails.orderId}</strong></p>
         
-        <hr />
+//         <hr />
         
-        <h3>👤 Customer Details</h3>
-        <p>
-          <strong>Name:</strong> ${customerDetails.name}<br/>
-          <strong>Phone:</strong> ${customerDetails.phone}<br/>
-          <strong>Address:</strong> ${customerDetails.address}<br/>
-          <strong>Email:</strong> ${customerDetails.email}
-        </p>
+//         <h3>👤 Customer Details</h3>
+//         <p>
+//           <strong>Name:</strong> ${customerDetails.name}<br/>
+//           <strong>Phone:</strong> ${customerDetails.phone}<br/>
+//           <strong>Address:</strong> ${customerDetails.address}<br/>
+//           <strong>Email:</strong> ${customerDetails.email}
+//         </p>
 
-        <hr />
+//         <hr />
 
-        <h3>🍫 Order Summary</h3>
-        <ul>${itemsListHtml}</ul>
-        <a href="https://www.chocosmiley.com/admin">Visit Choco Smiley for more details</a>
+//         <h3>🍫 Order Summary</h3>
+//         <ul>${itemsListHtml}</ul>
+//         <a href="https://www.chocosmiley.com/admin">Visit Choco Smiley for more details</a>
         
-        <h2 style="text-align: left;">Total: ₹${orderDetails.total.toFixed(2)}</h2>
+//         <h2 style="text-align: left;">Total: ₹${orderDetails.total.toFixed(2)}</h2>
         
-        <hr />
-        <p style="font-size: 12px; color: #888;">This is an automated notification from your Choco Smiley Site.</p>
-      </div>
-    `,
-  };
+//         <hr />
+//         <p style="font-size: 12px; color: #888;">This is an automated notification from your Choco Smiley Site.</p>
+//       </div>
+//     `,
+//   };
 
-  // 4. Send the email
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log('Admin notification email sent successfully');
-    return { success: true };
-  } catch (error) {
-    console.error('Failed to send admin notification email:', error);
-    return { success: false, error };
-  }
-}
+//   // 4. Send the email
+//   try {
+//     await transporter.sendMail(mailOptions);
+//     console.log('Admin notification email sent successfully');
+//     return { success: true };
+//   } catch (error) {
+//     console.error('Failed to send admin notification email:', error);
+//     return { success: false, error };
+//   }
+// }
 
 // 1. New Helper Action to Subscribe Devices
 export async function subscribeToAdminTopic(token: string) {
