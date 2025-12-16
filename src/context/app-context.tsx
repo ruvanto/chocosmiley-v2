@@ -480,13 +480,13 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
             totalDiscount: totalDiscount,
         };
 
-        const newOrderId = await addUserOrder(user.uid, newOrderData);
+        const { id: newOrderId, customOrderId } = await addUserOrder(user.uid, newOrderData);
         // --- NEW CODE START: Send Notification ---
         if (newOrderId) {
           // We don't await this so the user UI isn't blocked by email sending
           sendAdminOrderNotification(
               { 
-                  orderId: newOrderId, // You might want to fetch the readable "customOrderId" if preferred, but ID is fine for link
+                  orderId: customOrderId,
                   total: total > 0 ? total : 0, 
                   items: orderItems 
               },
@@ -494,7 +494,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
           );
 
           sendAdminPushNotification(
-            newOrderId,
+            customOrderId,
             total > 0 ? total : 0, 
             profileInfo.name || 'Guest'
         );

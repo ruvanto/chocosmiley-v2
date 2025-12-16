@@ -300,7 +300,7 @@ export const clearFirestoreWishlist = async (uid: string): Promise<void> => {
 };
 
 
-export const addUserOrder = async (uid: string, orderData: Omit<Order, 'id' | 'uid' | 'date' | 'customOrderId'>): Promise<string> => {
+export const addUserOrder = async (uid: string, orderData: Omit<Order, 'id' | 'uid' | 'date' | 'customOrderId'>): Promise<{id: string, customOrderId: string}> => {
     const db = getClientFirestore();
     if (!db) throw new Error("Firestore not initialized");
     const ordersCollectionRef = collection(db, 'users', uid, 'orders');
@@ -326,7 +326,7 @@ export const addUserOrder = async (uid: string, orderData: Omit<Order, 'id' | 'u
     });
 
     await updateDoc(docRef, { id: docRef.id });
-    return docRef.id;
+    return { id: docRef.id, customOrderId };
 };
 
 

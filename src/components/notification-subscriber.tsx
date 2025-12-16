@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { getToken, onMessage } from 'firebase/messaging';
+import { getToken } from 'firebase/messaging';
 import { getClientMessaging } from '@/lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
-import { getClientFirestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { subscribeToAdminTopic } from '@/app/actions';
 

@@ -22,6 +22,7 @@ import { getProductSuggestions, type TrendingSuggestion } from './actions';
 import { SearchSuggestions } from '@/components/search-suggestions';
 import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
+import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 
 interface HomepageContent {
   exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
@@ -131,6 +132,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
 
   useEffect(() => setIsGlobalLoading(false), [setIsGlobalLoading]);
 
+  if(!isClient) return <CustomScreenLoader></CustomScreenLoader>;
   return (
     <>
       {isMobile ? <StaticSparkleBackground /> : <SparkleBackground />}
