@@ -52,23 +52,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.chocosmiley.com",
   },
-
-  icons: {
-    icon: [
-      { url: '/favicon.png'},
-      // 2. The HIGH-RES icon for Google Search
-      { 
-        url: '/choco-smiley-logo.png', 
-        type: 'image/png', 
-        sizes: '512x512'
-      },
-    ],
-    // 3. For iPhone/iPad Home Screen
-    apple: [
-      { url: '/choco-smiley-logo.png', sizes: '180x180', type: 'image/png' },
-    ]
-  },
   manifest: '/manifest.json',
+  appleWebApp: {
+    title: 'Choco Smiley',
+    statusBarStyle: 'default',
+  },
 };
 
 export default function RootLayout({
