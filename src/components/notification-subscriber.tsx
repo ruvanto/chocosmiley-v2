@@ -6,6 +6,7 @@ import { getClientMessaging } from '@/lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { getClientFirestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
+import { subscribeToAdminTopic } from '@/app/actions';
 
 export function AdminNotificationSubscriber() {
   const { toast } = useToast();
@@ -39,35 +40,9 @@ export function AdminNotificationSubscriber() {
         });
 
         if (token) {
-          const db = getClientFirestore();
-          if (db) {
-            await setDoc(doc(db, 'notifications', 'admin'), {
-              token: token,
-              updatedAt: new Date().toISOString()
-            }, { merge: true });
-          }
+          await subscribeToAdminTopic(token); 
+          console.log("Subscribed to Admin Alerts");
         }
-
-        // 👇 NEW: Listen for messages when the app is OPEN (Foreground)
-        onMessage(msg, (payload) => {
-          console.log('[Foreground] Message received: ', payload);
-          
-          // Option A: Show a Toast inside the app
-          toast({
-            title: payload.notification?.title || 'New Order',
-            description: payload.notification?.body,
-            variant: 'default',
-            duration: 5000,
-          });
-
-          // Option B: FORCE a System Notification even if app is open
-          if (Notification.permission === 'granted') {
-             new Notification(payload.notification?.title || 'New Order', {
-               body: payload.notification?.body,
-               icon: payload.notification?.icon
-             });
-          }
-        });
 
       } catch (error) {
         console.error('Auto-subscribe failed:', error);

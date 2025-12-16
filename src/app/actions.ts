@@ -177,29 +177,41 @@ export async function sendAdminOrderNotification(
   }
 }
 
-export async function sendAdminPushNotification(orderId: string, amount: number, customerName: string) {
+// 1. New Helper Action to Subscribe Devices
+export async function subscribeToAdminTopic(token: string) {
+  if (!adminMessaging) {
+    console.error('Firebase Admin Messaging not initialized. Cannot subscribe to topic.');
+    return { success: false };
+  }
   try {
-    // 1. Fetch the stored Admin Token
-    const adminDoc = await adminFirestore.collection('notifications').doc('admin').get();
-    
-    if (!adminDoc.exists || !adminDoc.data()?.token) {
-      console.log('No admin token found for push notification');
-      return { success: false };
-    }
+    // This adds the device to the "admin-orders" broadcasting channel
+    await adminMessaging.subscribeToTopic(token, 'admin-orders');
+    return { success: true };
+  } catch (error) {
+    console.error('Topic subscription failed:', error);
+    return { success: false };
+  }
+}
 
-    const token = adminDoc.data()?.token;
+// 2. Update the Send Notification Function
+export async function sendAdminPushNotification(orderId: string, amount: number, customerName: string) {
+  if (!adminMessaging) {
+    console.error('Firebase Admin Messaging not initialized. Cannot send push notification.');
+    return { success: false };
+  }
+  try {
     const formattedAmount = amount.toFixed(2);
 
-    // 2. Send the message
+    // CHANGE: Send to 'topic' instead of 'token'
     await adminMessaging.send({
-      token: token,
+      topic: 'admin-orders', // <--- Broadcast to everyone on this topic
       notification: {
         title: '💰 New Order Received!',
         body: `Order ${orderId} by ${customerName} for ₹${formattedAmount}`,
       },
       webpush: {
         fcmOptions: {
-          link: `https://chocosmiley.com/admin?orderId=${orderId}` // Deep link to admin panel
+          link: `https://chocosmiley.com/admin?orderId=${orderId}`
         }
       }
     });
@@ -207,6 +219,41 @@ export async function sendAdminPushNotification(orderId: string, amount: number,
     return { success: true };
   } catch (error) {
     console.error('Push notification failed:', error);
-    return { success: false, error }; // Don't crash the app if notification fails
+    return { success: false, error };
   }
 }
+
+// export async function sendAdminPushNotification(orderId: string, amount: number, customerName: string) {
+//   try {
+//     // 1. Fetch the stored Admin Token
+//     const adminDoc = await adminFirestore.collection('notifications').doc('admin').get();
+    
+//     if (!adminDoc.exists || !adminDoc.data()?.token) {
+//       console.log('No admin token found for push notification');
+//       return { success: false };
+//     }
+
+//     const token = adminDoc.data()?.token;
+//     const formattedAmount = amount.toFixed(2);
+
+//     // 2. Send the message
+//     await adminMessaging.send({
+//       token: token,
+//       notification: {
+//         title: '💰 New Order Received!',
+//         body: `Order ${orderId} by ${customerName} for ₹${formattedAmount}`,
+//       },
+//       webpush: {
+//         fcmOptions: {
+//           link: `https://www.chocosmiley.com/admin?orderId=${orderId}` // Deep link to admin panel
+//         }
+//       }
+//     });
+
+//     return { success: true };
+//   } catch (error) {
+//     console.error('Push notification failed:', error);
+//     return { success: false, error }; // Don't crash the app if notification fails
+//   }
+// }
+
