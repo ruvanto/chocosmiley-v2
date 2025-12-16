@@ -205,10 +205,10 @@ export async function sendAdminPushNotification(customOrderId: string, amount: n
     // CHANGE: Send to 'topic' instead of 'token'
     await adminMessaging.send({
       topic: 'admin-orders', // <--- Broadcast to everyone on this topic
-      data: {
+      notification: {
         title: '🔔 New Order Received!',
         body: `Order ${customOrderId} placed by ${customerName} — ₹${formattedAmount}`,
-        link: `https://chocosmiley.com/admin`,
+        //link: `https://chocosmiley.com/admin`,
       },
       webpush: {
         fcmOptions: {
