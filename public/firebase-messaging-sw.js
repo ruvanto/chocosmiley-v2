@@ -12,16 +12,16 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+// messaging.onBackgroundMessage((payload) => {
+//   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   
-  // Customize notification here
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/choco-smiley-logo.png', // Or any icon path you have in public/
-    data: payload.notification
-  };
+//   // Customize notification here
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: '/choco-smiley-logo.png', // Or any icon path you have in public/
+//     data: payload.notification
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
