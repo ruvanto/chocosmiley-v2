@@ -43,8 +43,8 @@ export function OrderBackDialog({ open, onClose, onConfirm, order }: OrderBackDi
   };
   
   const whatsAppUrl = order
-    ? `https://api.whatsapp.com/send?phone=917411414007&text=${generateWhatsAppMessage(order)}`
-    : `https://api.whatsapp.com/send?phone=917411414007`;
+    ? `https://api.whatsapp.com/send?phone=917975283091&text=${generateWhatsAppMessage(order)}`
+    : `https://api.whatsapp.com/send?phone=917975283091`;
 
 
   return (
@@ -63,7 +63,7 @@ export function OrderBackDialog({ open, onClose, onConfirm, order }: OrderBackDi
                 </a>
             </Button>
             <Button asChild variant="outline" className="h-auto w-full py-2 text-white border-white/50 bg-transparent hover:bg-white/10 hover:text-white rounded-full font-plex-sans shadow-lg" onClick={onClose}>
-                <a href="tel:+917411414007">
+                <a href="tel:+917975283091">
                 <Phone className="h-4 w-4" /> Call Us
                 </a>
             </Button>

@@ -61,7 +61,7 @@ export function Footer() {
                         <Mail size={16} />
                         <span>chocosmiley79@gmail.com</span>
                     </a>
-                    <a href="https://wa.me/917411414007" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs md:text-sm text-gray-300 hover:text-custom-gold transition-colors">
+                    <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs md:text-sm text-gray-300 hover:text-custom-gold transition-colors">
                         <SiWhatsapp size={16} />
                         <span>+91 74114 14007</span>
                     </a>

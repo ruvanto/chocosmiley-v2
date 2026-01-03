@@ -130,13 +130,13 @@ export function UserActions({
                             <p className="text-base font-semibold font-plex-sans-condensed w-full text-center">Get personalized advice on flavours, packaging, and more.</p>
                             <Separator className="my-2 bg-custom-purple-dark h-[1px] w-3/4 self-center" />
                             <Button asChild className="w-full h-auto py-2 bg-custom-purple-dark hover:bg-custom-purple-dark/90 text-white rounded-full text-base font-plex-sans">
-                                <a href="tel:+917411414007">
+                                <a href="tel:+917975283091">
                                     <Phone className="h-4 w-4" /> Call Us
                                 </a>
                             </Button>
                             <p className="text-xs font-medium self-center">-OR-</p>
                             <Button asChild className="w-full h-auto py-2 bg-custom-purple-dark hover:bg-custom-purple-dark/90 text-white rounded-full text-base font-plex-sans">
-                                <a href="https://wa.me/917411414007" target="_blank" rel="noopener noreferrer">
+                                <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer">
                                     <SiWhatsapp className="h-8 w-8" /> Whatsapp Us
                                 </a>
                              </Button>
@@ -318,13 +318,13 @@ export function UserActions({
                         </SheetHeader>
                         <div className="flex flex-col gap-3 mt-6">
                             <Button asChild className="h-auto py-2 bg-white hover:bg-white/90 text-black rounded-full text-base font-plex-sans self-center w-48">
-                                <a href="tel:+917411414007">
+                                <a href="tel:+917975283091">
                                     <Phone className="h-5 w-5" /> Call Us
                                 </a>
                             </Button>
                             <p className="text-sm font-medium self-center text-white/80">-OR-</p>
                             <Button asChild className="h-auto py-2 bg-white hover:bg-white/90 text-black rounded-full text-base font-plex-sans self-center w-48">
-                                <a href="https://wa.me/917411414007" target="_blank" rel="noopener noreferrer">
+                                <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer">
                                     <SiWhatsapp  className="h-8 w-8" /> Whatsapp Us
                                 </a>
                              </Button>
