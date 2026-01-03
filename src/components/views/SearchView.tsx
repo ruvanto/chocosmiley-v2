@@ -4,7 +4,7 @@
 
 import { FilterContainer } from '@/components/filter-container';
 import { cn } from '@/lib/utils';
-import type { StructuredFilter } from '@/types';
+import type { SanityProduct, StructuredFilter } from '@/types';
 import { ProductList } from './ProductListView';
 
 interface SearchViewProps {
@@ -18,6 +18,7 @@ interface SearchViewProps {
   onRemoveFilter: (type: string, value: string) => void;
   sortOption: string;
   onSortChange: (value: string) => void;
+  initialProducts?: SanityProduct[];
 }
 
 export function SearchView({
@@ -31,6 +32,7 @@ export function SearchView({
   onRemoveFilter,
   sortOption,
   onSortChange,
+  initialProducts,
 }: SearchViewProps) {
   
   return (
@@ -55,6 +57,7 @@ export function SearchView({
           onPriceCheckboxChange={onPriceCheckboxChange}
           sortOption={sortOption}
           onSortChange={onSortChange}
+          initialProducts={initialProducts}
         />
       </div>
     </div>

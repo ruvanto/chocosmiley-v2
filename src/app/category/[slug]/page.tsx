@@ -4,7 +4,7 @@ import { client } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import SearchClientPage from '@/app/search/search-client-page';
-import type { StructuredFilter } from '@/types';
+import type { SanityProduct, StructuredFilter } from '@/types';
 import { getTrendingSuggestions } from '@/app/actions';
 import { Suspense } from 'react';
 
@@ -34,6 +34,30 @@ async function getCategory(slug: string): Promise<Category | undefined> {
   }
   
   return homepage.exploreCategories.find((cat: Category) => cat.slug?.current === slug);
+}
+
+// NEW FUNCTION: Fetch initial products for SSR
+async function getInitialProducts(term: string): Promise<SanityProduct[]> {
+    if (!term) return [];
+    const query = `
+      *[_type == "product" && (
+        lower(name) match "*${term.toLowerCase()}*" || 
+        lower(bestFor) match "*${term.toLowerCase()}*" || 
+        tags[] match "*${term.toLowerCase()}*"
+      )] | order(_createdAt desc)[0...8] {
+        _id, name, slug, mrp, discountedPrice, weight, packageType, composition, isOutOfStock, 
+        "images": images[].asset->url,
+        "availableFlavours": availableFlavours[]-> | order(orderRank) { _id, name, "imageUrl": image.asset->url, "price": coalesce(price, 0) },
+        numberOfChocolates, bestFor, "tags": tags[].value
+      }`;
+    
+    try {
+        const products = await client.fetch(query);
+        return products;
+    } catch (error) {
+        console.error("Failed to fetch initial products:", error);
+        return [];
+    }
 }
 
 // Generate dynamic metadata for the page
@@ -114,9 +138,12 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     notFound();
   }
 
-  // Pre-fetch filters and trending suggestions for the client page
-  const filters = await getFilters();
-  const trendingSuggestions = await getTrendingSuggestions();
+  // Pre-fetch filters, trending suggestions, AND initial products
+  const [filters, trendingSuggestions, initialProducts] = await Promise.all([
+    getFilters(),
+    getTrendingSuggestions(),
+    getInitialProducts(category.name),
+  ]);
 
   // JSON-LD for structured data
   const jsonLd = {
@@ -147,6 +174,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
               initialFilters={filters} 
               trendingSuggestions={trendingSuggestions} 
               initialQuery={category.name}
+              initialProducts={initialProducts}
             />
         </Suspense>
     </>

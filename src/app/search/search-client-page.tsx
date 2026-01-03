@@ -28,6 +28,7 @@ interface SearchClientPageProps {
   initialFilters: StructuredFilter[];
   trendingSuggestions: TrendingSuggestion[];
   initialQuery?: string;
+  initialProducts?: SanityProduct[];
 }
 
 const LoadingFallback = () => (
@@ -39,7 +40,7 @@ function formatCategoryTitleToKey(title: string) {
 }
 
 
-export default function SearchClientPage({ initialFilters, trendingSuggestions, initialQuery = '' }: SearchClientPageProps) {
+export default function SearchClientPage({ initialFilters, trendingSuggestions, initialQuery = '', initialProducts }: SearchClientPageProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -358,6 +359,7 @@ export default function SearchClientPage({ initialFilters, trendingSuggestions, 
              onRemoveFilter={handleRemoveFilter}
              sortOption={sortOption}
              onSortChange={handleSortChange}
+             initialProducts={initialProducts}
            />
 
         </main>

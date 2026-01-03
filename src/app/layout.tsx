@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     "new years",
     "festivals"
   ],
+  icons: {
+    icon: "/favicon-v2.ico",
+    apple: "/apple-icon.png",
+  },
+  
   openGraph: {
     title: "Choco Smiley - Premium Handmade Chocolates & Custom Gifts Online",
     description:

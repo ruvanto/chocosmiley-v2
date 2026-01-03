@@ -44,6 +44,7 @@ interface ProductListProps {
   onPriceCheckboxChange: (range: string, isChecked: boolean) => void;
   sortOption: string;
   onSortChange: (value: string) => void;
+  initialProducts?: SanityProduct[];
 }
 
 export function ProductList({
@@ -57,15 +58,17 @@ export function ProductList({
   onPriceCheckboxChange,
   sortOption,
   onSortChange,
+  initialProducts,
 }: ProductListProps) {
-  const [products, setProducts] = useState<SanityProduct[]>([]);
-  const [page, setPage] = useState(0);
+  const [products, setProducts] = useState<SanityProduct[]>(initialProducts || []);
+  const [page, setPage] = useState(initialProducts ? 1 : 0);
   const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(!initialProducts);
+  const [isInitialLoad, setIsInitialLoad] = useState(!initialProducts);
   const loaderRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const initialDataHandled = useRef(!!initialProducts);
 
   const { cart, updateCart, setFlavourSelection, setIsGlobalLoading } = useAppContext();
   
@@ -169,7 +172,13 @@ export function ProductList({
   }, [searchParams, sortOption, query]);
 
   useEffect(() => {
-    fetchProducts(0, true);
+    // If we have initial products from the server, don't fetch again on mount.
+    if (initialDataHandled.current) {
+        // However, subsequent filter changes should trigger a fetch.
+        fetchProducts(0, true);
+    }
+    // After the first render (which might use server data), all subsequent renders should fetch.
+    initialDataHandled.current = true;
   }, [searchParams, sortOption, fetchProducts]);
 
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
