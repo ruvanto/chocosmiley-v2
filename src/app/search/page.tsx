@@ -6,7 +6,11 @@ import type { StructuredFilter } from '@/types';
 import { getTrendingSuggestions } from '../actions';
 import { Suspense } from 'react';
 
-export const revalidate = 300; // Revalidate this page at most every 300 seconds
+// REMOVE THIS LINE:
+// export const revalidate = 300; 
+
+// ADD THIS LINE:
+export const dynamic = 'force-dynamic';
 
 // Fetch filters from Sanity
 async function getFilters(): Promise<StructuredFilter[]> {
