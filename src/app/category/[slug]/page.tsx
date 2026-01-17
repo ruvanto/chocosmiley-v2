@@ -1,4 +1,3 @@
-
 // @/app/category/[slug]/page.tsx
 import { client } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
@@ -17,8 +16,9 @@ interface Category {
   imageUrl: string;
 }
 
-// Fetches the entire homepage document to find the category
+// Fetches the entire homepage document from Sanity to find the details of a specific category by its slug.
 async function getCategory(slug: string): Promise<Category | undefined> {
+  // Fetch the 'exploreCategories' array from the single 'homepage' document.
   const homepage = await client.fetch(`*[_type == "homepage"][0]{
     exploreCategories[]{
       _key,
@@ -29,16 +29,22 @@ async function getCategory(slug: string): Promise<Category | undefined> {
     }
   }`);
   
+  // Return undefined if the homepage or its categories are not found.
   if (!homepage || !homepage.exploreCategories) {
     return undefined;
   }
   
+  // Find the specific category that matches the provided slug.
   return homepage.exploreCategories.find((cat: Category) => cat.slug?.current === slug);
 }
 
-// NEW FUNCTION: Fetch initial products for SSR
+// Fetches an initial batch of products for Server-Side Rendering (SSR) to improve SEO.
 async function getInitialProducts(term: string): Promise<SanityProduct[]> {
+    // Return empty if there's no search term.
     if (!term) return [];
+
+    // GROQ query to find products matching the term in name, bestFor, or tags.
+    // It orders them by creation date and limits to the first 8 results.
     const query = `
       *[_type == "product" && (
         lower(name) match "*${term.toLowerCase()}*" || 
@@ -52,18 +58,22 @@ async function getInitialProducts(term: string): Promise<SanityProduct[]> {
       }`;
     
     try {
+        // Execute the query.
         const products = await client.fetch(query);
         return products;
     } catch (error) {
+        // Log errors and return an empty array on failure.
         console.error("Failed to fetch initial products:", error);
         return [];
     }
 }
 
-// Generate dynamic metadata for the page
+// Generates dynamic metadata for the page based on the category slug. This is crucial for SEO.
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  // Fetch category details.
   const category = await getCategory(params.slug);
 
+  // If the category doesn't exist, return metadata for a "Not Found" page.
   if (!category) {
     return {
       title: 'Category Not Found | ChocoSmiley',
@@ -71,6 +81,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
+  // If the category is found, generate rich metadata for social sharing and search engines.
   return {
     title: `${category.name} | ChocoSmiley`,
     description: category.subtitle,
@@ -100,7 +111,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 
-// Fetch filters from Sanity for the search client page
+// Fetches and structures the filter data (categories, options, flavours) from Sanity.
 async function getFilters(): Promise<StructuredFilter[]> {
   const query = `{
     "categories": *[_type == "filterCategory"] | order(orderRank) {_id, title, "icon": icon.asset->url},
@@ -111,12 +122,16 @@ async function getFilters(): Promise<StructuredFilter[]> {
   try {
     const { categories, options, flavours } = await client.fetch(query);
 
+    // Sort options alphabetically for a consistent user experience.
     const sortedOptions = [...options].sort((a, b) => a.title.localeCompare(b.title));
 
+    // Map the fetched data into a structured format for the filter UI.
     return categories.map((category: any) => {
+      // Special handling for 'Flavours & Fillings' to use the specific flavour data.
       if (category.title === 'Flavours & Fillings') {
         return { ...category, options: flavours };
       }
+      // Assign the corresponding options to each filter category.
       return {
         ...category,
         options: sortedOptions.filter((opt: any) => opt.categoryId === category._id),
@@ -129,23 +144,24 @@ async function getFilters(): Promise<StructuredFilter[]> {
 }
 
 
-// The main page component
+// The main page component for a category page. It's a server component.
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
+  // Fetch the category data based on the slug from the URL.
   const category = await getCategory(params.slug);
 
-  // If no category matches the slug, show the 404 page
+  // If no category matches the slug, render the 404 page.
   if (!category) {
     notFound();
   }
 
-  // Pre-fetch filters, trending suggestions, AND initial products
+  // Pre-fetch all necessary data in parallel for performance.
   const [filters, trendingSuggestions, initialProducts] = await Promise.all([
     getFilters(),
     getTrendingSuggestions(),
-    getInitialProducts(category.name),
+    getInitialProducts(category.name), // Fetch initial products for SSR.
   ]);
 
-  // JSON-LD for structured data
+  // Define JSON-LD structured data for rich search results.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -154,27 +170,28 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "url": `https://www.chocosmiley.com/category/${params.slug}`,
     "mainEntity": {
         "@type": "ItemList",
-        "itemListElement": [] // Can be populated on the client if needed
+        "itemListElement": [] // Can be populated on the client if needed for more detailed schema.
     }
   };
 
   return (
     <>
+        {/* Inject the JSON-LD script into the page head. */}
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {/*
-            Instead of building a new UI, we can reuse the existing powerful SearchClientPage
-            and simply pass the category name as the initial search query.
-            This is efficient and maintains a consistent user experience.
+            Instead of building a new UI, we reuse the existing powerful SearchClientPage.
+            We pass the category name as the initial search query, which is an efficient
+            way to maintain a consistent user experience.
         */}
         <Suspense>
             <SearchClientPage 
               initialFilters={filters} 
               trendingSuggestions={trendingSuggestions} 
               initialQuery={category.name}
-              initialProducts={initialProducts}
+              initialProducts={initialProducts} // Pass the server-fetched products to the client component.
             />
         </Suspense>
     </>
