@@ -99,12 +99,13 @@ export function ProductList({
             const wordFilters = searchWords.map((word, index) => {
                 const wordParam = `word${index}`;
                 params[wordParam] = word;
+                // Simplified query to be more performant and avoid timeouts in production.
+                // It relies on important keywords (like flavours) being in the 'tags' array.
                 return `(
                     lower(name) match "*"+$${wordParam}+"*" ||
-                    pt::text(description) match "*"+$${wordParam}+"*" ||
-                    count(tags[lower(@) match "*"+$${wordParam}+"*"]) > 0 ||
-                    count(availableFlavours[references(*[_type=="flavour" && lower(name) match "*"+$${wordParam}+"*"]._id)]) > 0 ||
-                    lower(bestFor) match "*"+$${wordParam}+"*"
+                    lower(bestFor) match "*"+$${wordParam}+"*" ||
+                    tags[] match "*"+$${wordParam}+"*" ||
+                    pt::text(description) match "*"+$${wordParam}+"*"
                 )`;
             });
             filterClauses.push(`(${wordFilters.join(' || ')})`);
