@@ -1,4 +1,3 @@
-
 // @/components/search-suggestions.tsx
 'use client';
 
@@ -13,6 +12,7 @@ import { TrendingSuggestions } from './trending-suggestions';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Separator } from './ui/separator';
 import { client } from '@/lib/sanity';
+import Link from 'next/link'; // Import Link
 
 interface SearchSuggestionsProps {
   productSuggestions: SanityProduct[];
@@ -76,7 +76,6 @@ const getMatchDetails = (product: SanityProduct, query: string, allFlavourNames:
 
     return null;
 }
-
 
 export function SearchSuggestions({ 
   productSuggestions, 
@@ -148,39 +147,42 @@ export function SearchSuggestions({
   const mobileSuggestionItem = (product: SanityProduct) => {
     const match = getMatchDetails(product, searchInput, allFlavourNames);
     return (
-        <li
-          key={product._id}
-          onClick={() => onProductClick(product)}
-          className="flex items-center gap-4 p-2 cursor-pointer rounded-lg hover:bg-black/20"
-        >
-          <div className="relative w-10 h-10 flex-shrink-0">
-            <Image
-              src={product.images?.[0] || '/placeholder.png'}
-              alt={product.name}
-              fill
-              sizes="40px"
-              className="object-cover rounded-md"
-              onDragStart={(e) => e.preventDefault()}
-            />
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-semibold truncate text-sm text-white">{product.name}</span>
-             {match?.type === 'flavour' && (
-                <span className='text-xs font-medium truncate text-custom-gold'>
-                    {`Contains ${match.value}`}
-                </span>
-            )}
-            {match?.type === 'tag' && (
-                <span className='text-xs font-medium truncate text-custom-gold'>
-                    {`in "${match.value}"`}
-                </span>
-            )}
-            {match?.type === 'bestFor' && (
-                <span className='text-xs font-medium truncate text-custom-gold'>
-                    {`Best for ${match.value}`}
-                </span>
-            )}
-          </div>
+        <li key={product._id} className="block">
+          {/* FIX: Use Link for SEO */}
+          <Link 
+            href={`/product/${product.slug.current}`} 
+            onClick={() => onProductClick(product)}
+            className="flex items-center gap-4 p-2 cursor-pointer rounded-lg hover:bg-black/20"
+          >
+            <div className="relative w-10 h-10 flex-shrink-0">
+              <Image
+                src={product.images?.[0] || '/placeholder.png'}
+                alt={product.name}
+                fill
+                sizes="40px"
+                className="object-cover rounded-md"
+                onDragStart={(e) => e.preventDefault()}
+              />
+            </div>
+            <div className="flex flex-col min-w-0 text-left">
+              <span className="font-semibold truncate text-sm text-white">{product.name}</span>
+               {match?.type === 'flavour' && (
+                  <span className='text-xs font-medium truncate text-custom-gold'>
+                      {`Contains ${match.value}`}
+                  </span>
+              )}
+              {match?.type === 'tag' && (
+                  <span className='text-xs font-medium truncate text-custom-gold'>
+                      {`in "${match.value}"`}
+                  </span>
+              )}
+              {match?.type === 'bestFor' && (
+                  <span className='text-xs font-medium truncate text-custom-gold'>
+                      {`Best for ${match.value}`}
+                  </span>
+              )}
+            </div>
+          </Link>
         </li>
     )
   };
@@ -191,40 +193,46 @@ export function SearchSuggestions({
       <motion.li
         key={product._id}
         variants={itemVariants}
-        onClick={() => onProductClick(product)}
-        className={cn(
-          "flex items-center gap-4 p-2 cursor-pointer rounded-lg",
-          "text-black hover:bg-black/10"
-        )}
+        className="block"
       >
-        <div className="relative w-10 h-10 flex-shrink-0">
-          <Image
-            src={product.images?.[0] || '/placeholder.png'}
-            alt={product.name}
-            fill
-            sizes="40px"
-            className="object-cover rounded-md"
-            onDragStart={(e) => e.preventDefault()}
-          />
-        </div>
-        <div className="flex flex-col min-w-0">
-          <span className="font-semibold truncate text-sm">{product.name}</span>
-           {match?.type === 'flavour' && (
-              <span className='text-xs font-medium truncate text-custom-purple-dark'>
-                  {`Contains ${match.value}`}
-              </span>
-          )}
-          {match?.type === 'tag' && (
-              <span className='text-xs font-medium truncate text-custom-purple-dark'>
-                  {`in "${match.value}"`}
-              </span>
-          )}
-          {match?.type === 'bestFor' && (
-              <span className='text-xs font-medium truncate text-custom-purple-dark'>
-                  {`Best for ${match.value}`}
-              </span>
-          )}
-        </div>
+        {/* FIX: Use Link for SEO */}
+        <Link 
+            href={`/product/${product.slug.current}`}
+            onClick={() => onProductClick(product)}
+            className={cn(
+            "flex items-center gap-4 p-2 cursor-pointer rounded-lg",
+            "text-black hover:bg-black/10"
+            )}
+        >
+            <div className="relative w-10 h-10 flex-shrink-0">
+            <Image
+                src={product.images?.[0] || '/placeholder.png'}
+                alt={product.name}
+                fill
+                sizes="40px"
+                className="object-cover rounded-md"
+                onDragStart={(e) => e.preventDefault()}
+            />
+            </div>
+            <div className="flex flex-col min-w-0 text-left">
+            <span className="font-semibold truncate text-sm">{product.name}</span>
+            {match?.type === 'flavour' && (
+                <span className='text-xs font-medium truncate text-custom-purple-dark'>
+                    {`Contains ${match.value}`}
+                </span>
+            )}
+            {match?.type === 'tag' && (
+                <span className='text-xs font-medium truncate text-custom-purple-dark'>
+                    {`in "${match.value}"`}
+                </span>
+            )}
+            {match?.type === 'bestFor' && (
+                <span className='text-xs font-medium truncate text-custom-purple-dark'>
+                    {`Best for ${match.value}`}
+                </span>
+            )}
+            </div>
+        </Link>
       </motion.li>
     )
   };

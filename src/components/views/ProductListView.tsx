@@ -171,22 +171,18 @@ export function ProductList({
   }, [searchParams, sortOption, query]);
 
   useEffect(() => {
-    // FIXED LOGIC:
-    // If this is the first run...
-    if (!initialDataHandled.current) {
-        // ...and we already have products from the server, mark as handled and DO NOT fetch.
-        if (initialProducts && initialProducts.length > 0) {
-            initialDataHandled.current = true;
-            return;
-        }
-        // ...and we DO NOT have products, we MUST fetch.
-        fetchProducts(0, true);
+    // Case 1: First render with Server Data. 
+    // If we have products passed from the server, mark as handled and SKIP the fetch.
+    if (!initialDataHandled.current && initialProducts && initialProducts.length > 0) {
         initialDataHandled.current = true;
         return;
     }
 
-    // If this is NOT the first run (e.g. filters changed), always fetch.
+    // Case 2: No Server Data (Client Navigation).
+    // If we don't have data, OR if filters changed, we MUST fetch.
     fetchProducts(0, true);
+    
+    initialDataHandled.current = true;
   }, [searchParams, sortOption, fetchProducts, initialProducts]);
 
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {

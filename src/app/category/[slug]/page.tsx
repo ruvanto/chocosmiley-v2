@@ -7,6 +7,8 @@ import type { SanityProduct, StructuredFilter } from '@/types';
 import { getTrendingSuggestions } from '@/app/actions';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 // Define the shape of a category item from the homepage
 interface Category {
   _key: string;

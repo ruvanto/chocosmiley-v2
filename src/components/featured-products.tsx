@@ -1,4 +1,3 @@
-
 // @/components/featured-products.tsx
 'use client';
 
@@ -50,10 +49,17 @@ export function FeaturedProducts({
       <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
         {products.map(product => (
           <div key={product._id} className={cn("flex-shrink-0", isMobile ? "w-40" : "w-56")}>
-            <Link href={`/product/${product.slug.current}`} onClick={(e) => { e.preventDefault(); onProductClick(product); }} className="aspect-[3/4] h-full w-full block">
+            {/* FIX: Link now handles navigation. onProductClick only handles side-effects (like loading state). */}
+            <Link 
+              href={`/product/${product.slug.current}`} 
+              onClick={() => onProductClick(product)} 
+              className="aspect-[3/4] h-full w-full block"
+            >
               <FeaturedProductCard
                 product={product}
-                onProductClick={() => onProductClick(product)}
+                // Pass empty function or keep strict UI handlers if needed, 
+                // but the Link wrapper above handles the main click.
+                onProductClick={() => {}} 
                 onAddToCart={onAddToCart}
                 onRemoveFromCart={onRemoveFromCart}
                 quantity={cart[product.name]?.quantity || 0}

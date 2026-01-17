@@ -6,10 +6,6 @@ import type { StructuredFilter } from '@/types';
 import { getTrendingSuggestions } from '../actions';
 import { Suspense } from 'react';
 
-// REMOVE THIS LINE:
-// export const revalidate = 300; 
-
-// ADD THIS LINE:
 export const dynamic = 'force-dynamic';
 
 // Fetch filters from Sanity
