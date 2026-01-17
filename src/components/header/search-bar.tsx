@@ -1,4 +1,3 @@
-
 // @/components/header/search-bar.tsx
 'use client';
 

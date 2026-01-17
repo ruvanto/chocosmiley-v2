@@ -56,10 +56,20 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   const [isCartButtonExpanded] = useState(false);
   const handleToggleCartPopup = () => setIsCartOpen(p => !p);
 
+  const [isHeaderSearchVisible, setIsHeaderSearchVisible] = useState(false);
+  const mainContentRef = useRef<HTMLElement>(null);
+
+
   useEffect(() => {
     setIsClient(true);
     setIsGlobalLoading(false);
   }, [setIsGlobalLoading]);
+
+  const handleScroll = () => {
+    if (mainContentRef.current) {
+        setIsHeaderSearchVisible(mainContentRef.current.scrollTop > 100);
+    }
+  };
 
   useEffect(() => {
     if (isProfileOpen) document.body.classList.add('overflow-hidden');
@@ -95,6 +105,15 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
     router.push(`/search?q=${encodeURIComponent(currentSearchInput.trim())}`);
   };
 
+  const handleHeaderSearchSubmit = (query: string) => {
+    if (!query.trim()) {
+      toast({ title: "Empty Field", description: "Search field cannot be empty.", variant: "destructive" });
+      return;
+    }
+    setIsGlobalLoading(true);
+    router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+  };
+
   const handleTrendingSuggestionClick = (searchQuery: string) => {
     setShowSuggestions(false);
     setSearchInput(searchQuery);
@@ -115,6 +134,12 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
     setIsGlobalLoading(true);
     router.push(newPath);
   };
+  
+  const handleLogoClick = () => {
+    if (pathname === '/') return;
+    setIsGlobalLoading(true);
+    router.push('/');
+  }
 
   const handleProductClick = (product: SanityProduct) => {
     setIsGlobalLoading(true);
@@ -127,7 +152,6 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
   };
 
   const cartItemCount = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
-  const handleScroll = (event: UIEvent<HTMLDivElement>) => setIsContentScrolled(event.currentTarget.scrollTop > 0);
   const handleSuggestionClick = (product: SanityProduct) => { setShowSuggestions(false); handleProductClick(product); }
 
   useEffect(() => setIsGlobalLoading(false), [setIsGlobalLoading]);
@@ -139,17 +163,43 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
       <div className={cn("flex flex-col h-screen", (isProfileOpen || flavourSelection.isOpen || isEnquireOpen) ? 'opacity-50' : '')}>
         <Header
           onProfileOpenChange={setIsProfileOpen}
-          isContentScrolled={!!isMobile}
-          onReset={() => { if (pathname !== '/') { setIsGlobalLoading(true); router.push('/'); } }}
+          isContentScrolled={isContentScrolled}
+          onReset={handleLogoClick}
           onNavigate={handleHeaderNavigate}
           activeView={'home'}
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
-        />
+          onProductClick={handleSuggestionClick}
+          onTrendingClick={handleTrendingSuggestionClick}
+          searchInput={searchInput}
+          onSearchInputChange={handleSearchInputChange}
+          onSearchFocus={handleSearchFocus}
+          showAnimatedSearch={isHeaderSearchVisible}
+          onSearchSubmit={handleHeaderSearchSubmit}
+          searchContainerRef={searchContainerRef}
+        >
+          {showSuggestions && (
+             <SearchSuggestions
+                  productSuggestions={productSuggestions}
+                  trendingSuggestions={trendingSuggestions}
+                  isLoading={isSuggestionsLoading}
+                  onProductClick={handleSuggestionClick}
+                  onTrendingClick={handleTrendingSuggestionClick}
+                  onClose={() => setShowSuggestions(false)}
+                  hasSearchInput={searchInput.length > 0}
+                  searchInput={searchInput}
+                  searchContainerRef={searchContainerRef}
+              />
+          )}
+        </Header>
         <ProfileCompletionBanner isMobile={isMobile} />
-        <main onScroll={handleScroll} className="pt-20 md:pt-30 flex flex-col items-center justify-start transition-all duration-500 relative flex-grow min-h-0 pb-16 md:pb-0 overflow-y-auto no-scrollbar">
+        <main ref={mainContentRef} onScroll={handleScroll} className="pt-20 md:pt-30 flex flex-col items-center justify-start transition-all duration-500 relative flex-grow min-h-0 pb-16 md:pb-0 overflow-y-auto no-scrollbar">
           <div className="w-full px-8 md:px-4">
-            <div ref={searchContainerRef} className='relative mt-8 md:mt-12 z-30 mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl'>
+            <div ref={searchContainerRef} className={cn(
+              "relative mt-8 md:mt-12 z-30 mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl",
+              "transition-opacity-transform duration-300",
+              isHeaderSearchVisible ? "opacity-0 -translate-y-4" : "opacity-100 translate-y-0",
+            )}>
               <SearchBar
                 activeView={'home'}
                 isEnquireOpen={isEnquireOpen}
@@ -159,8 +209,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
                 onFocus={handleSearchFocus}
               />
               {showSuggestions && (
-                 <div className="absolute top-full w-full">
-                    <SearchSuggestions
+                 <SearchSuggestions
                       productSuggestions={productSuggestions}
                       trendingSuggestions={trendingSuggestions}
                       isLoading={isSuggestionsLoading}
@@ -170,8 +219,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
                       hasSearchInput={searchInput.length > 0}
                       searchInput={searchInput}
                       searchContainerRef={searchContainerRef}
-                    />
-                 </div>
+                  />
               )}
             </div>
           </div>
