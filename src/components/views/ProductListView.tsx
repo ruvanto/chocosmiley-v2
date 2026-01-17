@@ -1,4 +1,3 @@
-
 // @/components/views/product-list.tsx
 'use client';
 
@@ -68,7 +67,9 @@ export function ProductList({
   const loaderRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialDataHandled = useRef(!!initialProducts);
+  
+  // FIXED: We track if we have processed the initial load.
+  const initialDataHandled = useRef(false);
 
   const { cart, updateCart, setFlavourSelection, setIsGlobalLoading } = useAppContext();
   
@@ -99,8 +100,6 @@ export function ProductList({
             const wordFilters = searchWords.map((word, index) => {
                 const wordParam = `word${index}`;
                 params[wordParam] = word;
-                // Simplified query to be more performant and avoid timeouts in production.
-                // It relies on important keywords (like flavours) being in the 'tags' array.
                 return `(
                     lower(name) match "*"+$${wordParam}+"*" ||
                     lower(bestFor) match "*"+$${wordParam}+"*" ||
@@ -112,7 +111,6 @@ export function ProductList({
         }
     }
     
-    // Handle price filters
     if (priceRanges.length > 0) {
         const rangeClauses = priceRanges.map((range, index) => {
             const [min, max] = range.split('-').map(Number);
@@ -173,14 +171,23 @@ export function ProductList({
   }, [searchParams, sortOption, query]);
 
   useEffect(() => {
-    // If we have initial products from the server, don't fetch again on mount.
-    if (initialDataHandled.current) {
-        // However, subsequent filter changes should trigger a fetch.
+    // FIXED LOGIC:
+    // If this is the first run...
+    if (!initialDataHandled.current) {
+        // ...and we already have products from the server, mark as handled and DO NOT fetch.
+        if (initialProducts && initialProducts.length > 0) {
+            initialDataHandled.current = true;
+            return;
+        }
+        // ...and we DO NOT have products, we MUST fetch.
         fetchProducts(0, true);
+        initialDataHandled.current = true;
+        return;
     }
-    // After the first render (which might use server data), all subsequent renders should fetch.
-    initialDataHandled.current = true;
-  }, [searchParams, sortOption, fetchProducts]);
+
+    // If this is NOT the first run (e.g. filters changed), always fetch.
+    fetchProducts(0, true);
+  }, [searchParams, sortOption, fetchProducts, initialProducts]);
 
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
@@ -232,7 +239,6 @@ export function ProductList({
   };
   
   const handleProductClick = (e: React.MouseEvent, product: SanityProduct) => {
-    // Only trigger client-side navigation for left clicks without modifier keys
     if (e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
         e.preventDefault();
         setIsGlobalLoading(true);
