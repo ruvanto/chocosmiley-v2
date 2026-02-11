@@ -1,103 +1,72 @@
-
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, X } from 'lucide-react';
-import { SiWhatsapp } from 'react-icons/si';
-import { Button } from '../ui/button';
-import { cn } from '@/lib/utils';
-
-const wrapperVariants = {
-  open: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-  closed: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1 },
-  },
-};
-
-const itemVariants = {
-  open: {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 24,
-    },
-  },
-  closed: {
-    y: 0,
-    opacity: 0,
-    scale: 0,
-  },
-};
+import React, { useState } from 'react';
+import { Phone, X, MessageCircle } from 'lucide-react';
 
 export function FloatingEnquireButton() {
   const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <div className="fixed bottom-20 right-4 z-[60] md:hidden">
-      <motion.div
-        initial={false}
-        animate={isOpen ? 'open' : 'closed'}
-        className="flex flex-col items-end gap-3"
-      >
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              variants={wrapperVariants}
-              className="flex flex-col-reverse items-end gap-3"
-            >
-              <motion.div variants={itemVariants}>
-                <Button
-                  asChild
-                  className="rounded-full bg-custom-purple-dark text-white shadow-lg h-12 flex items-center gap-2 pr-4 border border-white/30"
-                >
-                  <a href="tel:+917975283091">
-                    <Phone className="h-5 w-5" />
-                    <span className="font-semibold">Call Us</span>
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div variants={itemVariants}>
-                <Button
-                  asChild
-                  className="rounded-full bg-custom-purple-dark text-white shadow-lg h-12 flex items-center gap-2 pr-4 border border-white/30"
-                >
-                  <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer">
-                    <SiWhatsapp className="h-5 w-5" />
-                    <span className="font-semibold">Whatsapp Us</span>
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-        <motion.button
-          onClick={() => setIsOpen(!isOpen)}
-          className={cn(
-            'h-14 w-14 rounded-full flex items-center justify-center text-white shadow-xl transition-colors duration-300',
-            isOpen ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
-          )}
-          whileTap={{ scale: 0.9 }}
+  // Modern, clean styles for the sub-buttons
+  const subButtonClass = `
+    flex items-center gap-3 px-5 py-3 
+    bg-white text-gray-800 rounded-full shadow-lg 
+    transition-all duration-300 ease-out border border-gray-100
+    hover:bg-gray-50 active:scale-95
+    whitespace-nowrap origin-bottom-right
+  `;
+
+  return (
+    <div className="fixed bottom-8 right-8 flex flex-col-reverse items-end gap-3 z-[9999]">
+      
+      {/* Main Toggle Button */}
+      <button
+        onClick={toggleMenu}
+        aria-label="Contact options"
+        className={`
+          w-16 h-16 rounded-full flex items-center justify-center 
+          shadow-2xl transition-all duration-300 transform active:scale-90 z-10
+          ${isOpen ? 'bg-slate-800 rotate-90' : 'bg-blue-600 hover:bg-blue-700'}
+        `}
+      >
+        {isOpen ? (
+          <X className="text-white w-8 h-8 transition-all duration-300" />
+        ) : (
+          <Phone className="text-white w-8 h-8 transition-all duration-300" />
+        )}
+      </button>
+
+      {/* Sub Buttons Group */}
+      <div className={`flex flex-col items-end gap-3 transition-all duration-300 ${
+        isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      }`}>
+        
+        {/* Whatsapp Button */}
+        <button
+          className={subButtonClass}
+          onClick={() => window.open('https://wa.me/917975283091', '_blank')}
         >
-          <AnimatePresence initial={false} mode="wait">
-            <motion.div
-              key={isOpen ? 'x' : 'whatsapp'}
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {isOpen ? <X size={28} /> : <SiWhatsapp size={28} />}
-            </motion.div>
-          </AnimatePresence>
-        </motion.button>
-      </motion.div>
+          <div className="bg-green-500 p-1.5 rounded-full text-white">
+            <MessageCircle size={18} fill="currentColor" />
+          </div>
+          <span className="font-semibold text-sm">Whatsapp Us</span>
+        </button>
+
+        {/* Call Us Button */}
+        <button
+          className={subButtonClass}
+          onClick={() => window.location.href = 'tel:+917975283091'}
+        >
+          <div className="bg-blue-500 p-1.5 rounded-full text-white">
+            <Phone size={18} fill="currentColor" />
+          </div>
+          <span className="font-semibold text-sm">Call Us</span>
+        </button>
+      </div>
+
     </div>
   );
-}
+};
