@@ -12,7 +12,7 @@ export function FloatingEnquireButton() {
     setIsOpen(!isOpen);
   };
 
-  const subButtonClass = `
+  const subButtonClass = `pointer-events-auto
     flex items-center gap-2 px-1 py-1
     bg-white text-gray-800 rounded-full shadow-lg
     transition-all duration-300 ease-out border border-gray-100
@@ -21,13 +21,13 @@ export function FloatingEnquireButton() {
   `;
 
   return (
-    <div className="fixed bottom-20 right-5 flex flex-col-reverse items-end gap-3 z-50">
+    <div className="fixed bottom-20 right-5 flex flex-col-reverse items-end gap-3 z-50 pointer-events-none">
       
       {/* Main Toggle Button */}
       <button
         onClick={toggleMenu}
         aria-label="Contact options"
-        className={`
+        className={`pointer-events-auto
           w-12 h-12 rounded-full flex items-center justify-center 
           shadow-2xl transition-all duration-300 transform active:scale-90 z-10
           ${isOpen ? 'bg-black/100 rotate-90' : 'bg-custom-gold'}
@@ -41,8 +41,8 @@ export function FloatingEnquireButton() {
       </button>
 
       {/* Sub Buttons Group */}
-      <div className={`flex flex-col items-end gap-3 transition-all duration-300 ${
-        isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      <div className={`pointer-events-auto flex flex-col items-end gap-3 transition-all duration-300 ${
+        isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 invisible'
       }`}>
         
         {/* Whatsapp Button */}
