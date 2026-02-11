@@ -42,13 +42,13 @@ export function FloatingEnquireButton() {
       <motion.div
         initial={false}
         animate={isOpen ? 'open' : 'closed'}
-        className="flex flex-col items-center gap-3"
+        className="flex flex-col items-end gap-3"
       >
         <AnimatePresence>
           {isOpen && (
             <motion.div
               variants={wrapperVariants}
-              className="flex flex-col items-center gap-3"
+              className="flex flex-col items-end gap-3"
             >
               <motion.div variants={itemVariants}>
                 <Button
