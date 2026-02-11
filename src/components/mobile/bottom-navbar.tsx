@@ -42,7 +42,7 @@ export function BottomNavbar({ activeView, onNavigate, cartItemCount = 0 }: Bott
               onClick={() => onNavigate(item.view)}
               className={cn(
                 'flex flex-col items-center justify-center gap-1 text-xs transition-colors w-full h-full',
-                isActive ? 'text-custom-gold' : 'text-white/70 hover:text-white'
+                isActive ? 'text-custom-gold' : 'text-white/70'
               )}
             >
               <div className="relative">

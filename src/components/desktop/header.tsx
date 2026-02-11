@@ -1,4 +1,3 @@
-
 // @/components/header.tsx
 "use client";
 
@@ -7,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Logo } from "../header/logo";
 import { Navigation } from "../header/navigation";
 import { UserActions } from "../header/user-actions";
-import type { ActiveView } from "@/types";
+import type { ActiveView, SanityProduct } from "@/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAppContext } from "@/context/app-context";
 import { MobileHeader } from "../mobile/mobile-header";
@@ -27,6 +26,10 @@ interface HeaderProps {
   children?: React.ReactNode;
   isEnquireOpen: boolean;
   onEnquireOpenChange: (isOpen: boolean) => void;
+  onProductClick?: (product: SanityProduct) => void;
+  onTrendingClick?: (searchQuery: string) => void;
+  showAnimatedSearch?: boolean;
+  searchContainerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export function Header({ 
@@ -43,10 +46,11 @@ export function Header({
   children,
   isEnquireOpen,
   onEnquireOpenChange,
+  showAnimatedSearch = false,
 }: HeaderProps) {
   const { setIsGlobalLoading } = useAppContext();
   const isMobile = useIsMobile();
-  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const localSearchContainerRef = useRef<HTMLDivElement>(null);
 
   const handleLogoClick = () => {
     if (activeView === 'home') return;
@@ -65,6 +69,8 @@ export function Header({
     );
   }
 
+  const showSearch = activeView === 'search' || activeView === 'product-detail' || (activeView === 'home' && showAnimatedSearch);
+
   return (
     <header className={cn(
       "fixed top-0 z-50 w-full pt-4 md:pt-6 pb-4 md:pb-4 transition-all duration-100", 
@@ -79,11 +85,15 @@ export function Header({
         
         {/* Center Column */}
         <div className="hidden md:flex flex-1 justify-center px-6 relative">
-          <div ref={searchContainerRef} className="w-full h-full flex justify-center items-center">
-             {(activeView === 'search' || activeView === 'product-detail') ? (
+          <div ref={localSearchContainerRef} className="w-full h-full flex justify-center items-center">
+             {showSearch ? (
                 <div 
-                  className={cn("w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl", isEnquireOpen && 'opacity-50 pointer-events-none')}
-                  onClick={onSearchIconClick}
+                  className={cn(
+                    "w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-2xl transition-all duration-300", 
+                    isEnquireOpen && 'opacity-50 pointer-events-none',
+                    activeView === 'home' && 'animate-slide-down-fade'
+                  )}
+                  onClick={activeView !== 'home' ? onSearchIconClick : undefined}
                 >
                   <AnimatedSearchBar 
                     onSearchSubmit={onSearchSubmit}
@@ -94,9 +104,8 @@ export function Header({
                     searchInput={searchInput}
                     onSearchInputChange={onSearchInputChange}
                     onFocus={onSearchFocus}
-                    isClickOnly={isMobile}
+                    isClickOnly={isMobile && activeView !== 'home'}
                 />
-
                    {children}
                 </div>
             ) : (
