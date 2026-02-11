@@ -21,16 +21,17 @@ const itemVariants = {
   open: {
     y: 0,
     opacity: 1,
+    scale: 1,
     transition: {
-      y: { stiffness: 1000, velocity: -100 },
+      type: "spring",
+      stiffness: 300,
+      damping: 24,
     },
   },
   closed: {
-    y: 50,
+    y: 0,
     opacity: 0,
-    transition: {
-      y: { stiffness: 1000 },
-    },
+    scale: 0,
   },
 };
 
@@ -48,7 +49,7 @@ export function FloatingEnquireButton() {
           {isOpen && (
             <motion.div
               variants={wrapperVariants}
-              className="flex flex-col items-end gap-3"
+              className="flex flex-col-reverse items-end gap-3"
             >
               <motion.div variants={itemVariants}>
                 <Button
