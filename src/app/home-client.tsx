@@ -1,3 +1,4 @@
+
 // @/app/home-client.tsx
 'use client';
 
@@ -23,6 +24,7 @@ import { SearchSuggestions } from '@/components/search-suggestions';
 import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
+import { FloatingEnquireButton } from '@/components/mobile/FloatingEnquireButton';
 
 interface HomepageContent {
   exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];
@@ -257,6 +259,7 @@ export default function HomeClient({ exploreCategories, exploreFlavours, trendin
         onOpenChange={(isOpen) => setFlavourSelection({ product: null, isOpen })}
         onConfirm={handleFlavourConfirm}
       />
+      {isMobile && <FloatingEnquireButton />}
     </>
   );
 }

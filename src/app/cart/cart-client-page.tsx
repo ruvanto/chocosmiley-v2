@@ -34,6 +34,7 @@ import { ToastAction } from '@/components/ui/toast';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { client } from '@/lib/sanity';
+import { FloatingEnquireButton } from '@/components/mobile/FloatingEnquireButton';
 
 
 async function getProductsForCart(productNames: string[]): Promise<SanityProduct[]> {
@@ -353,6 +354,7 @@ export default function CartClientPage() {
           isLoading={isProcessingOrder || isCartUpdating}
         />
       )}
+      {isMobile && <FloatingEnquireButton />}
     </>
   );
 }
