@@ -20,6 +20,7 @@ import { WishlistView } from '@/components/tabs/my-wishlist-tab';
 import { MyOrdersTab } from '@/components/tabs/my-orders-tab';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 
 const tabs = ['My Profile', 'My Wishlist', 'My Orders'];
@@ -228,6 +229,7 @@ export default function AccountClientPage() {
         onOpenChange={(isOpen) => setFlavourSelection({ product: null, isOpen })}
         onConfirm={handleFlavourConfirm}
       />
+      {isMobile && <FloatingEnquireButton />}
     </>
   );
 }

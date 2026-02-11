@@ -62,7 +62,7 @@ export function FloatingEnquireButton() {
           onClick={() => window.location.href = 'tel:+917975283091'}
         >
           <div className="bg-custom-purple-dark p-2 rounded-full text-white">
-            <Phone size={16} fill="currentColor" />
+            <Phone size={18} fill="currentColor" />
           </div>
           <span className="font-normal text-sm pr-2">Call Us</span>
         </button>

@@ -134,7 +134,7 @@ export function UserActions({
                                 </a>
                             </Button>
                             <p className="text-xs font-medium self-center">-OR-</p>
-                            <Button asChild className="w-full h-auto py-2 bg-custom-purple-dark hover:bg-custom-purple-dark/90 text-white rounded-full text-base font-plex-sans">
+                            <Button asChild className="w-full h-auto py-2 bg-green-500 hover:bg-green-500/90 text-white rounded-full text-base font-plex-sans">
                                 <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer">
                                     <SiWhatsapp className="h-8 w-8" /> Whatsapp Us
                                 </a>
@@ -217,7 +217,7 @@ export function UserActions({
                                         <button
                                             onClick={() => handleMobileNav(link.href)}
                                             className={cn(
-                                                "transition-colors hover:text-custom-gold text-left flex items-center gap-3", 
+                                                "transition-colors text-left flex items-center gap-3", 
                                                 isActive ? "text-custom-gold font-semibold" : "text-foreground/80"
                                             )}
                                         >
@@ -279,16 +279,16 @@ export function UserActions({
                             </>
                            )}
 
-                           <div className='mt-auto flex flex-col gap-4'>
-                            <div className="flex items-center gap-4 self-center">
+                           
+                            <div className="flex mt-auto items-center gap-2">
                                     <a href="https://www.instagram.com/chocosmileygifts/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                                        <AiOutlineInstagram className="h-7 w-7 transition-colors hover:text-custom-gold" />
+                                        <AiOutlineInstagram className="h-7 w-7" />
                                     </a>
                                     <a href="https://www.facebook.com/chocosmileychocolates" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                                        <IoLogoFacebook className="h-7 w-7 transition-colors hover:text-custom-gold" />
+                                        <IoLogoFacebook className="h-7 w-7" />
                                     </a>
                                 </div>
-                           </div>
+                           
                         </div>
                     </SheetContent>
                 </Sheet>

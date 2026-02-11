@@ -34,7 +34,7 @@ import { ToastAction } from '@/components/ui/toast';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
 import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-banner';
 import { client } from '@/lib/sanity';
-import { FloatingEnquireButton } from '@/components/mobile/FloatingEnquireButton';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 
 async function getProductsForCart(productNames: string[]): Promise<SanityProduct[]> {

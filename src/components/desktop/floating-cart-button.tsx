@@ -2,7 +2,6 @@
 // @/components/floating-cart-button.tsx
 'use client';
 
-import Image from 'next/image';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

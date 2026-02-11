@@ -540,33 +540,3 @@ export const addCancellationReason = async (uid: string, orderId: string, reason
         cancellationReason: reason,
     });
 };
-
-export const deleteUserAccount = async (password?: string): Promise<void> => {
-    const auth = getClientAuth();
-    const db = getClientFirestore();
-    const user = auth?.currentUser;
-
-    if (!user || !db) {
-        throw new Error("User not authenticated or services not initialized.");
-    }
-
-    if (password && user.email) {
-        const credential = EmailAuthProvider.credential(user.email, password);
-        await reauthenticateWithCredential(user, credential);
-    }
-
-    const batch = writeBatch(db);
-    const userDocRef = doc(db, 'users', user.uid);
-    const ordersCollectionRef = collection(db, 'users', user.uid, 'orders');
-
-    const ordersSnapshot = await getDocs(ordersCollectionRef);
-    ordersSnapshot.forEach((orderDoc) => {
-        batch.delete(orderDoc.ref);
-    });
-
-    batch.delete(userDocRef);
-
-    await batch.commit();
-
-    await deleteUser(user);
-};

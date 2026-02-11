@@ -14,7 +14,6 @@ import { Loader } from '../loaders/loader';
 import { Textarea } from '../ui/textarea';
 import { states } from '@/lib/states';
 import { SecurityUpdatePopup } from '../popups/security-update-popup';
-import { DeleteAccountPopup } from '../popups/delete-account-popup';
 import { Separator } from '../ui/separator';
 import { StateSelectionPopup } from '../popups/state-selection-popup';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -103,7 +102,6 @@ export function MyProfileTab({ profile, onProfileUpdate }: { profile: ProfileInf
   
   const [isSaving, setIsSaving] = useState(false);
   const [isSecurityPopupOpen, setIsSecurityPopupOpen] = useState(false);
-  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [isStatePopupOpen, setIsStatePopupOpen] = useState(false);
 
   const { toast } = useToast();
@@ -229,6 +227,13 @@ const fullAddressFromState = useMemo(() => {
     setState(stateValue);
     setIsStatePopupOpen(false);
   };
+  
+  const handleDeleteClick = () => {
+    toast({
+      title: "Feature Under Development",
+      description: "This feature will be available soon.",
+    });
+  };
 
 
   if (isSaving) {
@@ -344,7 +349,7 @@ const fullAddressFromState = useMemo(() => {
                               )}
 
                               <Button 
-                                onClick={() => setIsDeletePopupOpen(true)} 
+                                onClick={handleDeleteClick} 
                                 variant="destructive"
                                 className="w-auto md:w-full"
                               >
@@ -380,10 +385,6 @@ const fullAddressFromState = useMemo(() => {
             open={isSecurityPopupOpen} 
             onOpenChange={setIsSecurityPopupOpen}
             onForgotPasswordClick={handleForgotPassword}
-        />
-        <DeleteAccountPopup
-            open={isDeletePopupOpen}
-            onOpenChange={setIsDeletePopupOpen}
         />
         <StateSelectionPopup
           open={isStatePopupOpen}

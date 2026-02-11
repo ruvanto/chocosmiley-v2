@@ -23,7 +23,7 @@ import { getProductSuggestions, type TrendingSuggestion } from '@/app/actions';
 import { SearchSuggestions } from '../../components/search-suggestions';
 import { MobileSearchHeader } from '../../components/mobile/mobile-search-header';
 import CustomScreenLoader from '../../components/loaders/custom-screen-loader';
-import { FloatingEnquireButton } from '@/components/mobile/FloatingEnquireButton';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 interface SearchClientPageProps {
   initialFilters: StructuredFilter[];

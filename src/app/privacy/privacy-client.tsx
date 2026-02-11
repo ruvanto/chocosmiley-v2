@@ -17,6 +17,7 @@ import { PopupsManager } from '@/components/popups/popups-manager';
 import { useAppContext } from '@/context/app-context';
 import { BottomNavbar } from '@/components/mobile/bottom-navbar';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 
 export default function PrivacyClientPage() {
@@ -96,6 +97,7 @@ export default function PrivacyClientPage() {
                 isEnquireOpen={isEnquireOpen}
             />
             <BottomNavbar activeView={'home'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
+            {isMobile && <FloatingEnquireButton />}
         </>
     );
 }

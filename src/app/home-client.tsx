@@ -24,7 +24,7 @@ import { SearchSuggestions } from '@/components/search-suggestions';
 import { FloatingCartButton } from '@/components/desktop/floating-cart-button';
 import { MobileExploreCategories } from '@/components/mobile/mobile-explore-categories';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
-import { FloatingEnquireButton } from '@/components/mobile/FloatingEnquireButton';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 interface HomepageContent {
   exploreCategories: { _key: string; name: string; subtitle: string; imageUrl: string; slug: { current: string } }[];

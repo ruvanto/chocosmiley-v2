@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { useAppContext } from '@/context/app-context';
 import type { ActiveView } from '@/types';
 import CustomScreenLoader from '@/components/loaders/custom-screen-loader';
+import { FloatingEnquireButton } from '@/components/mobile/floating-enquire-button';
 
 
 const containerVariants = {
@@ -185,6 +186,7 @@ export default function AboutPageClient() {
                 isEnquireOpen={isEnquireOpen}
             />
             <BottomNavbar activeView={'about'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
+            {isMobile && <FloatingEnquireButton />}
         </>
     );
 }
