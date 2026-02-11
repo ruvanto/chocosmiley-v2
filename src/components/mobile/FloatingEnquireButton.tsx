@@ -1,7 +1,9 @@
+
 'use client';
 
 import React, { useState } from 'react';
-import { Phone, X, MessageCircle } from 'lucide-react';
+import { Phone, X } from 'lucide-react';
+import { SiWhatsapp } from 'react-icons/si';
 
 export function FloatingEnquireButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,32 +12,31 @@ export function FloatingEnquireButton() {
     setIsOpen(!isOpen);
   };
 
-  // Modern, clean styles for the sub-buttons
   const subButtonClass = `
-    flex items-center gap-3 px-5 py-3 
-    bg-white text-gray-800 rounded-full shadow-lg 
+    flex items-center gap-2 px-1 py-1
+    bg-white text-gray-800 rounded-full shadow-lg
     transition-all duration-300 ease-out border border-gray-100
     hover:bg-gray-50 active:scale-95
     whitespace-nowrap origin-bottom-right
   `;
 
   return (
-    <div className="fixed bottom-20 right-8 flex flex-col-reverse items-end gap-3 z-[9999]">
+    <div className="fixed bottom-20 right-5 flex flex-col-reverse items-end gap-3 z-50">
       
       {/* Main Toggle Button */}
       <button
         onClick={toggleMenu}
         aria-label="Contact options"
         className={`
-          w-16 h-16 rounded-full flex items-center justify-center 
+          w-12 h-12 rounded-full flex items-center justify-center 
           shadow-2xl transition-all duration-300 transform active:scale-90 z-10
-          ${isOpen ? 'bg-slate-800 rotate-90' : 'bg-blue-600 hover:bg-blue-700'}
+          ${isOpen ? 'bg-black/100 rotate-90' : 'bg-custom-gold'}
         `}
       >
         {isOpen ? (
-          <X className="text-white w-8 h-8 transition-all duration-300" />
+          <X className="text-white w-6 h-6 transition-all duration-300" />
         ) : (
-          <Phone className="text-white w-8 h-8 transition-all duration-300" />
+          <Phone className="text-custom-purple-dark w-6 h-6 transition-all duration-300" />
         )}
       </button>
 
@@ -49,10 +50,10 @@ export function FloatingEnquireButton() {
           className={subButtonClass}
           onClick={() => window.open('https://wa.me/917975283091', '_blank')}
         >
-          <div className="bg-green-500 p-1.5 rounded-full text-white">
-            <MessageCircle size={18} fill="currentColor" />
+          <div className="bg-green-500 p-2 rounded-full text-white">
+            <SiWhatsapp className="h-5 w-5" />
           </div>
-          <span className="font-semibold text-sm">Whatsapp Us</span>
+          <span className="font-normal text-sm pr-2">Whatsapp Us</span>
         </button>
 
         {/* Call Us Button */}
@@ -60,10 +61,10 @@ export function FloatingEnquireButton() {
           className={subButtonClass}
           onClick={() => window.location.href = 'tel:+917975283091'}
         >
-          <div className="bg-blue-500 p-1.5 rounded-full text-white">
-            <Phone size={18} fill="currentColor" />
+          <div className="bg-custom-purple-dark p-2 rounded-full text-white">
+            <Phone size={16} fill="currentColor" />
           </div>
-          <span className="font-semibold text-sm">Call Us</span>
+          <span className="font-normal text-sm pr-2">Call Us</span>
         </button>
       </div>
 

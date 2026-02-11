@@ -1,3 +1,4 @@
+
 // @/components/header/user-actions.tsx
 'use client';
 
@@ -56,7 +57,6 @@ export function UserActions({
     activeView,
 }: UserActionsProps) {
     const isMobile = useIsMobile();
-    const [isEnquireSheetOpen, setIsEnquireSheetOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const { logout, isAuthenticated, isAdmin, setIsGlobalLoading, profileInfo, isProfileLoaded } = useAppContext();
@@ -280,21 +280,6 @@ export function UserActions({
                            )}
 
                            <div className='mt-auto flex flex-col gap-4'>
-                            <SheetClose asChild>
-                                <Button 
-                                    onClick={() => {
-                                        if (isMobile) {
-                                            setIsEnquireSheetOpen(true);
-                                        } else {
-                                            onEnquireOpenChange(true);
-                                        }
-                                    }}
-                                    variant="outline"
-                                    className="w-full justify-center text-custom-gold border-custom-gold hover:bg-custom-gold hover:text-custom-purple-dark"
-                                >
-                                    Enquire Now
-                                </Button>
-                            </SheetClose>
                             <div className="flex items-center gap-4 self-center">
                                     <a href="https://www.instagram.com/chocosmileygifts/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                                         <AiOutlineInstagram className="h-7 w-7 transition-colors hover:text-custom-gold" />
@@ -304,29 +289,6 @@ export function UserActions({
                                     </a>
                                 </div>
                            </div>
-                        </div>
-                    </SheetContent>
-                </Sheet>
-                 <Sheet open={isEnquireSheetOpen} onOpenChange={setIsEnquireSheetOpen}>
-                    <SheetContent side="bottom" className="bg-custom-purple-dark/90 text-white rounded-t-3xl border-t-2 border-custom-gold p-6">
-                        <SheetHeader className="text-center">
-                            <SheetTitle className="text-xl font-bold text-white font-plex-sans">Looking for a Perfect Gift?</SheetTitle>
-                            <SheetDescription className="text-white/80 font-plex-sans-condensed text-base">
-                                Get personalized advice on flavours, packaging, and more.
-                            </SheetDescription>
-                        </SheetHeader>
-                        <div className="flex flex-col gap-3 mt-6">
-                            <Button asChild className="h-auto py-2 bg-white hover:bg-white/90 text-black rounded-full text-base font-plex-sans self-center w-48">
-                                <a href="tel:+917975283091">
-                                    <Phone className="h-5 w-5" /> Call Us
-                                </a>
-                            </Button>
-                            <p className="text-sm font-medium self-center text-white/80">-OR-</p>
-                            <Button asChild className="h-auto py-2 bg-white hover:bg-white/90 text-black rounded-full text-base font-plex-sans self-center w-48">
-                                <a href="https://wa.me/917975283091" target="_blank" rel="noopener noreferrer">
-                                    <SiWhatsapp  className="h-8 w-8" /> Whatsapp Us
-                                </a>
-                             </Button>
                         </div>
                     </SheetContent>
                 </Sheet>
