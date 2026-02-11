@@ -20,7 +20,7 @@ export function FloatingEnquireButton() {
   `;
 
   return (
-    <div className="fixed bottom-8 right-8 flex flex-col-reverse items-end gap-3 z-[9999]">
+    <div className="fixed bottom-20 right-8 flex flex-col-reverse items-end gap-3 z-[9999]">
       
       {/* Main Toggle Button */}
       <button
