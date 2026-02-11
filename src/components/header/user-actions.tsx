@@ -1,4 +1,3 @@
-
 // @/components/header/user-actions.tsx
 'use client';
 
@@ -117,7 +116,7 @@ export function UserActions({
                                 isEnquireOpen ? 'bg-white text-custom-purple-dark hover:bg-white' : 'bg-custom-gold text-custom-purple-dark hover:bg-custom-gold'
                             )}
                         >
-                            Enquire now
+                            Enquire Now
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent
@@ -293,7 +292,7 @@ export function UserActions({
                                     variant="outline"
                                     className="w-full justify-center text-custom-gold border-custom-gold hover:bg-custom-gold hover:text-custom-purple-dark"
                                 >
-                                    Enquire now
+                                    Enquire Now
                                 </Button>
                             </SheetClose>
                             <div className="flex items-center gap-4 self-center">
