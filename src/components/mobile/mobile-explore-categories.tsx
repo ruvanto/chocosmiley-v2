@@ -1,4 +1,3 @@
-
 // @/components/mobile/mobile-explore-categories.tsx
 'use client';
 
@@ -103,7 +102,7 @@ export function MobileExploreCategories({ exploreCategories, exploreFlavours }: 
                     Explore Flavours
                 </SectionTitle>
                 <div 
-                    className="flex flex-row overflow-x-auto no-scrollbar flex-1 items-center gap-4 pb-6 pt-1"
+                    className="flex flex-row overflow-x-auto no-scrollbar items-center gap-4 pb-6 pt-1"
                 >
                     {(exploreFlavours || []).map((flavour, index) => (
                     <div 
