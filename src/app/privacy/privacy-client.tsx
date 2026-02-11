@@ -79,7 +79,7 @@ export default function PrivacyClientPage() {
                         onScroll={handleScroll}
                         className={cn(
                             "flex-grow flex flex-col overflow-y-auto no-scrollbar transition-all duration-300",
-                            "pt-24 md:pt-32"
+                            "pt-20 md:pt-32"
                         )}
                     >
                         <Suspense fallback={<LoadingFallback text="Loading Privacy Policy..." />}>

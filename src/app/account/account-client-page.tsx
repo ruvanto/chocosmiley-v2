@@ -1,5 +1,4 @@
-
-// @/app/profile/profile-client-page.tsx
+// @/app/account/account-client-page.tsx
 'use client';
 
 import { useState, useEffect, type UIEvent } from 'react';
@@ -25,7 +24,7 @@ import { ProfileCompletionBanner } from '@/components/mobile/profile-completion-
 
 const tabs = ['My Profile', 'My Wishlist', 'My Orders'];
 
-export default function ProfileClientPage() {
+export default function AccountClientPage() {
   const router = useRouter();
   const pathname = usePathname();
   const isMobile = useIsMobile();
@@ -127,7 +126,7 @@ export default function ProfileClientPage() {
             router.push('/');
           }}
           onNavigate={handleHeaderNavigate}
-          activeView={'profile'}
+          activeView={'account'}
           isEnquireOpen={isEnquireOpen}
           onEnquireOpenChange={setIsEnquireOpen}
         />
@@ -217,7 +216,7 @@ export default function ProfileClientPage() {
             </div>
           )}
         </main>
-        <BottomNavbar activeView={'profile'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
+        <BottomNavbar activeView={'account'} onNavigate={handleNavigation} cartItemCount={cartItemCount} />
       </div>
        <PopupsManager
           isProfileOpen={isProfileOpen}

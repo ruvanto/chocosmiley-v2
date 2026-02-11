@@ -1,9 +1,8 @@
+// @/app/account/page.tsx
+import AccountClientPage from './account-client-page';
 
-// @/app/profile/page.tsx
-import ProfileClientPage from './account-client-page';
-
-export default function ProfilePage() {
+export default function AccountPage() {
     return (
-        <ProfileClientPage />
+        <AccountClientPage />
     );
 }
