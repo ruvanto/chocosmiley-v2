@@ -35,7 +35,7 @@ const CategoryCard = ({ category }: { category: ExploreItem }) => {
     return (
         <div
             key={category._key}
-            className="w-full aspect-[5/6] relative cursor-pointer"
+            className="w-full aspect-[5/6] relative cursor-pointer px-0.5"
             onClick={() => handleCategoryClick(category.slug.current)}
         >
             <Image
@@ -108,7 +108,7 @@ export function MobileExploreCategories({ exploreCategories, exploreFlavours }: 
                     {(exploreFlavours || []).map((flavour, index) => (
                     <div 
                         key={flavour._key} 
-                        className="w-24 flex-shrink-0 aspect-square relative group cursor-pointer" 
+                        className="w-24 flex-shrink-0 aspect-square relative group cursor-pointer px-0.5" 
                         onClick={() => handleFlavourClick(flavour.name)}
                     >
                         <Image
