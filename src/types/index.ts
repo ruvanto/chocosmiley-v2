@@ -20,10 +20,10 @@ export interface SanityProduct {
   packageType?: string;
   composition?: string;
   description?: PortableTextBlock[];
-  ingredients?: string;
+  ingredients?: PortableTextBlock[];
   allergenAlert?: PortableTextBlock[];
   availableFlavours?: SanityFlavour[];
-  bestFor?: string;
+  bestFor?: PortableTextBlock[];
   tags?: string[];
   filterOptions?: {
     title: string;

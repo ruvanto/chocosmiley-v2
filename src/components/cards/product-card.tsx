@@ -16,6 +16,7 @@ interface ProductCardProps {
   onRemoveFromCart: (product: SanityProduct) => void;
   quantity: number;
   onProductClick: (e: React.MouseEvent, product: SanityProduct) => void;
+  priority?: boolean;
 }
 
 export function ProductCard({
@@ -24,6 +25,7 @@ export function ProductCard({
   onRemoveFromCart,
   quantity,
   onProductClick,
+  priority = false,
 }: ProductCardProps) {
   const [isAnimatingLike, setIsAnimatingLike] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -90,7 +92,7 @@ export function ProductCard({
           onLoad={() => setIsImageLoading(false)}
           onError={() => setIsImageLoading(false)}
           onDragStart={(e) => e.preventDefault()}
-          priority
+          priority={priority}
         />
         {product.isOutOfStock && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">

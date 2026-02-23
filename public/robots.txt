@@ -4,5 +4,7 @@ Disallow: /admin/
 Disallow: /account/
 Disallow: /cart/
 Disallow: /order-confirmed/
+Disallow: /search
+Disallow: /search/
 
 Sitemap: https://www.chocosmiley.com/sitemap.xml

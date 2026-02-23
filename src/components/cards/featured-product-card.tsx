@@ -16,6 +16,7 @@ interface FeaturedProductCardProps {
   onRemoveFromCart: (product: SanityProduct) => void;
   quantity: number;
   onProductClick: (product: SanityProduct) => void;
+  priority?: boolean;
 }
 
 export function FeaturedProductCard({
@@ -24,6 +25,7 @@ export function FeaturedProductCard({
   onRemoveFromCart,
   quantity,
   onProductClick,
+  priority = false,
 }: FeaturedProductCardProps) {
   const [isClient, setIsClient] = useState(false);
   const { likedProducts, toggleLike } = useAppContext();
@@ -83,7 +85,7 @@ export function FeaturedProductCard({
           onLoad={() => setIsImageLoading(false)}
           onError={() => setIsImageLoading(false)}
           onDragStart={(e) => e.preventDefault()}
-          priority
+          priority={priority}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
       </div>

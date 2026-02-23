@@ -12,15 +12,22 @@ export const revalidate = 300; // Revalidate this page at most every 300 seconds
 
 // Helper to convert Sanity's Portable Text to plain text for meta descriptions
 function portableTextToString(blocks: PortableTextBlock[] | undefined) {
-    if (!blocks) {
-      return ""
-    }
-    return blocks
-      .filter(block => block._type === 'block' && block.children)
-      .map(block => block.children.map((child: any) => child.text).join(''))
-      .join(' ')
-      .substring(0, 155) // Truncate to a good length for descriptions
+  if (!blocks) {
+    return "";
   }
+  
+  const fullText = blocks
+    .filter(block => block._type === 'block' && block.children)
+    .map(block => block.children.map((child: any) => child.text).join(''))
+    .join(' ');
+
+  if (fullText.length <= 155) return fullText;
+
+  const truncated = fullText.substring(0, 155);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  return lastSpace > 0 ? truncated.substring(0, lastSpace) + '...' : truncated + '...';
+}
 
 async function getProduct(slug: string): Promise<SanityProduct | null> {
     const query = `*[_type == "product" && slug.current == $slug][0]{
@@ -132,18 +139,41 @@ async function getFeaturedProducts(currentProduct: SanityProduct): Promise<Sanit
 }
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-    const product = await getProduct(params.slug);
+  const product = await getProduct(params.slug);
 
-    if (!product) {
-        notFound();
-    }
+  if (!product) {
+      notFound();
+  }
 
-    const featuredProducts = await getFeaturedProducts(product);
+  const featuredProducts = await getFeaturedProducts(product);
 
-    return (
-        <ProductClientPage 
-            product={product} 
-            featuredProducts={featuredProducts || []} 
-        />
-    );
+  const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "image": product.images?.[0],
+      "description": portableTextToString(product.description),
+      "offers": {
+          "@type": "Offer",
+          "url": `https://www.chocosmiley.com/product/${params.slug}`,
+          "priceCurrency": "INR",
+          "price": product.discountedPrice || product.mrp || 0,
+          "availability": product.isOutOfStock 
+              ? "https://schema.org/OutOfStock" 
+              : "https://schema.org/InStock"
+      }
+  };
+
+  return (
+      <>
+          <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          <ProductClientPage 
+              product={product} 
+              featuredProducts={featuredProducts || []} 
+          />
+      </>
+  );
 }

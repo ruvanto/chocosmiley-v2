@@ -44,7 +44,7 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
         <div className={cn("flex flex-col gap-4 h-full text-black")}>
             {/* Title and Like button */}
             <div className="flex justify-between items-start">
-                <h2 className={cn("font-bold font-plex-sans-condensed", isMobile ? "text-2xl" : "text-3xl")}>{product.name}</h2>
+                <h1 className={cn("font-bold font-plex-sans-condensed", isMobile ? "text-2xl" : "text-3xl")}>{product.name}</h1>
                 <div className="relative">
                     <button onClick={handleLikeClick} className="p-1">
                         <Heart 
@@ -84,9 +84,7 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
             {/* Best for */}
             {product.bestFor && (
                 <div>
-                     <p className={cn("font-semibold font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
-                        <span className="font-semibold">Best for:</span> {product.bestFor}
-                    </p>
+                        <p className="font-semibold">Best for:</p> <PortableText value={product.bestFor} components={customComponents} />
                 </div>
             )}
 
@@ -101,12 +99,11 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
 
             {/* Ingredients */}
             {product.ingredients && (
-  <div className={cn("font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
-    <span className="font-medium">Ingredients:</span>
-    <PortableText value={product.ingredients} components={customComponents} />
-  </div>
-)}
-
+            <div className={cn("font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
+                <span className="font-medium">Ingredients:</span>
+                <PortableText value={product.ingredients} components={customComponents} />
+            </div>
+            )}
             
             {/* Allergen Alert */}
             {product.allergenAlert && (

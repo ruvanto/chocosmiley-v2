@@ -1,5 +1,3 @@
-
-// @/components/header/logo.tsx
 'use client';
 
 import Link from "next/link";
@@ -14,6 +12,8 @@ interface LogoProps {
 export function Logo({ onLogoClick, isEnquireOpen }: LogoProps) {
     return (
         <div className={cn("flex items-center gap-2 md:gap-4 lg:gap-8 transition-opacity duration-100")}>
+            <h1 className="sr-only">Choco Smiley - Premium Online Chocolate Store</h1>
+            
             <Link href="/" className="flex items-center gap-2" onClick={onLogoClick}>
                 <Image 
                     src="/homepage-logo.png" 

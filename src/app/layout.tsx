@@ -72,19 +72,32 @@ export default function RootLayout({
   // This tells Google: "We are a real company, and THIS is our official logo."
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    'name': 'Choco Smiley',
-    'url': 'https://www.chocosmiley.com',
-    'logo': 'https://www.chocosmiley.com/choco-smiley-logo.png',
-    'sameAs': [
-      'https://www.instagram.com/chocosmileygifts/',
-      'https://www.facebook.com/chocosmileychocolates'
-    ],
-    'contactPoint': {
-      '@type': 'ContactPoint',
-      'telephone': '+91-7975283091',
-      'contactType': 'customer service'
-    }
+    '@graph': [
+      {
+        '@type': 'Organization',
+        'name': 'Choco Smiley',
+        'url': 'https://www.chocosmiley.com',
+        'logo': 'https://www.chocosmiley.com/choco-smiley-logo.png',
+        'sameAs': [
+          'https://www.instagram.com/chocosmileygifts/',
+          'https://www.facebook.com/chocosmileychocolates'
+        ],
+        'contactPoint': {
+          '@type': 'ContactPoint',
+          'telephone': '+91-7975283091',
+          'contactType': 'customer service'
+        }
+      },
+      {
+        '@type': 'WebSite',
+        'url': 'https://www.chocosmiley.com',
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': 'https://www.chocosmiley.com/search?q={search_term_string}',
+          'query-input': 'required name=search_term_string'
+        }
+      }
+    ]
   };
 
   return (

@@ -115,8 +115,8 @@ export function ProductInfoCard({ product, isLiked, onLikeToggle }: ProductInfoC
 
                     <DetailSection title="Best For" isMobile={true}>
                     {product.bestFor && (
-  <PortableText value={product.bestFor} components={customComponents} />
-)}
+                    <PortableText value={product.bestFor} components={customComponents} />
+                    )}
 
                     </DetailSection>
 

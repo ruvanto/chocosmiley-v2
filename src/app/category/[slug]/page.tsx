@@ -148,22 +148,18 @@ async function getFilters(): Promise<StructuredFilter[]> {
 
 // The main page component for a category page. It's a server component.
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  // Fetch the category data based on the slug from the URL.
   const category = await getCategory(params.slug);
 
-  // If no category matches the slug, render the 404 page.
   if (!category) {
     notFound();
   }
 
-  // Pre-fetch all necessary data in parallel for performance.
   const [filters, trendingSuggestions, initialProducts] = await Promise.all([
     getFilters(),
     getTrendingSuggestions(),
-    getInitialProducts(category.name), // Fetch initial products for SSR.
+    getInitialProducts(category.name), 
   ]);
 
-  // Define JSON-LD structured data for rich search results.
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -172,28 +168,26 @@ export default async function CategoryPage({ params }: { params: { slug: string 
     "url": `https://www.chocosmiley.com/category/${params.slug}`,
     "mainEntity": {
         "@type": "ItemList",
-        "itemListElement": [] // Can be populated on the client if needed for more detailed schema.
+        "itemListElement": initialProducts.map((product, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "url": `https://www.chocosmiley.com/product/${product.slug.current}`
+        }))
     }
   };
 
   return (
     <>
-        {/* Inject the JSON-LD script into the page head. */}
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/*
-            Instead of building a new UI, we reuse the existing powerful SearchClientPage.
-            We pass the category name as the initial search query, which is an efficient
-            way to maintain a consistent user experience.
-        */}
         <Suspense>
             <SearchClientPage 
               initialFilters={filters} 
               trendingSuggestions={trendingSuggestions} 
               initialQuery={category.name}
-              initialProducts={initialProducts} // Pass the server-fetched products to the client component.
+              initialProducts={initialProducts} 
             />
         </Suspense>
     </>

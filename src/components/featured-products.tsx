@@ -47,7 +47,7 @@ export function FeaturedProducts({
       </SectionTitle>
       
       <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
-        {products.map(product => (
+        {products.map((product, index) => (
           <div key={product._id} className={cn("flex-shrink-0", isMobile ? "w-40" : "w-56")}>
             {/* FIX: Link now handles navigation. onProductClick only handles side-effects (like loading state). */}
             <Link 
@@ -63,6 +63,7 @@ export function FeaturedProducts({
                 onAddToCart={onAddToCart}
                 onRemoveFromCart={onRemoveFromCart}
                 quantity={cart[product.name]?.quantity || 0}
+                priority={index < 2}
               />
             </Link>
           </div>
