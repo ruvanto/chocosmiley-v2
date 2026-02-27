@@ -23,7 +23,7 @@ export interface SanityProduct {
   ingredients?: PortableTextBlock[];
   allergenAlert?: PortableTextBlock[];
   availableFlavours?: SanityFlavour[];
-  bestFor?: PortableTextBlock[];
+  bestFor?: string;
   tags?: string[];
   filterOptions?: {
     title: string;

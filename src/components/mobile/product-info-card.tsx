@@ -113,12 +113,15 @@ export function ProductInfoCard({ product, isLiked, onLikeToggle }: ProductInfoC
 
                 <div className={cn("flex flex-col gap-3 text-white")}>
 
+                    {/* Best for */}
                     <DetailSection title="Best For" isMobile={true}>
-                    {product.bestFor && (
-                    <PortableText value={product.bestFor} components={customComponents} />
-                    )}
-
+                    {product.bestFor && 
+                        <p className="font-plex-sans-condensed text-sm">
+                            {product.bestFor}
+                        </p>
+                    }
                     </DetailSection>
+                    
 
                     <Separator className="bg-white/20" />
                 

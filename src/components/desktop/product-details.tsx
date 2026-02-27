@@ -84,7 +84,9 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
             {/* Best for */}
             {product.bestFor && (
                 <div>
-                        <p className="font-semibold">Best for:</p> <PortableText value={product.bestFor} components={customComponents} />
+                    <p className={cn("font-semibold font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
+                        <span className="font-semibold">Best for:</span> {product.bestFor}
+                    </p>
                 </div>
             )}
 
@@ -99,8 +101,8 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
 
             {/* Ingredients */}
             {product.ingredients && (
-            <div className={cn("font-plex-sans-condensed", isMobile ? "text-sm" : "text-base")}>
-                <span className="font-medium">Ingredients:</span>
+            <div className="font-plex-sans-condensed text-base">
+                <span className="font-semibold">Ingredients:</span>
                 <PortableText value={product.ingredients} components={customComponents} />
             </div>
             )}
@@ -109,9 +111,9 @@ export function ProductDetails({ product, isLiked, onLikeToggle, isMobile = fals
             {product.allergenAlert && (
                 <div className={cn("font-semibold text-black font-plex-sans", isMobile ? "text-xs " : "text-sm")}>
                     <p>Allergen Alert:</p>
-        <div className="prose prose-sm list-disc list-inside pt-1 pl-5">
-        <PortableText value={product.allergenAlert} components={customComponents} />
-        </div>
+                    <div className="prose prose-sm list-disc list-inside pt-1 pl-5">
+                        <PortableText value={product.allergenAlert} components={customComponents} />
+                    </div>
                 </div>
             )}
         </div>
