@@ -181,8 +181,8 @@ function OrderConfirmedPageComponent() {
   };
 
   const whatsAppUrl = confirmedOrder
-    ? `https://api.whatsapp.com/send?phone=917975283091&text=${generateWhatsAppMessage(confirmedOrder)}`
-    : `https://api.whatsapp.com/send?phone=917975283091`;
+    ? `https://api.whatsapp.com/send?phone=917411414007&text=${generateWhatsAppMessage(confirmedOrder)}`
+    : `https://api.whatsapp.com/send?phone=917411414007`;
     
   const handleCopyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -274,7 +274,7 @@ function OrderConfirmedPageComponent() {
               </p>
               <div className="flex flex-col sm:flex-row items-center gap-3 mt-4 w-full justify-center">
                 <Button asChild variant="outline" className="h-auto w-full sm:w-auto py-2 px-6 text-sm md:text-base text-white border-white/50 bg-transparent hover:bg-white/10 hover:text-white rounded-full font-plex-sans shadow-lg">
-                  <a href="tel:+917975283091">
+                  <a href="tel:+917411414007">
                     <span className="flex items-center gap-2"><Phone className="h-4 w-4" /> Call Us</span>
                   </a>
                 </Button>

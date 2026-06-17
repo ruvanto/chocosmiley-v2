@@ -48,7 +48,7 @@ export function FloatingEnquireButton() {
         {/* Whatsapp Button */}
         <button
           className={subButtonClass}
-          onClick={() => window.open('https://wa.me/917975283091', '_blank')}
+          onClick={() => window.open('https://wa.me/917411414007', '_blank')}
         >
           <div className="bg-green-500 p-2 rounded-full text-white">
             <SiWhatsapp className="h-5 w-5" />
@@ -59,7 +59,7 @@ export function FloatingEnquireButton() {
         {/* Call Us Button */}
         <button
           className={subButtonClass}
-          onClick={() => window.location.href = 'tel:+917975283091'}
+          onClick={() => window.location.href = 'tel:+917411414007'}
         >
           <div className="bg-custom-purple-dark p-2 rounded-full text-white">
             <Phone size={18} fill="currentColor" />
